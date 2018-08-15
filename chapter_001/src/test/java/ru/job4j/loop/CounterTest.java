@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 
 public class CounterTest {
     @Test
-    public void whenThirdMoreSecondAndFirst() {
+    public void sumOfEvenNumbers() {
         Counter counter = new Counter();
         int result = counter.add(1, 8);
         assertThat(result, is(20));
