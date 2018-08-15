@@ -5,7 +5,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * @author Sir-Hedgehog (mailto:parsentev@yandex.ru)
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
  * @since 0.1
  */
