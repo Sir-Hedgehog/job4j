@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 
 public class FactorialTest {
     @Test
-    public void whenNumberMoreOne() {
+    public void whenNumberMoreZero() {
         Factorial fact = new Factorial();
         int result = fact.calc(4);
         assertThat(result, is(24));
