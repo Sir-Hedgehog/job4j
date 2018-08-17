@@ -21,7 +21,7 @@ public class Triangle {
      */
 
     public double period(double ab, double ac, double bc) {
-        return (a.distanceTo(b) + a.distanceTo(c) + b.distanceTo(c)) / 2;
+        return (ab + ac + bc) / 2;
     }
 
     /**
@@ -51,10 +51,6 @@ public class Triangle {
      * @return true, если сумма двух любых сторон треугольника не меньше третьей стороны, иначе - false.
      */
     private boolean exist(double ab, double ac, double bc) {
-        if (ab + ac > bc && ab + bc > ac && ac + bc > ab) {
-            return true;
-        } else {
-            return false;
-        }
+        return (ab + ac > bc && ab + bc > ac && ac + bc > ab);
     }
 }
