@@ -6,23 +6,16 @@ public class Sorting {
         int indexFirst = 0, indexSecond = 0, indexResult = 0;
         while (indexFirst < first.length && indexSecond < second.length) {
             if (first[indexFirst] < second[indexSecond]) {
-                result[indexResult] = first[indexFirst];
-                indexFirst++;
+                result[indexResult++] = first[indexFirst++];
             } else {
-                result[indexResult] = second[indexSecond];
-                indexSecond++;
+                result[indexResult++] = second[indexSecond++];
             }
-            indexResult++;
         }
         while (indexFirst < first.length) {
-            result[indexResult] = first[indexFirst];
-            indexFirst++;
-            indexResult++;
+            result[indexResult++] = first[indexFirst++];
         }
         while (indexSecond < second.length) {
-            result[indexResult] = second[indexSecond];
-            indexSecond++;
-            indexResult++;
+            result[indexResult++] = second[indexSecond++];
         }
         return result;
     }
