@@ -9,78 +9,93 @@ public class Logic3T {
 
     public boolean isWinnerX() {
         boolean resultHorizontal = true;
+        boolean resultVertical = true;
+        boolean resultFirstDiagonal = true;
+        boolean resultSecondDiagonal = true;
+
         for (int out = 0; out < table.length; out++) {
-            for (int in = 1; in < table.length; in++) {
-                if (table[out][0].hasMarkX() != table[out][in].hasMarkX()) {
+            for (int in = 0; in < table.length; in++) {
+                if (!table[out][in].hasMarkX()) {
                     resultHorizontal = false;
                     break;
                 }
             }
         }
 
-        boolean resultVertical = true;
-        for (int out = 0; out < table.length; out++) {
-            for (int in = 1; in < table.length; in++) {
-                if (table[0][out].hasMarkX() != table[in][out].hasMarkX()) {
-                    resultVertical = false;
-                    break;
+        if (!resultHorizontal) {
+            for (int out = 0; out < table.length; out++) {
+                for (int in = 0; in < table.length; in++) {
+                    if (!table[in][out].hasMarkX()) {
+                        resultVertical = false;
+                        break;
+                    }
                 }
             }
         }
 
-        boolean resultDiagonalOne = true;
-        for (int line = 1; line < table.length; line++) {
-            if (table[0][0].hasMarkX() != table[line][line].hasMarkX()) {
-                resultDiagonalOne = false;
+        if (!resultVertical) {
+            for (int line = 0; line < table.length; line++) {
+                if (!table[line][line].hasMarkX()) {
+                    resultFirstDiagonal = false;
+                }
             }
         }
 
-        boolean resultDiagonalSecond = true;
-        for (int line = 1, column = table.length - 2; line < table.length; line++, column--) {
-            if (table[0][table.length - 1].hasMarkX() != table[line][column].hasMarkX()) {
-                resultDiagonalSecond = false;
+
+        if (!resultFirstDiagonal) {
+            for (int line = 0, column = table.length - 1; line < table.length; line++, column--) {
+                if (!table[line][column].hasMarkX()) {
+                    resultSecondDiagonal = false;
+                }
             }
         }
 
-        return resultHorizontal || resultVertical || resultDiagonalOne || resultDiagonalSecond;
+        return resultHorizontal || resultVertical || resultFirstDiagonal || resultSecondDiagonal;
     }
 
     public boolean isWinnerO() {
         boolean resultHorizontal = true;
+        boolean resultVertical = true;
+        boolean resultFirstDiagonal = true;
+        boolean resultSecondDiagonal = true;
+
         for (int out = 0; out < table.length; out++) {
-            for (int in = 1; in < table.length; in++) {
-                if (table[out][0].hasMarkO() != table[out][in].hasMarkO()) {
+            for (int in = 0; in < table.length; in++) {
+                if (!table[out][in].hasMarkO()) {
                     resultHorizontal = false;
                     break;
                 }
             }
         }
 
-        boolean resultVertical = true;
-        for (int out = 0; out < table.length; out++) {
-            for (int in = 1; in < table.length; in++) {
-                if (table[0][out].hasMarkO() != table[in][out].hasMarkO()) {
-                    resultVertical = false;
-                    break;
+        if (!resultHorizontal) {
+            for (int out = 0; out < table.length; out++) {
+                for (int in = 1; in < table.length; in++) {
+                    if (table[in][out].hasMarkO() != table[in][out].hasMarkO()) {
+                        resultVertical = false;
+                        break;
+                    }
                 }
             }
         }
 
-        boolean resultDiagonalOne = true;
-        for (int line = 1; line < table.length; line++) {
-            if (table[0][0].hasMarkO() != table[line][line].hasMarkO()) {
-                resultDiagonalOne = false;
+        if (!resultVertical) {
+            for (int line = 0; line < table.length; line++) {
+                if (!table[line][line].hasMarkO()) {
+                    resultFirstDiagonal = false;
+                }
             }
         }
 
-        boolean resultDiagonalSecond = true;
-        for (int line = 1, column = table.length - 2; line < table.length; line++, column--) {
-            if (table[0][table.length - 1].hasMarkO() != table[line][column].hasMarkO()) {
-                resultDiagonalSecond = false;
+        if (!resultFirstDiagonal) {
+            for (int line = 0, column = table.length - 1; line < table.length; line++, column--) {
+                if (!table[line][column].hasMarkO()) {
+                    resultSecondDiagonal = false;
+                }
             }
         }
 
-        return resultHorizontal || resultVertical || resultDiagonalOne || resultDiagonalSecond;
+        return resultHorizontal || resultVertical || resultFirstDiagonal || resultSecondDiagonal;
     }
 
     public boolean hasGap() {
@@ -92,7 +107,7 @@ public class Logic3T {
                     break;
                 }
             }
-            if (result == true) {
+            if (!result) {
                 break;
             }
         }
