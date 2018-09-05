@@ -3,19 +3,19 @@ package ru.job4j.array;
 public class Sorting {
     public int[] plus(int[] first, int[] second) {
         int[] result = new int[first.length + second.length];
-        int indexFirst = 0, indexSecond = 0, indexResult = 0;
-        while (indexFirst < first.length && indexSecond < second.length) {
-            if (first[indexFirst] < second[indexSecond]) {
-                result[indexResult++] = first[indexFirst++];
+        int one = 0, two = 0, score = 0;
+        while (one < first.length && two < second.length) {
+            if (first[one] < second[two]) {
+                result[score++] = first[one++];
             } else {
-                result[indexResult++] = second[indexSecond++];
+                result[score++] = second[two++];
             }
         }
-        while (indexFirst < first.length) {
-            result[indexResult++] = first[indexFirst++];
+        while (one < first.length) {
+            result[score++] = first[one++];
         }
-        while (indexSecond < second.length) {
-            result[indexResult++] = second[indexSecond++];
+        while (two < second.length) {
+            result[score++] = second[two++];
         }
         return result;
     }

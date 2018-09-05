@@ -9,7 +9,7 @@ public class TurnTest {
     public void whenTurnArrayWithEvenAmountOfElementsThenTurnedArray() {
         Turn turner = new Turn();
         int[] input = new int[] {4, 1, 6, 2};
-        int[] result = turner.turn(input);
+        int[] result = turner.exchange(input);
         int[] expect = new int[] {2, 6, 1, 4};
         assertThat(result, is(expect));
     }
@@ -18,7 +18,7 @@ public class TurnTest {
     public void whenTurnArrayWithOddAmountOfElementsThenTurnedArray() {
        Turn turner = new Turn();
        int[] input = new int[] {5, 4, 3, 2, 1};
-       int[] result = turner.turn(input);
+       int[] result = turner.exchange(input);
        int[] expect = new int[] {1, 2, 3, 4, 5};
        assertThat(result, is(expect));
     }
