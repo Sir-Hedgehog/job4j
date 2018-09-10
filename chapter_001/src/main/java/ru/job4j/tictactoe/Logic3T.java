@@ -8,94 +8,68 @@ public class Logic3T {
     }
 
     public boolean isWinnerX() {
-        boolean resultHorizontal = true;
-        boolean resultVertical = true;
-        boolean resultFirstDiagonal = true;
-        boolean resultSecondDiagonal = true;
+        boolean result = false;
+        int horizon;
+        int vertical;
+        int diagonal1 = 0;
+        int diagonal2 = 0;
 
-        for (int out = 0; out < table.length; out++) {
+        for (int out = 0, column = table.length - 1; out < table.length; out++, column--) {
+            horizon = 0;
+            vertical = 0;
+            if (table[out][out].hasMarkX()) {
+                diagonal1++;
+            }
+            if (table[out][column].hasMarkX()) {
+                diagonal2++;
+            }
             for (int in = 0; in < table.length; in++) {
-                if (!table[out][in].hasMarkX()) {
-                    resultHorizontal = false;
-                    break;
+                if (table[out][in].hasMarkX()) {
+                    horizon++;
+                }
+                if (table[in][out].hasMarkX()) {
+                    vertical++;
                 }
             }
-        }
-
-        if (!resultHorizontal) {
-            for (int out = 0; out < table.length; out++) {
-                for (int in = 0; in < table.length; in++) {
-                    if (!table[in][out].hasMarkX()) {
-                        resultVertical = false;
-                        break;
-                    }
-                }
+            if (horizon == 3 || vertical == 3 || diagonal1 == 3 || diagonal2 == 3) {
+                result = true;
+                break;
             }
         }
-
-        if (!resultVertical) {
-            for (int line = 0; line < table.length; line++) {
-                if (!table[line][line].hasMarkX()) {
-                    resultFirstDiagonal = false;
-                }
-            }
-        }
-
-
-        if (!resultFirstDiagonal) {
-            for (int line = 0, column = table.length - 1; line < table.length; line++, column--) {
-                if (!table[line][column].hasMarkX()) {
-                    resultSecondDiagonal = false;
-                }
-            }
-        }
-
-        return resultHorizontal || resultVertical || resultFirstDiagonal || resultSecondDiagonal;
+        return result;
     }
 
+
     public boolean isWinnerO() {
-        boolean resultHorizontal = true;
-        boolean resultVertical = true;
-        boolean resultFirstDiagonal = true;
-        boolean resultSecondDiagonal = true;
+        boolean result = false;
+        int horizon;
+        int vertical;
+        int diagonal1 = 0;
+        int diagonal2 = 0;
 
-        for (int out = 0; out < table.length; out++) {
+        for (int out = 0, column = table.length - 1; out < table.length; out++, column--) {
+            horizon = 0;
+            vertical = 0;
+            if (table[out][out].hasMarkO()) {
+                diagonal1++;
+            }
+            if (table[out][column].hasMarkO()) {
+                diagonal2++;
+            }
             for (int in = 0; in < table.length; in++) {
-                if (!table[out][in].hasMarkO()) {
-                    resultHorizontal = false;
-                    break;
+                if (table[out][in].hasMarkO()) {
+                    horizon++;
+                }
+                if (table[in][out].hasMarkO()) {
+                    vertical++;
                 }
             }
-        }
-
-        if (!resultHorizontal) {
-            for (int out = 0; out < table.length; out++) {
-                for (int in = 1; in < table.length; in++) {
-                    if (table[in][out].hasMarkO() != table[in][out].hasMarkO()) {
-                        resultVertical = false;
-                        break;
-                    }
-                }
+            if (horizon == 3 || vertical == 3 || diagonal1 == 3 || diagonal2 == 3) {
+                result = true;
+                break;
             }
         }
-
-        if (!resultVertical) {
-            for (int line = 0; line < table.length; line++) {
-                if (!table[line][line].hasMarkO()) {
-                    resultFirstDiagonal = false;
-                }
-            }
-        }
-
-        if (!resultFirstDiagonal) {
-            for (int line = 0, column = table.length - 1; line < table.length; line++, column--) {
-                if (!table[line][column].hasMarkO()) {
-                    resultSecondDiagonal = false;
-                }
-            }
-        }
-
-        return resultHorizontal || resultVertical || resultFirstDiagonal || resultSecondDiagonal;
+        return result;
     }
 
     public boolean hasGap() {

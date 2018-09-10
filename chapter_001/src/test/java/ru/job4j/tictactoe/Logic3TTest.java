@@ -47,7 +47,7 @@ public class Logic3TTest {
                 {new Figure3T(true), new Figure3T(false), new Figure3T(false)},
         };
         Logic3T login = new Logic3T(table);
-        assertThat(login.isWinnerX(), is(false));
+        assertThat(login.isWinnerX(), is(true));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class Logic3TTest {
         Figure3T[][] table = {
                 {new Figure3T(true), new Figure3T(true), new Figure3T(true)},
                 {new Figure3T(), new Figure3T(false), new Figure3T()},
-                {new Figure3T(false), new Figure3T(), new Figure3T(true)},
+                {new Figure3T(false), new Figure3T(), new Figure3T()},
         };
         Logic3T login = new Logic3T(table);
         assertThat(login.hasGap(), is(true));
@@ -111,17 +111,6 @@ public class Logic3TTest {
                 {new Figure3T(true), new Figure3T(), new Figure3T(false)},
                 {new Figure3T(), new Figure3T(false), new Figure3T()},
                 {new Figure3T(false), new Figure3T(), new Figure3T(true)},
-        };
-        Logic3T login = new Logic3T(table);
-        assertThat(login.hasGap(), is(true));
-    }
-
-    @Test
-    public void whenHasGasOfGameOver() {
-        Figure3T[][] table = {
-                {new Figure3T(true), new Figure3T(false), new Figure3T(false)},
-                {new Figure3T(false), new Figure3T(true), new Figure3T(true)},
-                {new Figure3T(false), new Figure3T(true), new Figure3T(false)},
         };
         Logic3T login = new Logic3T(table);
         assertThat(login.hasGap(), is(true));
