@@ -31,7 +31,7 @@ public class Logic3T {
                     vertical++;
                 }
             }
-            if (horizon == 3 || vertical == 3 || diagonal1 == 3 || diagonal2 == 3) {
+            if (horizon == table.length || vertical == table.length || diagonal1 == table.length || diagonal2 == table.length) {
                 result = true;
                 break;
             }
@@ -64,7 +64,7 @@ public class Logic3T {
                     vertical++;
                 }
             }
-            if (horizon == 3 || vertical == 3 || diagonal1 == 3 || diagonal2 == 3) {
+            if (horizon == table.length || vertical == table.length || diagonal1 == table.length || diagonal2 == table.length) {
                 result = true;
                 break;
             }
@@ -81,7 +81,7 @@ public class Logic3T {
                     break;
                 }
             }
-            if (!result) {
+            if (result) {
                 break;
             }
         }
