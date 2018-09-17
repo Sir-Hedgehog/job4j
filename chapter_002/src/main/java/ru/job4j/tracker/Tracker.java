@@ -39,6 +39,7 @@ public class Tracker {
      * @param id идентификатор
      */
     public void replace(String id, Item item) {
+        item.setId(id);
         for (int index = 0; index < this.items.length; index++) {
             if (id != null && this.items[index].getId().equals(id)) {
                 this.items[index] = item;
@@ -55,6 +56,7 @@ public class Tracker {
         for (int index = 0; index < this.items.length; index++) {
             if (id != null && this.items[index].getId().equals(id)) {
                 System.arraycopy(this.items, index + 1, this.items, index, this.items.length - index - 1);
+                position--;
                 break;
             }
         }
@@ -65,11 +67,7 @@ public class Tracker {
      * @return список заявок
      */
     public Item[] findAll() {
-        Item[] result = new Item[position];
-        for (int index = 0; index != position; index++) {
-            result[index] = this.items[index];
-        }
-        return result;
+        return Arrays.copyOf(this.items, this.position);
     }
 
     /**
@@ -79,12 +77,13 @@ public class Tracker {
      */
     public Item[] findByName(String key) {
         Item[] result = new Item[position];
+        int out = 0;
         for (int index = 0; index != this.items.length; index++) {
             if (key != null && this.items[index].getName().equals(key)) {
-                result[position++] = this.items[index];
+                result[out++] = this.items[index];
             }
         }
-        return Arrays.copyOf(result, position);
+        return Arrays.copyOf(result, out);
     }
 
     /**
