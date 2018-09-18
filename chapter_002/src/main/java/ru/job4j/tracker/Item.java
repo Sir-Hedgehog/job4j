@@ -1,5 +1,11 @@
 package ru.job4j.tracker;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 17.09.2018
+ */
+
 public class Item {
     private String id;
     private String name;

@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 16.09.2018
+ * @since 18.09.2018
  */
 
 public class Tracker {
@@ -78,7 +78,7 @@ public class Tracker {
     public Item[] findByName(String key) {
         Item[] result = new Item[position];
         int out = 0;
-        for (int index = 0; index != this.items.length; index++) {
+        for (int index = 0; index != this.position; index++) {
             if (key != null && this.items[index].getName().equals(key)) {
                 result[out++] = this.items[index];
             }

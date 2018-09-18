@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 16.09.2018
+ * @since 18.09.2018
  */
 
 public class TrackerTest {
@@ -59,11 +59,12 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item[] items = {new Item("test1", "testDescription", 123L),
         new Item("test2", "testDescription2", 1234L),
-        new Item("test3", "testDescription3", 12345L)};
+        new Item("test1", "testDescription3", 12345L)};
         tracker.add(items[0]);
         tracker.add(items[1]);
         tracker.add(items[2]);
-        assertThat(tracker.findByName("test3"), is(items[2]));
+        Item[] expect = {items[0], items[2]};
+        assertThat(tracker.findByName("test1"), is(expect));
     }
 
     @Test
