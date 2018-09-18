@@ -14,7 +14,7 @@ public class TrackerTest {
     @Test
     public void whenAddNewItemThenTrackerHasSameItem() {
         Tracker tracker = new Tracker();
-        Item item = new Item("test1", "testDescription", 123L);
+        Item item = new Item("test1", "testDescription");
         tracker.add(item);
         assertThat(tracker.findAll()[0], is(item));
     }
@@ -22,9 +22,9 @@ public class TrackerTest {
     @Test
     public void whenReplaceNameThenReturnNewName() {
         Tracker tracker = new Tracker();
-        Item previous = new Item("test1", "testDescription", 123L);
+        Item previous = new Item("test1", "testDescription");
         tracker.add(previous);
-        Item next = new Item("test2", "testDescription2", 1234L);
+        Item next = new Item("test2", "testDescription2");
         next.setId(previous.getId());
         tracker.replace(previous.getId(), next);
         assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
@@ -33,9 +33,9 @@ public class TrackerTest {
     @Test
     public void whenDeleteItemOfBaseThenReturnBase() {
         Tracker tracker = new Tracker();
-        Item first = new Item("test1", "testDescription", 123L);
+        Item first = new Item("test1", "testDescription");
         tracker.add(first);
-        Item second = new Item("test2", "testDescription2", 1234L);
+        Item second = new Item("test2", "testDescription2");
         tracker.add(second);
         tracker.delete(first.getId());
         assertThat(tracker.findAll()[0], is(second));
@@ -44,9 +44,9 @@ public class TrackerTest {
     @Test
     public void whenTrackerHasItemsThenShowItems() {
         Tracker tracker = new Tracker();
-        Item[] items = {new Item("test1", "testDescription", 123L),
-        new Item("test2", "testDescription1", 1234L),
-        new Item("test3", "testDescription2", 12345L)};
+        Item[] items = {new Item("test1", "testDescription"),
+        new Item("test2", "testDescription1"),
+        new Item("test3", "testDescription2")};
         tracker.add(items[0]);
         tracker.add(items[1]);
         tracker.add(items[2]);
@@ -57,9 +57,9 @@ public class TrackerTest {
     @Test
     public void whenInputNameThenTrackerGivesSameItem() {
         Tracker tracker = new Tracker();
-        Item[] items = {new Item("test1", "testDescription", 123L),
-        new Item("test2", "testDescription2", 1234L),
-        new Item("test1", "testDescription3", 12345L)};
+        Item[] items = {new Item("test1", "testDescription"),
+        new Item("test2", "testDescription2"),
+        new Item("test1", "testDescription3")};
         tracker.add(items[0]);
         tracker.add(items[1]);
         tracker.add(items[2]);
@@ -70,7 +70,7 @@ public class TrackerTest {
     @Test
     public void whenInputIdThenExistingItem() {
         Tracker tracker = new Tracker();
-        Item item = new Item("test1", "testDescription", 123L);
+        Item item = new Item("test1", "testDescription");
         tracker.add(item);
         tracker.findById(item.getId());
         assertThat(tracker.findAll()[0], is(item));
