@@ -1,9 +1,11 @@
 package ru.job4j.tracker;
 
+import java.sql.SQLOutput;
+
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 18.09.2018
+ * @since 19.09.2018
  */
 
 public class StartUI {
@@ -62,7 +64,7 @@ public class StartUI {
         String desc = this.input.ask("Введите описание заявки: ");
         Item item = new Item(name, desc);
         this.tracker.add(item);
-        System.out.println("------------ Новая заявка с getId : " + item.getId() + "-----------");
+        System.out.println("------------ Новая заявка принята. Номер идентификатора: " + item.getId() + "-----------");
     }
 
     /**
@@ -70,7 +72,16 @@ public class StartUI {
      */
     private void showItems() {
         System.out.println("------------ Вывод всех заявок --------------");
-        this.tracker.findAll();
+        Item[] item = this.tracker.findAll();
+        if (item != null) {
+            for (int index = 0; index < item.length; index++) {
+                System.out.println("Заявка №" + (index + 1) + ": ");
+                System.out.println(item[index].toString());
+                System.out.println();
+            }
+        } else {
+            System.out.println("------------ Заявок нет! --------------");
+        }
     }
 
     /**
@@ -82,8 +93,13 @@ public class StartUI {
         String name = this.input.ask("Введите новое имя заявки: ");
         String desc = this.input.ask("Введите новое описание заявки: ");
         Item item = new Item(name, desc);
-        this.tracker.replace(id, item);
-        System.out.println("------------ Существующая заявка с getId : " + item.getId() +  " обновлена -----------");
+        boolean result = this.tracker.replace(id, item);
+        System.out.println("------------ Результат обновления --------------");
+        if (!result) {
+            System.out.println("------------ Существующая заявка с номером: " + item.getId() +  " обновлена! -----------");
+        } else {
+            System.out.println("------------ Заявка не найдена! --------------");
+        }
     }
 
     /**
@@ -92,8 +108,12 @@ public class StartUI {
     private void deleteItem() {
         System.out.println("------------ Удаление заявки --------------");
         String id = this.input.ask("Введите идентификатор заявки, которую необходимо удалить: ");
-        this.tracker.delete(id);
-        System.out.println("------------ Заявка успешно удалена --------------");
+        boolean result = this.tracker.delete(id);
+        if (!result) {
+            System.out.println("------------ Заявка успешно удалена --------------");
+        } else {
+            System.out.println("------------ Заявка не найдена --------------");
+        }
     }
 
     /**
@@ -102,7 +122,13 @@ public class StartUI {
     private void showById() {
         System.out.println("------------ Поиск по идентификатору --------------");
         String id = this.input.ask("Введите идентификатор заявки, которую необходимо найти: ");
-        this.tracker.findById(id);
+        Item item = this.tracker.findById(id);
+        if (item != null) {
+            System.out.println("------------ Результат поиска --------------");
+            System.out.println(item);
+        } else {
+            System.out.println("------------ Заявка не найдена! --------------");
+        }
     }
 
     /**
@@ -111,7 +137,16 @@ public class StartUI {
     private void showByName() {
         System.out.println("------------ Поиск по имени --------------");
         String name = this.input.ask("Введите имя заявки, которую необходимо найти: ");
-        this.tracker.findByName(name);
+        Item[] item = this.tracker.findByName(name);
+        System.out.println("------------ Результат поиска --------------");
+        if (item != null) {
+            for (int index = 0; index < item.length; index++) {
+                System.out.println("Заявка с наименованием " + name + " №" + (index + 1) + ": ");
+                System.out.println(item[index].toString());
+            }
+        } else {
+            System.out.println("------------ Заявка не найдена! --------------");
+        }
     }
 
     private void showMenu() {

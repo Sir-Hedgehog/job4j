@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 18.09.2018
+ * @since 19.09.2018
  */
 
 public class Tracker {
@@ -38,28 +38,36 @@ public class Tracker {
      * @param item существующая заявка
      * @param id идентификатор
      */
-    public void replace(String id, Item item) {
+    public boolean replace(String id, Item item) {
+        boolean result = false;
         item.setId(id);
-        for (int index = 0; index < this.items.length; index++) {
+        Item[] myItem = new Item[position];
+        for (int index = 0; index != position; index++) {
             if (id != null && this.items[index].getId().equals(id)) {
                 this.items[index] = item;
+                result = true;
                 break;
             }
         }
+        return result;
     }
 
     /**
      * Метод удаляет заявку
      * @param id идентификатор заявки
      */
-    public void delete(String id) {
-        for (int index = 0; index < this.items.length; index++) {
+    public boolean delete(String id) {
+        boolean result = false;
+        Item[] myItem = new Item[position];
+        for (int index = 0; index != position; index++) {
             if (id != null && this.items[index].getId().equals(id)) {
                 System.arraycopy(this.items, index + 1, this.items, index, this.items.length - index - 1);
+                result = true;
                 position--;
                 break;
             }
         }
+        return result;
     }
 
     /**
