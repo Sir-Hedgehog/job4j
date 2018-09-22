@@ -1,11 +1,9 @@
 package ru.job4j.tracker;
 
-import java.sql.SQLOutput;
-
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 19.09.2018
+ * @since 21.09.2018
  */
 
 public class StartUI {
