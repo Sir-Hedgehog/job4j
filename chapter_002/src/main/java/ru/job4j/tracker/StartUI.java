@@ -63,20 +63,18 @@ public class StartUI {
         String desc = this.input.ask("Введите описание заявки: ");
         Item item = new Item(name, desc);
         this.tracker.add(item);
-        System.out.println("------------ Новая заявка принята. Номер идентификатора: " + item.getId() + "-----------");
+        System.out.println("------------ Новая заявка принята.-----------");
     }
-
+    /* Номер идентификатора: " + item.getId() + "*/
     /**
      * Метод показывает все существующие заявки.
      */
     private void showItems() {
         System.out.println("------------ Вывод всех заявок --------------");
-        Item[] item = this.tracker.findAll();
-        if (item.length > 0) {
-            for (int index = 0; index < item.length; index++) {
-                System.out.println("Заявка №" + (index + 1) + ": ");
-                System.out.println(item[index].toString());
-                System.out.println();
+        Item[] items = this.tracker.findAll();
+        if (items.length > 0) {
+            for (Item item : items) {
+                System.out.println(item);
             }
         } else {
             System.out.println("------------ Заявок нет! --------------");
