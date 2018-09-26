@@ -82,7 +82,8 @@ public class StartUITest {
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-    private String showMenu() {StringBuilder menu = new StringBuilder()
+    private String showMenu() {
+        StringBuilder menu = new StringBuilder()
                 .append("Меню").append(System.lineSeparator())
                 .append("0. Добавить новую заявку").append(System.lineSeparator())
                 .append("1. Показать все заявки").append(System.lineSeparator())
@@ -108,12 +109,13 @@ public class StartUITest {
     public void whenUserAddItemThenAdminHadSeenThat() {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
+        String id = item.getId();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
         new StartUI(input, tracker).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Добавление новой заявки --------------").append(System.lineSeparator())
-                .append("------------ Новая заявка принята. Номер идентификатора: " + item.getId() + "-----------").append(System.lineSeparator())
+                .append("------------ Новая заявка принята. Номер идентификатора: " + id + "-----------").append(System.lineSeparator())
                 .append(showMenu());
         assertThat(new String(out.toString()), is(result.toString()));
     }
@@ -146,12 +148,6 @@ public class StartUITest {
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Обновление существующей заявки --------------").append(System.lineSeparator())
-                .append("Введите идентификатор заявки: ")
-                .append(item.getId()).append(System.lineSeparator())
-                .append("Введите новое имя заявки: ")
-                .append("test replace").append(System.lineSeparator())
-                .append("Введите новое описание заявки: ")
-                .append("заменили заявку").append(System.lineSeparator())
                 .append("------------ Результат обновления --------------").append(System.lineSeparator())
                 .append("------------ Существующая заявка с номером: " + item.getId() + " обновлена! -----------").append(System.lineSeparator())
                 .append(showMenu());
@@ -170,7 +166,6 @@ public class StartUITest {
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Удаление заявки --------------").append(System.lineSeparator())
-                .append("Введите идентификатор заявки, которую необходимо удалить: " + first.getId()).append(System.lineSeparator())
                 .append("------------ Заявка успешно удалена --------------").append(System.lineSeparator())
                 .append(showMenu());
         assertThat(new String(out.toString()), is(result.toString()));
@@ -186,7 +181,6 @@ public class StartUITest {
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Поиск по идентификатору --------------").append(System.lineSeparator())
-                .append("Введите идентификатор заявки, которую необходимо найти: " + item.getId()).append(System.lineSeparator())
                 .append("------------ Результат поиска --------------").append(System.lineSeparator())
                 .append(item).append(System.lineSeparator())
                 .append(showMenu());
@@ -203,8 +197,8 @@ public class StartUITest {
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Поиск по имени --------------").append(System.lineSeparator())
-                .append("Введите имя заявки, которую необходимо найти: ").append("test name").append(System.lineSeparator())
                 .append("------------ Результат поиска --------------").append(System.lineSeparator())
+                .append("Заявка с наименованием test name №1: ").append(System.lineSeparator())
                 .append(item).append(System.lineSeparator())
                 .append(showMenu());
         assertThat(new String(out.toString()), is(result.toString()));
