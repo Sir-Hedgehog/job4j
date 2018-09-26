@@ -19,7 +19,8 @@ public class StartUI {
 
     /**
      * Конструтор, инициализирующий поля.
-     * @param input ввод данных.
+     *
+     * @param input   ввод данных.
      * @param tracker хранилище заявок.
      */
     public StartUI(Input input, Tracker tracker) {
@@ -94,7 +95,7 @@ public class StartUI {
         boolean result = this.tracker.replace(id, item);
         System.out.println("------------ Результат обновления --------------");
         if (result) {
-            System.out.println("------------ Существующая заявка с номером: " + item.getId() +  " обновлена! -----------");
+            System.out.println("------------ Существующая заявка с номером: " + item.getId() + " обновлена! -----------");
         } else {
             System.out.println("------------ Заявка не найдена! --------------");
         }
