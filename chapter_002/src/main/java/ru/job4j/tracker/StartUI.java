@@ -20,7 +20,7 @@ public class StartUI {
     /**
      * Конструтор, инициализирующий поля.
      *
-     * @param input   ввод данных.
+     * @param input ввод данных.
      * @param tracker хранилище заявок.
      */
     public StartUI(Input input, Tracker tracker) {
@@ -63,9 +63,9 @@ public class StartUI {
         String desc = this.input.ask("Введите описание заявки: ");
         Item item = new Item(name, desc);
         this.tracker.add(item);
-        System.out.println("------------ Новая заявка принята.-----------");
+        System.out.println("------------ Новая заявка принята. Номер идентификатора: " + item.getId() + "-----------");
     }
-    /* Номер идентификатора: " + item.getId() + "*/
+
     /**
      * Метод показывает все существующие заявки.
      */
