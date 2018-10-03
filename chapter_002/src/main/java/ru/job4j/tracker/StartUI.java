@@ -6,10 +6,12 @@ import java.util.List;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 30.09.2018
+ * @since 01.10.2018
  */
 
 public class StartUI {
+
+    private boolean working = true;
     private final Input input;
     Tracker tracker = new Tracker();
 
@@ -19,9 +21,8 @@ public class StartUI {
      * @param input ввод данных.
      */
 
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input) {
         this.input = input;
-        this.tracker = tracker;
     }
 
     /**
@@ -31,7 +32,7 @@ public class StartUI {
         Tracker tracker = new Tracker();
         MenuTracker menu = new MenuTracker(this.input, tracker);
         List<Integer> range = new ArrayList<>();
-        menu.fillActions();
+        menu.fillActions(this);
         for (int i = 0; i < menu.getActionsLength(); i++) {
             range.add(i);
         }
@@ -39,7 +40,11 @@ public class StartUI {
             menu.show();
             int key = Integer.valueOf(input.ask("Выберите пункт: "));
             menu.select(key);
-        } while (!"6".equals(this.input.ask("Выход?(6): ")));
+        } while (this.working);
+    }
+
+    public void stop() {
+        this.working = false;
     }
 
     /**
@@ -47,6 +52,6 @@ public class StartUI {
      * @param args
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ConsoleInput()).init();
     }
 }

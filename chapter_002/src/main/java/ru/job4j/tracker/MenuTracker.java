@@ -3,6 +3,12 @@ package ru.job4j.tracker;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Sir-Hedgehog
+ * @version $Id$
+ * @since 01.10.2018
+ */
+
 public class MenuTracker {
     private static final int ADD = 0;
     private static final int SHOW = 1;
@@ -10,6 +16,8 @@ public class MenuTracker {
     private static final int DELETE = 3;
     private static final int ID = 4;
     private static final int NAME = 5;
+    private static final int EXIT = 6;
+
     private final Input input;
     private final Tracker tracker;
 
@@ -36,13 +44,14 @@ public class MenuTracker {
     /**
      * Метод заполняет массив.
      */
-    public void fillActions() {
-        this.actions.add(new AddItem(0, "Добавление новой заявки"));
-        this.actions.add(new ShowItems(1, "Вывод всех заявок"));
-        this.actions.add(new ReplaceItem(2, "Обновление существующей заявки"));
-        this.actions.add(new DeleteItem(3, "Удаление заявки"));
-        this.actions.add(new FindItemsById(4, "Поиск по идентификатору"));
-        this.actions.add(new FindItemsByName(5, "Поиск по имени"));
+    public void fillActions(StartUI ui) {
+        this.actions.add(new AddItem(0, "Добавить новую заявку"));
+        this.actions.add(new ShowItems(1, "Показать все заявки"));
+        this.actions.add(new ReplaceItem(2, "Редактировать заявку"));
+        this.actions.add(new DeleteItem(3, "Удалить заявку"));
+        this.actions.add(new FindItemsById(4, "Найти заявку по идентификатору"));
+        this.actions.add(new FindItemsByName(5, "Найти заявки по имени"));
+        this.actions.add(new ExitProgram(ui, 6, "Выйти"));
     }
 
     /**
@@ -57,6 +66,7 @@ public class MenuTracker {
      * Метод выводит на экран меню.
      */
     public void show() {
+        System.out.println("Меню");
         for (UserAction action : this.actions) {
             if (action != null) {
                 System.out.println(action.info());
@@ -90,7 +100,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Добавление новой заявки");
+            return String.format("%s. %s", this.key(), "Добавить новую заявку");
         }
     }
 
@@ -123,7 +133,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Вывод всех заявок");
+            return String.format("%s. %s", this.key(), "Показать все заявки");
         }
     }
 
@@ -159,7 +169,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Обновление существующей заявки");
+            return String.format("%s. %s", this.key(), "Редактировать заявку");
         }
     }
 
@@ -191,7 +201,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Удаление заявки");
+            return String.format("%s. %s", this.key(), "Удалить заявку");
         }
     }
 
@@ -224,7 +234,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Поиск по идентификатору");
+            return String.format("%s. %s", this.key(), "Найти заявку по идентификатору");
         }
     }
 
@@ -260,7 +270,34 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Поиск по имени");
+            return String.format("%s. %s", this.key(), "Найти заявки по имени");
+        }
+    }
+
+    public class ExitProgram implements UserAction {
+        private final StartUI ui;
+        private int number;
+        private String desc;
+
+        public ExitProgram(StartUI ui, int number, String desc) {
+            this.ui = ui;
+            this.number = number;
+            this.desc = desc;
+        }
+
+        @Override
+        public int key() {
+            return EXIT;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            this.ui.stop();
+        }
+
+        @Override
+        public String info() {
+            return String.format("%s. %s", this.key(), "Выйти");
         }
     }
 }

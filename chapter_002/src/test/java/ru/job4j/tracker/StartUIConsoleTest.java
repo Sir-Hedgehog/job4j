@@ -51,7 +51,8 @@ public class StartUIConsoleTest {
         tracker.add(items[1]);
         tracker.add(items[2]);
         Input input = new StubInput(new String[]{"1", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input).init();
+
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Вывод всех заявок --------------").append(System.lineSeparator())
@@ -67,7 +68,8 @@ public class StartUIConsoleTest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"});
-        new StartUI(input, tracker).init();
+        MenuTracker menu = new MenuTracker(input, tracker);
+        new StartUI(input).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Обновление существующей заявки --------------").append(System.lineSeparator())
@@ -85,7 +87,8 @@ public class StartUIConsoleTest {
         Item second = new Item("test name", "desc");
         tracker.add(second);
         Input input = new StubInput(new String[]{"3", first.getId(), "6"});
-        new StartUI(input, tracker).init();
+        MenuTracker menu = new MenuTracker(input, tracker);
+        new StartUI(input).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Удаление заявки --------------").append(System.lineSeparator())
@@ -100,7 +103,8 @@ public class StartUIConsoleTest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"4", item.getId(), "6"});
-        new StartUI(input, tracker).init();
+        MenuTracker menu = new MenuTracker(input, tracker);
+        new StartUI(input).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Поиск по идентификатору --------------").append(System.lineSeparator())
@@ -116,7 +120,8 @@ public class StartUIConsoleTest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"5", "test name", "6"});
-        new StartUI(input, tracker).init();
+        MenuTracker menu = new MenuTracker(input, tracker);
+        new StartUI(input).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
                 .append("------------ Поиск по имени --------------").append(System.lineSeparator())
