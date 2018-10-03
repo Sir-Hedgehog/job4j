@@ -20,7 +20,6 @@ public class StartUI {
      * Конструтор, инициализирующий поле.
      * @param input ввод данных.
      */
-
     public StartUI(Input input) {
         this.input = input;
     }

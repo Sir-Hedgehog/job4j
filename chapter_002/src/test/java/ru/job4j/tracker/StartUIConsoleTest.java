@@ -68,7 +68,6 @@ public class StartUIConsoleTest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"});
-        MenuTracker menu = new MenuTracker(input, tracker);
         new StartUI(input).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
@@ -87,7 +86,6 @@ public class StartUIConsoleTest {
         Item second = new Item("test name", "desc");
         tracker.add(second);
         Input input = new StubInput(new String[]{"3", first.getId(), "6"});
-        MenuTracker menu = new MenuTracker(input, tracker);
         new StartUI(input).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
@@ -103,7 +101,6 @@ public class StartUIConsoleTest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"4", item.getId(), "6"});
-        MenuTracker menu = new MenuTracker(input, tracker);
         new StartUI(input).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
@@ -120,7 +117,6 @@ public class StartUIConsoleTest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"5", "test name", "6"});
-        MenuTracker menu = new MenuTracker(input, tracker);
         new StartUI(input).init();
         StringBuilder result = new StringBuilder()
                 .append(showMenu())
