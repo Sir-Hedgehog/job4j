@@ -16,7 +16,7 @@ public class StartUITest {
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0].getName(), is("test name"));
     }
 
@@ -30,7 +30,7 @@ public class StartUITest {
         tracker.add(items[1]);
         tracker.add(items[2]);
         Input input = new StubInput(new String[]{"1", "6"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll(), is(items));
     }
 
@@ -39,7 +39,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findById(item.getId()).getName(), is("test replace"));
     }
 
@@ -51,7 +51,7 @@ public class StartUITest {
         Item second = new Item("test name", "desc");
         tracker.add(second);
         Input input = new StubInput(new String[]{"3", first.getId(), "6"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0], is(second));
     }
 
@@ -61,7 +61,7 @@ public class StartUITest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"4", item.getId(), "6"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0], is(item));
     }
 
@@ -72,7 +72,7 @@ public class StartUITest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"5", "test name", "6"});
-        new StartUI(input).init();
+        new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0], is(item));
     }
 }

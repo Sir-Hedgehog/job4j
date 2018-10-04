@@ -13,23 +13,22 @@ public class StartUI {
 
     private boolean working = true;
     private final Input input;
-    Tracker tracker = new Tracker();
-
+    private final Tracker tracker;
 
     /**
      * Конструтор, инициализирующий поле.
      * @param input ввод данных.
      */
-    public StartUI(Input input) {
+    public StartUI(Input input, Tracker tracker) {
         this.input = input;
+        this.tracker = tracker;
     }
 
     /**
      * Основой цикл программы.
      */
     public void init() {
-        Tracker tracker = new Tracker();
-        MenuTracker menu = new MenuTracker(this.input, tracker);
+        MenuTracker menu = new MenuTracker(this.input, this.tracker);
         List<Integer> range = new ArrayList<>();
         menu.fillActions(this);
         for (int i = 0; i < menu.getActionsLength(); i++) {
@@ -48,9 +47,8 @@ public class StartUI {
 
     /**
      * Запуск программы.
-     * @param args
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput()).init();
+        new StartUI(new ConsoleInput(), new Tracker()).init();
     }
 }
