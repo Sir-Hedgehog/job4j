@@ -36,11 +36,10 @@ public class StartUI {
         }
         do {
             menu.show();
-            int key = Integer.valueOf(input.ask("Выберите пункт: "));
-            menu.select(key);
+            //int key = Integer.valueOf(input.ask("Выберите пункт: "));
+            menu.select(input.ask("Выберите пункт: ", new int[range.size()]));
         } while (this.working);
     }
-
     public void stop() {
         this.working = false;
     }
@@ -49,6 +48,6 @@ public class StartUI {
      * Запуск программы.
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(), new Tracker()).init();
     }
 }
