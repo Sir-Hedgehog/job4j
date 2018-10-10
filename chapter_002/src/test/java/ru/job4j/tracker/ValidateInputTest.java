@@ -31,9 +31,9 @@ public class ValidateInputTest {
     @Test
     public void whenInvalidInput() {
         ValidateInput input = new ValidateInput(
-                new StubInput(new String[] {"Добавить новую заявку", "0"})
+                new StubInput(new String[] {"invalid", "1"})
         );
-        input.ask("Выберите пункт: ", new int[] {0});
+        input.ask("Выбор: ", new int[] {1});
         assertThat(
                 this.mem.toString(),
                 is(
