@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 01.10.2018
+ * @since 10.10.2018
  */
 
 public class MenuTracker {
@@ -72,6 +72,15 @@ public class MenuTracker {
                 System.out.println(action.info());
             }
         }
+    }
+
+    public int[] fillKeys(List<Integer> range) {
+        Integer[] limit = range.toArray(new Integer[range.size()]);
+        int[] values = new int[limit.length];
+        for (int i = 0; i < limit.length; i++) {
+            values[i] = (int) limit[i];
+        }
+        return values;
     }
 
     public class AddItem implements UserAction {

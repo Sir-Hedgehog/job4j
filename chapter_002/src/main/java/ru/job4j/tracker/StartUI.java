@@ -1,13 +1,12 @@
 package ru.job4j.tracker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 01.10.2018
+ * @since 10.10.2018
  */
 
 public class StartUI {
@@ -37,12 +36,7 @@ public class StartUI {
         }
         do {
             menu.show();
-            Integer[] limit = range.toArray(new Integer[range.size()]);
-            int[] values = new int[limit.length];
-            for (int i = 0; i < limit.length; i++) {
-                values[i] = (int) limit[i];
-            }
-            menu.select(input.ask("Выберите пункт: ", values));
+            menu.select(input.ask("Выберите пункт: ", menu.fillKeys(range)));
         } while (this.working);
     }
     public void stop() {

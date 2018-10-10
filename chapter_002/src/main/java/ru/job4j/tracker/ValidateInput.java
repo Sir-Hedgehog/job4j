@@ -1,5 +1,11 @@
 package ru.job4j.tracker;
 
+/**
+ * @author Sir-Hedgehog
+ * @version $Id$
+ * @since 07.10.2018
+ */
+
 public class ValidateInput extends ConsoleInput {
     @Override
     public int ask(String question, int[] range) {

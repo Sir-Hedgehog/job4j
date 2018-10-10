@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 18.09.2018
+ * @since 07.10.2018
  */
 
 public class ConsoleInput implements Input {
