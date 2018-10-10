@@ -1,8 +1,5 @@
 package ru.job4j.tracker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Sir-Hedgehog
  * @version $Id$
@@ -29,20 +26,19 @@ public class StartUI {
      */
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, this.tracker);
-        List<Integer> range = new ArrayList<>();
         menu.fillActions(this);
-        for (int i = 0; i < menu.getActionsLength(); i++) {
-            range.add(i);
-        }
         do {
             menu.show();
-            menu.select(input.ask("Выберите пункт: ", menu.fillKeys(range)));
+            menu.select(input.ask("Выберите пункт: ", menu.fillKeys()));
         } while (this.working);
     }
+
+    /**
+     * Выход из программы.
+     */
     public void stop() {
         this.working = false;
     }
-
 
     /**
      * Запуск программы.

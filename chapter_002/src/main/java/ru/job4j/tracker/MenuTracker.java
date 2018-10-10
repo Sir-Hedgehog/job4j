@@ -34,14 +34,6 @@ public class MenuTracker {
     }
 
     /**
-     * Метод для получения массива меню.
-     * @return длину массива
-     */
-    public int getActionsLength() {
-        return this.actions.size();
-    }
-
-    /**
      * Метод заполняет массив.
      */
     public void fillActions(StartUI ui) {
@@ -74,13 +66,15 @@ public class MenuTracker {
         }
     }
 
-    public int[] fillKeys(List<Integer> range) {
-        Integer[] limit = range.toArray(new Integer[range.size()]);
-        int[] values = new int[limit.length];
-        for (int i = 0; i < limit.length; i++) {
-            values[i] = (int) limit[i];
+    /**
+     * Метод, передающий массив с заполненными ключами.
+     */
+    public int[] fillKeys() {
+        int[] limit = new int[this.actions.size()];
+        for (int i = 0; i < actions.size(); i++) {
+            limit[i] = actions.get(i).key();
         }
-        return values;
+        return limit;
     }
 
     public class AddItem implements UserAction {
@@ -94,7 +88,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return ADD;
+            return number;
         }
 
         @Override
@@ -109,7 +103,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Добавить новую заявку");
+            return String.format("%s. %s", this.key(), desc);
         }
     }
 
@@ -124,7 +118,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return SHOW;
+            return number;
         }
 
         @Override
@@ -142,7 +136,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Показать все заявки");
+            return String.format("%s. %s", this.key(), desc);
         }
     }
 
@@ -157,7 +151,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return REPLACE;
+            return number;
         }
 
         @Override
@@ -178,7 +172,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Редактировать заявку");
+            return String.format("%s. %s", this.key(), desc);
         }
     }
 
@@ -193,7 +187,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return DELETE;
+            return number;
         }
 
         @Override
@@ -210,7 +204,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Удалить заявку");
+            return String.format("%s. %s", this.key(), desc);
         }
     }
 
@@ -225,7 +219,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return ID;
+            return number;
         }
 
         @Override
@@ -243,7 +237,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Найти заявку по идентификатору");
+            return String.format("%s. %s", this.key(), desc);
         }
     }
 
@@ -258,7 +252,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return NAME;
+            return number;
         }
 
         @Override
@@ -279,7 +273,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Найти заявки по имени");
+            return String.format("%s. %s", this.key(), desc);
         }
     }
 
@@ -296,7 +290,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return EXIT;
+            return number;
         }
 
         @Override
@@ -306,7 +300,7 @@ public class MenuTracker {
 
         @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "Выйти");
+            return String.format("%s. %s", this.key(), desc);
         }
     }
 }
