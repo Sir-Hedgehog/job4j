@@ -3,7 +3,7 @@ package ru.job4j.tracker;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 10.10.2018
+ * @since 11.10.2018
  */
 
 public class StartUI {
@@ -44,6 +44,6 @@ public class StartUI {
      * Запуск программы.
      */
     public static void main(String[] args) {
-        new StartUI(new ConsoleInput(), new Tracker()).init();
+        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
     }
 }

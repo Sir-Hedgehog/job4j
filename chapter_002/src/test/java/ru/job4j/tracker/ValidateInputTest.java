@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 10.10.2018
+ * @since 11.10.2018
  */
 
 public class ValidateInputTest {
@@ -29,7 +29,7 @@ public class ValidateInputTest {
     }
 
     @Test
-    public void whenInvalidInput() {
+    public void whenInvalidInputOfNumberFormatException() {
         ValidateInput input = new ValidateInput(
                 new StubInput(new String[] {"invalid", "1"})
         );
@@ -37,7 +37,7 @@ public class ValidateInputTest {
         assertThat(
                 this.mem.toString(),
                 is(
-                        String.format("Пожалуйста, введите корректные значения!")
+                        String.format("Введите корректное значение!%n")
                 )
         );
     }

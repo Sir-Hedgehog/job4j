@@ -3,7 +3,7 @@ package ru.job4j.tracker;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 22.09.2018
+ * @since 11.10.2018
  */
 
 public class StubInput implements Input {
@@ -21,6 +21,18 @@ public class StubInput implements Input {
 
     @Override
     public int ask(String question, int[] range) {
-        throw new UnsupportedOperationException("Неверная операция!");
+        int key = Integer.valueOf(this.ask(question));
+        boolean exist = false;
+        for (int value : range) {
+            if (value == key) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            return key;
+        } else {
+            throw new UnsupportedOperationException("Неверная операция!");
+        }
     }
 }

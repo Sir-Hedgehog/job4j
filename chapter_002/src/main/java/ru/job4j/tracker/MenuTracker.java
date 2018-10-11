@@ -10,13 +10,6 @@ import java.util.List;
  */
 
 public class MenuTracker {
-    private static final int ADD = 0;
-    private static final int SHOW = 1;
-    private static final int REPLACE = 2;
-    private static final int DELETE = 3;
-    private static final int ID = 4;
-    private static final int NAME = 5;
-    private static final int EXIT = 6;
 
     private final Input input;
     private final Tracker tracker;
