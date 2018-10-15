@@ -36,7 +36,7 @@ public class MenuTracker {
         this.actions.add(new DeleteItem(3, "Удалить заявку"));
         this.actions.add(new FindItemsById(4, "Найти заявку по идентификатору"));
         this.actions.add(new FindItemsByName(5, "Найти заявки по имени"));
-        this.actions.add(new ExitProgram(ui, 6, "Выйти"));
+        this.actions.add(new ExitProgram(6, "Выйти", ui));
     }
 
     /**
@@ -70,18 +70,10 @@ public class MenuTracker {
         return limit;
     }
 
-    public class AddItem implements UserAction {
-        private int number;
-        private String desc;
+    public class AddItem extends BaseAction {
 
         public AddItem(int number, String desc) {
-            this.number = number;
-            this.desc = desc;
-        }
-
-        @Override
-        public int key() {
-            return number;
+            super(number, desc);
         }
 
         @Override
@@ -93,25 +85,14 @@ public class MenuTracker {
             tracker.add(item);
             System.out.println("------------ Новая заявка принята. Номер идентификатора: " + item.getId() + "-----------");
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), desc);
-        }
     }
 
-    public class ShowItems implements UserAction {
+    public class ShowItems extends BaseAction {
         private int number;
         private String desc;
 
         public ShowItems(int number, String desc) {
-            this.number = number;
-            this.desc = desc;
-        }
-
-        @Override
-        public int key() {
-            return number;
+            super(number, desc);
         }
 
         @Override
@@ -126,25 +107,12 @@ public class MenuTracker {
                 System.out.println("------------ Заявок нет! --------------");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), desc);
-        }
     }
 
-    public class ReplaceItem implements UserAction {
-        private int number;
-        private String desc;
+    public class ReplaceItem extends BaseAction {
 
         public ReplaceItem(int number, String desc) {
-            this.number = number;
-            this.desc = desc;
-        }
-
-        @Override
-        public int key() {
-            return number;
+            super(number, desc);
         }
 
         @Override
@@ -162,25 +130,12 @@ public class MenuTracker {
                 System.out.println("------------ Заявка не найдена! --------------");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), desc);
-        }
     }
 
-    public class DeleteItem implements UserAction {
-        private int number;
-        private String desc;
+    public class DeleteItem extends BaseAction {
 
         public DeleteItem(int number, String desc) {
-            this.number = number;
-            this.desc = desc;
-        }
-
-        @Override
-        public int key() {
-            return number;
+            super(number, desc);
         }
 
         @Override
@@ -194,25 +149,12 @@ public class MenuTracker {
                 System.out.println("------------ Заявка не найдена --------------");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), desc);
-        }
     }
 
-    public class FindItemsById implements UserAction {
-        private int number;
-        private String desc;
+    public class FindItemsById extends BaseAction {
 
         public FindItemsById(int number, String desc) {
-            this.number = number;
-            this.desc = desc;
-        }
-
-        @Override
-        public int key() {
-            return number;
+            super(number, desc);
         }
 
         @Override
@@ -227,25 +169,12 @@ public class MenuTracker {
                 System.out.println("------------ Заявка не найдена! --------------");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), desc);
-        }
     }
 
-    public class FindItemsByName implements UserAction {
-        private int number;
-        private String desc;
+    public class FindItemsByName extends BaseAction {
 
         public FindItemsByName(int number, String desc) {
-            this.number = number;
-            this.desc = desc;
-        }
-
-        @Override
-        public int key() {
-            return number;
+            super(number, desc);
         }
 
         @Override
@@ -263,11 +192,6 @@ public class MenuTracker {
                 System.out.println("------------ Заявка не найдена! --------------");
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), desc);
-        }
     }
 
     public class ExitProgram implements UserAction {
@@ -275,7 +199,7 @@ public class MenuTracker {
         private int number;
         private String desc;
 
-        public ExitProgram(StartUI ui, int number, String desc) {
+        public ExitProgram(int number, String desc, StartUI ui) {
             this.ui = ui;
             this.number = number;
             this.desc = desc;
