@@ -30,18 +30,17 @@ public class RookBlack implements Figure {
         int deltaY = dest.y - source.y;
         int stepX = deltaX > 0 ? 1 : -1;
         int stepY = deltaY > 0 ? 1 : -1;
-        if (Math.abs(deltaY) == 0 && Math.abs(deltaX) >= 1) {
-            for (int index = 0; index != steps.length; index++) {
+        if (Math.abs(deltaX) == Math.abs(deltaY)) {
+            throw new ImpossibleMoveException("Данная фигура не может ходить таким образом!");
+        }
+        for (int index = 0; index != steps.length; index++) {
+            if (Math.abs(deltaY) == 0 && Math.abs(deltaX) >= 1) {
                 int first = source.x + stepX * (index + 1);
                 steps[index] = Cell.values()[first * 8];
-            }
-        } else if (Math.abs(deltaX) == 0 && Math.abs(deltaY) >= 1) {
-            for (int index = 0; index != steps.length; index++) {
+            } else {
                 int second = source.y + stepY * (index + 1);
                 steps[index] = Cell.values()[second];
             }
-        } else {
-            throw new ImpossibleMoveException("Данная фигура не может ходить таким образом!");
         }
         return steps;
     }

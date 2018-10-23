@@ -2,7 +2,6 @@ package ru.job4j.chess;
 
 import ru.job4j.chess.figures.Cell;
 import ru.job4j.chess.figures.Figure;
-import java.util.Optional;
 
 /**
  *
@@ -33,7 +32,7 @@ public class Logic {
                 }
             }
         }
-        if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+        if (steps.length > 0) {
             this.figures[index] = this.figures[index].copy(dest);
             rst = true;
         }
