@@ -1,7 +1,5 @@
 package ru.job4j.chess.figures;
 
-import ru.job4j.chess.ImpossibleMoveException;
-
 public interface Figure {
     Cell position();
 
