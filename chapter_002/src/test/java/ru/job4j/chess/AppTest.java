@@ -1,48 +1,27 @@
 package ru.job4j.chess;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import ru.job4j.chess.figures.Cell;
 import ru.job4j.chess.figures.black.BishopBlack;
-
-import static ru.job4j.chess.figures.Cell.*;
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
- * Unit test for simple App.
+ * @author Sir-Hedgehog
+ * @version $Id$
+ * @since 31.10.2018
  */
-public class AppTest extends TestCase {
 
-    /**
-     * Create the test case
-     *
-     * @param TestName name of the test case
-     */
-    public AppTest( String TestName )
-    {
-        super( TestName );
-    }
+public class AppTest {
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigorous Test :-)
-     */
+    @Test
     public void whenBishopWillGoThen() {
         Logic logic = new Logic();
-        Cell cellOne = new Cell.H3;
-        BishopBlack first = new BishopBlack(cellOne);
+        Cell one = Cell.A3;
+        BishopBlack first = new BishopBlack(one);
         logic.add(first);
-        Cell cellTwo = new Cell(2, 7);
-        BishopBlack second = new BishopBlack(cellTwo);
+        Cell two = Cell.C1;
+        BishopBlack second = new BishopBlack(two);
         logic.add(second);
-        logic.move(cellOne, cellTwo);
-        assertTrue( true);
+        assertTrue(logic.move(one, two));
     }
 }
