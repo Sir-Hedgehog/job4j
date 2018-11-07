@@ -34,7 +34,7 @@ public class BishopBlack implements Figure {
         if (Math.abs(deltaX) != Math.abs(deltaY)) {
             throw new ImpossibleMoveException("Данная фигура не может ходить таким образом!");
         }
-        for (int index = 0; index != steps.length; index++) {
+        for (int index = 0; index < steps.length; index++) {
             int first = source.x + stepX * (index + 1);
             int second = source.y + stepY * (index + 1);
             steps[index] = Cell.values()[first * 8 + second];

@@ -27,7 +27,7 @@ public class Logic {
         Cell[] steps = this.figures[index].way(source, dest);
         for (Cell out : steps) {
             for (Figure in : figures) {
-                if (out.equals(in.position()) && in.position() != null) {
+                if (in.position() != null && out.equals(in.position())) {
                     throw new OccupiedWayException("Этот ход закрыт другой фигурой!");
                 }
             }
@@ -36,7 +36,6 @@ public class Logic {
             this.figures[index] = this.figures[index].copy(dest);
             rst = true;
         }
-
         return rst;
     }
 

@@ -24,7 +24,7 @@ public class PawnBlack implements Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        Cell[] steps = new Cell[0];
+        Cell[] steps = new Cell[Math.abs(dest.x - source.x)];
         if (source.y == dest.y + 1 && source.x == dest.x) {
             steps = new Cell[] {dest};
         }
