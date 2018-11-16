@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 15.11.2018
+ * @since 16.11.2018
  */
 
 public class PhoneDictionary {
@@ -23,8 +23,11 @@ public class PhoneDictionary {
      */
     public List<Person> find(String key) {
         List<Person> result = new ArrayList<>();
-        if (this.persons.contains(key)) {
-            for (int index = 0; index < this.persons.size(); index++) {
+        for (int index = 0; index < this.persons.size(); index++) {
+            if (this.persons.iterator().next().getName().contains(key)
+                    || this.persons.iterator().next().getSurname().contains(key)
+                    || this.persons.iterator().next().getPhone().contains(key)
+                    || this.persons.iterator().next().getAddress().contains(key)) {
                 result.add(this.persons.get(index));
             }
         }
