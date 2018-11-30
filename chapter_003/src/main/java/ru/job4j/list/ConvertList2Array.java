@@ -3,6 +3,12 @@ package ru.job4j.list;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Sir-Hedgehog
+ * @version $Id$
+ * @since 30.11.2018
+ */
+
 public class ConvertList2Array {
     public int[][] toArray(List<Integer> list, int rows) {
         int cells = (int) Math.ceil((float) list.size() / rows);
@@ -10,9 +16,7 @@ public class ConvertList2Array {
         int index = 0;
         for (int out = 0; out < rows; out++) {
             for (int in = 0; in < cells; in++) {
-                if (index >= list.size()) {
-                    array[out][in] = 0;
-                } else {
+                if (index < list.size()) {
                     array[out][in] = list.get(index);
                 }
                 index++;
