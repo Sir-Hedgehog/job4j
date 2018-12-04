@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 30.11.2018
+ * @since 04.12.2018
  */
 
 public class ConvertList2Array {
@@ -23,6 +23,16 @@ public class ConvertList2Array {
             }
         }
         return array;
+    }
+
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int[] array : list) {
+            for (int in = 0; in < array.length; in++) {
+                result.add(array[in]);
+            }
+        }
+        return result;
     }
 }
 
