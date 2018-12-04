@@ -28,8 +28,10 @@ public class ConvertList2Array {
     public List<Integer> convert(List<int[]> list) {
         List<Integer> result = new ArrayList<>();
         for (int[] array : list) {
-            for (int in = 0; in < array.length; in++) {
-                result.add(array[in]);
+            int index = 0;
+            for (int in : array) {
+                result.add(array[index]);
+                index++;
             }
         }
         return result;
