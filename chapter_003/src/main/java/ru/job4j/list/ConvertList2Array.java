@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 04.12.2018
+ * @since 05.12.2018
  */
 
 public class ConvertList2Array {
@@ -28,10 +28,8 @@ public class ConvertList2Array {
     public List<Integer> convert(List<int[]> list) {
         List<Integer> result = new ArrayList<>();
         for (int[] array : list) {
-            int index = 0;
             for (int in : array) {
-                result.add(array[index]);
-                index++;
+                result.add(in);
             }
         }
         return result;
