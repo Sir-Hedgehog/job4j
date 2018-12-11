@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Sir-Hedgehog
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 15.10.2018
+ * @since 11.12.2018
  */
 
 public class MenuTracker {
@@ -98,9 +98,9 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             System.out.println("------------ Вывод всех заявок --------------");
-            Item[] items = tracker.findAll();
-            if (items.length > 0) {
-                for (Item item : items) {
+            List<Item> list = tracker.findAll();
+            if (list.size() > 0) {
+                for (Item item : list) {
                     System.out.println(item);
                 }
             } else {
@@ -181,12 +181,12 @@ public class MenuTracker {
         public void execute(Input input, Tracker tracker) {
             System.out.println("------------ Поиск по имени --------------");
             String name = input.ask("Введите имя заявки, которую необходимо найти: ");
-            Item[] item = tracker.findByName(name);
+            List<Item> list = tracker.findByName(name);
             System.out.println("------------ Результат поиска --------------");
-            if (item.length > 0) {
-                for (int index = 0; index < item.length; index++) {
+            if (list.size() > 0) {
+                for (int index = 0; index < list.size(); index++) {
                     System.out.println("Заявка с наименованием " + name + " №" + (index + 1) + ": ");
-                    System.out.println(item[index].toString());
+                    System.out.println(list.get(index).toString());
                 }
             } else {
                 System.out.println("------------ Заявка не найдена! --------------");

@@ -1,7 +1,7 @@
 package ru.job4j.tracker;
 
 /**
- * @author Sir-Hedgehog
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
  * @since 11.10.2018
  */

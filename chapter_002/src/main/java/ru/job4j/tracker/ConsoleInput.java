@@ -3,7 +3,7 @@ package ru.job4j.tracker;
 import java.util.Scanner;
 
 /**
- * @author Sir-Hedgehog
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
  * @since 07.10.2018
  */

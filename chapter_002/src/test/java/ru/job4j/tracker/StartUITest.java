@@ -1,13 +1,17 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * @author Sir-Hedgehog
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 28.09.2018
+ * @since 11.12.2018
  */
 
 public class StartUITest {
@@ -17,21 +21,22 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("test name"));
+        assertThat(tracker.findAll().get(0).getName(), is("test name"));
     }
 
     @Test
     public void whenUserSearchAllItemsThenTrackerShowsItems() {
         Tracker tracker = new Tracker();
-        Item[] items = {new Item("test name", "desc"),
-                new Item("test name1", "desc1"),
-                new Item("test name2", "desc2")};
-        tracker.add(items[0]);
-        tracker.add(items[1]);
-        tracker.add(items[2]);
+        List<Item> list = new ArrayList<>();
+        list.add(new Item("test name", "desc"));
+        list.add(new Item("test name1", "desc1"));
+        list.add(new Item("test name2", "desc2"));
+        tracker.add(list.get(0));
+        tracker.add(list.get(1));
+        tracker.add(list.get(2));
         Input input = new StubInput(new String[]{"1", "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll(), is(items));
+        assertThat(tracker.findAll(), is(list));
     }
 
     @Test
@@ -52,7 +57,7 @@ public class StartUITest {
         tracker.add(second);
         Input input = new StubInput(new String[]{"3", first.getId(), "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0], is(second));
+        assertThat(tracker.findAll().get(0), is(second));
     }
 
     @Test
@@ -62,7 +67,7 @@ public class StartUITest {
         tracker.add(item);
         Input input = new StubInput(new String[]{"4", item.getId(), "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0], is(item));
+        assertThat(tracker.findAll().get(0), is(item));
     }
 
 
@@ -73,6 +78,6 @@ public class StartUITest {
         tracker.add(item);
         Input input = new StubInput(new String[]{"5", "test name", "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0], is(item));
+        assertThat(tracker.findAll().get(0), is(item));
     }
 }
