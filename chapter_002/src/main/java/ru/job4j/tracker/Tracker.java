@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 11.12.2018
+ * @since 12.12.2018
  */
 
 public class Tracker {
@@ -44,7 +44,7 @@ public class Tracker {
         item.setId(id);
         for (int index = 0; index < this.items.size(); index++) {
             if (this.items.get(index).getId().equals(id)) {
-                this.items.add(index, item);
+                this.items.set(index, item);
                 result = true;
                 break;
             }
