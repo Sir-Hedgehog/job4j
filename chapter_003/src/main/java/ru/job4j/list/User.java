@@ -6,7 +6,7 @@ public class User implements Comparable<User> {
     public int id;
     private String name;
     private String city;
-    private int age;
+    private Integer age;
 
     public User(int id, String name, String city) {
         this.id = id;
@@ -38,12 +38,6 @@ public class User implements Comparable<User> {
 
     @Override
     public int compareTo(User input) {
-        if (this.age > input.age) {
-            return 1;
-        } else if (this.age == input.age) {
-            return 0;
-        } else {
-            return -1;
-        }
+        return this.age.compareTo(input.age);
     }
 }
