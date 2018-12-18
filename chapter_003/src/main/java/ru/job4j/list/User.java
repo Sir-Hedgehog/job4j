@@ -8,6 +8,14 @@ public class User implements Comparable<User> {
     private String city;
     private Integer age;
 
+    public String getName() {
+        return name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
     public User(int id, String name, String city) {
         this.id = id;
         this.name = name;
@@ -34,6 +42,11 @@ public class User implements Comparable<User> {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, city);
+    }
+
+    @Override
+    public String toString() {
+        return "User {" + "name: " + name + ", age: " + age + '}';
     }
 
     @Override
