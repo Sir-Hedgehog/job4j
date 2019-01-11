@@ -11,12 +11,12 @@ import ru.job4j.tracker.Item;
 public class StaticFieldSingleton {
     private static StaticFieldSingleton instance;
 
-    private StaticFieldSingleton(Item item) {
+    private StaticFieldSingleton() {
     }
 
     public static StaticFieldSingleton getInstance() {
         if (instance == null) {
-            instance = new StaticFieldSingleton(new Item("test1", "testDescription1"));
+            instance = new StaticFieldSingleton();
         }
         return instance;
     }

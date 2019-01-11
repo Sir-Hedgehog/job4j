@@ -10,9 +10,9 @@ import ru.job4j.tracker.Item;
 
 public class StaticFinalFieldSingleton {
 
-    private static final StaticFinalFieldSingleton INSTANCE = new StaticFinalFieldSingleton(new Item("test1", "description1"));
+    private static final StaticFinalFieldSingleton INSTANCE = new StaticFinalFieldSingleton();
 
-    private StaticFinalFieldSingleton(Item item) {
+    private StaticFinalFieldSingleton() {
     }
 
     public static StaticFinalFieldSingleton getInstance() {

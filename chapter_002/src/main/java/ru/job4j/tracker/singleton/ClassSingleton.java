@@ -9,7 +9,7 @@ import ru.job4j.tracker.Item;
  */
 
 public class ClassSingleton {
-    private ClassSingleton(Item item) {
+    private ClassSingleton() {
     }
 
     public static ClassSingleton getInstance() {
@@ -17,7 +17,7 @@ public class ClassSingleton {
     }
 
     private static final class Holder {
-        private static final ClassSingleton INSTANCE = new ClassSingleton(new Item("test1", "description1"));
+        private static final ClassSingleton INSTANCE = new ClassSingleton();
     }
 
     public Item add(Item model) {

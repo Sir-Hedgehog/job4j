@@ -19,7 +19,7 @@ public class SingletonTest {
     @Test
     public void whenEnumSingleton() {
         EnumSingleton first = EnumSingleton.SINGLETON;
-        EnumSingleton.SINGLETON.add(new Item("test2", "description2"));
+        EnumSingleton.SINGLETON.add(new Item("test1", "description1"));
         EnumSingleton second = EnumSingleton.SINGLETON;
         assertThat(first == second, is(true));
     }
@@ -27,7 +27,7 @@ public class SingletonTest {
     @Test
     public void whenStaticFieldSingleton() {
         StaticFieldSingleton first = StaticFieldSingleton.getInstance();
-        StaticFieldSingleton.getInstance().add(new Item("test2", "description2"));
+        StaticFieldSingleton.getInstance().add(new Item("test1", "description1"));
         StaticFieldSingleton second = StaticFieldSingleton.getInstance();
         assertThat(first == second, is(true));
     }
@@ -35,7 +35,7 @@ public class SingletonTest {
     @Test
     public void whenStaticFinalFieldSingleton() {
         StaticFinalFieldSingleton first = StaticFinalFieldSingleton.getInstance();
-        StaticFinalFieldSingleton.getInstance().add(new Item("test2", "description2"));
+        StaticFinalFieldSingleton.getInstance().add(new Item("test1", "description1"));
         StaticFinalFieldSingleton second = StaticFinalFieldSingleton.getInstance();
         assertThat(first == second, is(true));
     }
@@ -43,7 +43,7 @@ public class SingletonTest {
     @Test
     public void whenClassSingleton() {
         ClassSingleton first = ClassSingleton.getInstance();
-        ClassSingleton.getInstance().add(new Item("test2", "description2"));
+        ClassSingleton.getInstance().add(new Item("test1", "description1"));
         ClassSingleton second = ClassSingleton.getInstance();
         assertThat(first == second, is(true));
     }
