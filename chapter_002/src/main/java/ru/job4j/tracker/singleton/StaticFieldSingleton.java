@@ -1,5 +1,7 @@
 package ru.job4j.tracker.singleton;
 
+import ru.job4j.tracker.Item;
+
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
@@ -9,13 +11,17 @@ package ru.job4j.tracker.singleton;
 public class StaticFieldSingleton {
     private static StaticFieldSingleton instance;
 
-    private StaticFieldSingleton() {
+    private StaticFieldSingleton(Item item) {
     }
 
     public static StaticFieldSingleton getInstance() {
         if (instance == null) {
-            instance = new StaticFieldSingleton();
+            instance = new StaticFieldSingleton(new Item("test1", "testDescription1"));
         }
         return instance;
+    }
+
+    public Item add(Item model) {
+        return model;
     }
 }
