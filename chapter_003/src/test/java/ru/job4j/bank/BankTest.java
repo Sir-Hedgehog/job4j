@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 17.01.2019
+ * @since 19.01.2019
  */
 
 public class BankTest {
@@ -17,9 +17,9 @@ public class BankTest {
         User user = new User("Ivanova Natalya", "4503675810");
         Bank bank = new Bank();
         bank.addUser(user);
-        bank.addAccountToUser(user, new Account(1000, "RK278Z"));
-        bank.addAccountToUser(user, new Account(15004, "RZ567G"));
-        assertThat(bank.getUserAccounts(user).size(), is(2));
+        bank.addAccountToUser("4503675810", new Account(1000, "RK278U"));
+        bank.addAccountToUser("4503675810", new Account(15004, "TY567V"));
+        assertThat(bank.getAllUsers().get(0), is(user));
     }
 
     @Test
@@ -31,9 +31,9 @@ public class BankTest {
         bank.addUser(user1);
         bank.addUser(user2);
         bank.addUser(user3);
-        bank.addAccountToUser(user1, new Account(1000, "RK278Z"));
-        bank.addAccountToUser(user2, new Account(15004, "RZ567G"));
-        bank.addAccountToUser(user3, new Account(1500434, "RM190U"));
+        bank.addAccountToUser("4503675810", new Account(1000, "UY278I"));
+        bank.addAccountToUser("4512012589", new Account(15004, "TR567U"));
+        bank.addAccountToUser("4802159357", new Account(1500434, "GF190U"));
         bank.deleteUser(user1);
         assertThat(bank.getAllUsers().size(), is(2));
     }
@@ -41,29 +41,29 @@ public class BankTest {
     @Test
     public void whenDeleteUserAccountsThenReturnListOfOtherUserAccounts() {
         User user = new User("Ivanova Natalya", "4503675810");
-        Account account1 = new Account(1000, "RK278Z");
-        Account account2 = new Account(10600, "KL256Y");
+        Account account1 = new Account(1000, "UY278I");
+        Account account2 = new Account(10600, "MJ256I");
         Bank bank = new Bank();
         bank.addUser(user);
-        bank.addAccountToUser(user, account1);
-        bank.addAccountToUser(user, account2);
-        bank.deleteAccountFromUser(user, account1);
-        assertThat(bank.getUserAccounts(user).size(), is(1));
+        bank.addAccountToUser("4503675810", account1);
+        bank.addAccountToUser("4503675810", account2);
+        bank.deleteAccountFromUser("4503675810", account1);
+        assertThat(bank.getUserAccounts("4503675810").size(), is(1));
     }
 
     @Test
     public void whenTransferMoneyThenReturnUpdateData() {
         User sender = new User("Ivanova Natalya", "4503675810");
-        Account account1 = new Account(1500, "RK278Z");
-        User addressee = new User("Ivanova Natalya", "4503675810");
-        Account account2 = new Account(7000, "RU678Z");
+        Account account1 = new Account(1500, "RU278G");
+        User addressee = new User("Petrov Sidor", "3820598123");
+        Account account2 = new Account(7000, "RT678E");
         Bank bank = new Bank();
         bank.addUser(sender);
         bank.addUser(addressee);
-        bank.addAccountToUser(sender, account1);
-        bank.addAccountToUser(addressee, account2);
-        bank.transferMoney(sender, account1, addressee, account2, 500);
-        assertThat(bank.getUserAccounts(addressee).get(1).getValue(), is(7500.0));
+        bank.addAccountToUser("4503675810", account1);
+        bank.addAccountToUser("3820598123", account2);
+        bank.transferMoney("4503675810", "RU278G", "3820598123", "RT678E", 500);
+        assertThat(bank.getUserAccounts("3820598123").get(0).getValue(), is(7500.0));
     }
 
 }

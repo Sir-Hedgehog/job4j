@@ -1,17 +1,18 @@
 package ru.job4j.bank;
 
-import java.util.TreeMap;
+import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 17.01.2019
+ * @since 19.01.2019
  */
 
 public class Bank {
 
-    TreeMap<User, ArrayList<Account>> map = new TreeMap<>();
+    private Map<User, ArrayList<Account>> map = new HashMap<>();
 
     /**
      * Метод реализует добавление нового клиента с его списком счетов
@@ -45,58 +46,79 @@ public class Bank {
 
     /**
      * Метод добавляет клиенту новый счет
-     * @param user - клиент
+     * @param passport - паспотрные данные клиента
      * @param account - счет
      */
 
-    public void addAccountToUser(User user, Account account) {
-        this.map.get(user).add(account);
+    public void addAccountToUser(String passport, Account account) {
+        for (User user : this.map.keySet()) {
+            if (user.getPassport().equals(passport)) {
+                this.map.get(user).add(account);
+            }
+            break;
+        }
     }
 
     /**
      * Метод удаляет клиенту счет
-     * @param user - клиент
+     * @param passport - паспортные данные клиента
      * @param account - счет
      */
 
-    public void deleteAccountFromUser(User user, Account account) {
-        this.map.get(user).remove(account);
+    public void deleteAccountFromUser(String passport, Account account) {
+        for (User user : this.map.keySet()) {
+            if (user.getPassport().equals(passport)) {
+                this.map.get(user).remove(account);
+            }
+            break;
+        }
     }
 
     /**
      * Метод выдает список счетов пользователя
-     * @param user - клиент
+     * @param passport - паспортные данные клиента
      * @return список счетов
      */
 
-    public ArrayList<Account> getUserAccounts(User user) {
-        return this.map.get(user);
+    public ArrayList<Account> getUserAccounts(String passport) {
+        ArrayList<Account> accounts = new ArrayList<>();
+        for (User user : this.map.keySet()) {
+            if (user.getPassport().equals(passport)) {
+                accounts = this.map.get(user);
+            }
+            break;
+        }
+        return accounts;
     }
 
     /**
      * Метод выдает запрашиваемый счет
-     * @param user - клиент
-     * @param account - счет
+     * @param passport - паспортные данные клиента
+     * @param requisites - реквизиты
      * @return запрашиваемый счет
      */
 
-    public Account getActualAccount(User user, Account account) {
-        ArrayList<Account> list = this.map.get(user);
-        return list.get(list.indexOf(account));
+    private Account getActualAccount(String passport, String requisites) {
+        ArrayList<Account> list = new ArrayList<>();
+        for (User user : this.map.keySet()) {
+            if (passport.equals(user.getPassport())) {
+                list = this.map.get(user);
+            }
+            break;
+        }
+        return list.get(list.indexOf(this.map.get(requisites)));
     }
 
     /**
      * Метод для перечисления денег с одного счета на другой
-     * @param user1 - первый клиент
-     * @param srcAccount - счет первого клиента
-     * @param user2 - второй клиент
-     * @param destAccount - счет второго клиента
+     * @param srcPassport - первый клиент
+     * @param srcRequisite - счет первого клиента
+     * @param descPassport - второй клиент
+     * @param descRequisite - счет второго клиента
      * @param amount - количество денег
      */
 
-    public boolean transferMoney (User user1, Account srcAccount, User user2, Account destAccount, double amount) {
-        return this.map.get(user1).contains(srcAccount) &&
-                this.map.get(user2).contains(destAccount) &&
-                getActualAccount(user1, srcAccount).transfer(getActualAccount(user2, destAccount), amount);
+    public boolean transferMoney (String srcPassport, String srcRequisite, String descPassport, String descRequisite, double amount) {
+        return getActualAccount(srcPassport, srcRequisite).transfer(getActualAccount(descPassport, descRequisite), amount);
     }
 }
