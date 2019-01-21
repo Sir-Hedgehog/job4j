@@ -3,7 +3,7 @@ package ru.job4j.bank;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 17.01.2019
+ * @since 22.01.2019
  */
 
 public class Account {
@@ -23,14 +23,12 @@ public class Account {
         return requisites;
     }
 
-    public boolean transfer(Account destination, double source) {
-        boolean result = false;
-        if (source > 0 && source < this.value && destination != null) {
-            this.value -= source;
-            destination.value += source;
-            result = true;
-        }
-        return result;
+    public void minus(double amount) {
+        this.value -= amount;
+    }
+
+    public void plus(double amount) {
+        this.value += amount;
     }
 
     @Override

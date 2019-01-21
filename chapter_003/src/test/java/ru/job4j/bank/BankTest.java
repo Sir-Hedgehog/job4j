@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 19.01.2019
+ * @since 22.01.2019
  */
 
 public class BankTest {
@@ -62,8 +62,8 @@ public class BankTest {
         bank.addUser(addressee);
         bank.addAccountToUser("4503675810", account1);
         bank.addAccountToUser("3820598123", account2);
-        bank.transferMoney("4503675810", "RU278G", "3820598123", "RT678E", 500);
-        assertThat(bank.getUserAccounts("3820598123").get(0).getValue(), is(7500.0));
+        bank.transferMoney("4503675810", "RU278G", "3820598123", "RT678E", 500.0);
+        assertThat(bank.getActualAccount("3820598123", "RT678E").getValue(), is(7500.0));
     }
 
 }

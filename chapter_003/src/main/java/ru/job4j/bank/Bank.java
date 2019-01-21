@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 19.01.2019
+ * @since 22.01.2019
  */
 
 public class Bank {
@@ -98,15 +98,16 @@ public class Bank {
      * @return запрашиваемый счет
      */
 
-    private Account getActualAccount(String passport, String requisites) {
-        ArrayList<Account> list = new ArrayList<>();
-        for (User user : this.map.keySet()) {
-            if (passport.equals(user.getPassport())) {
-                list = this.map.get(user);
-            }
-            break;
+    public Account getActualAccount(String passport, String requisites) {
+        Account account = null;
+        final ArrayList<Account> userAccounts = getUserAccounts(passport);
+        if (!userAccounts.isEmpty()) {
+            account = userAccounts.stream()
+                    .filter(acc -> acc.getRequisites()
+                            .equals(requisites)).findFirst()
+                    .orElse(null);
         }
-        return list.get(list.indexOf(this.map.get(requisites)));
+        return account;
     }
 
     /**
@@ -119,6 +120,16 @@ public class Bank {
      */
 
     public boolean transferMoney (String srcPassport, String srcRequisite, String descPassport, String descRequisite, double amount) {
-        return getActualAccount(srcPassport, srcRequisite).transfer(getActualAccount(descPassport, descRequisite), amount);
+        boolean result = false;
+        Account srcAccount = getActualAccount(srcPassport, srcRequisite);
+        Account descAccount = getActualAccount(descPassport, descRequisite);
+        if (srcAccount != null && descAccount != null) {
+            if (amount > 0 && amount < srcAccount.getValue() && srcAccount.getValue() != 0) {
+                srcAccount.minus(amount);
+                descAccount.plus(amount);
+                result = true;
+            }
+        }
+        return result;
     }
 }
