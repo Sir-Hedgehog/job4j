@@ -5,33 +5,37 @@ import java.util.Objects;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 16.01.2019
+ * @since 22.01.2019
  */
 
 public class User implements Comparable<User> {
     private String name;
     private String passport;
 
-    public User(String name, String passport) {
+    User(String name, String passport) {
         this.name = name;
         this.passport = passport;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public String getPassport() {
+    String getPassport() {
         return passport;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         User user = (User) o;
-        return passport == user.passport &&
-                Objects.equals(name, user.name);
+        return passport.equals(user.passport)
+                && Objects.equals(name, user.name);
     }
 
     @Override

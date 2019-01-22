@@ -10,7 +10,7 @@ import java.util.Map;
  * @since 22.01.2019
  */
 
-public class Bank {
+class Bank {
 
     private Map<User, ArrayList<Account>> map = new HashMap<>();
 
@@ -19,7 +19,7 @@ public class Bank {
      * @param user - клиент
      */
 
-    public void addUser(User user) {
+    void addUser(User user) {
         ArrayList<Account> accounts = new ArrayList<>();
         this.map.put(user, accounts);
     }
@@ -29,7 +29,7 @@ public class Bank {
      * @param user - клиент
      */
 
-    public void deleteUser(User user) {
+    void deleteUser(User user) {
         if (user != null) {
             this.map.remove(user);
         }
@@ -40,7 +40,7 @@ public class Bank {
      * @return users - клиенты
      */
 
-    public ArrayList<User> getAllUsers() {
+    ArrayList<User> getAllUsers() {
         return new ArrayList<>(this.map.keySet());
     }
 
@@ -50,12 +50,12 @@ public class Bank {
      * @param account - счет
      */
 
-    public void addAccountToUser(String passport, Account account) {
+    void addAccountToUser(String passport, Account account) {
         for (User user : this.map.keySet()) {
             if (user.getPassport().equals(passport)) {
                 this.map.get(user).add(account);
+                break;
             }
-            break;
         }
     }
 
@@ -65,12 +65,12 @@ public class Bank {
      * @param account - счет
      */
 
-    public void deleteAccountFromUser(String passport, Account account) {
+    void deleteAccountFromUser(String passport, Account account) {
         for (User user : this.map.keySet()) {
             if (user.getPassport().equals(passport)) {
                 this.map.get(user).remove(account);
+                break;
             }
-            break;
         }
     }
 
@@ -80,13 +80,13 @@ public class Bank {
      * @return список счетов
      */
 
-    public ArrayList<Account> getUserAccounts(String passport) {
+    ArrayList<Account> getUserAccounts(String passport) {
         ArrayList<Account> accounts = new ArrayList<>();
         for (User user : this.map.keySet()) {
             if (user.getPassport().equals(passport)) {
                 accounts = this.map.get(user);
+                break;
             }
-            break;
         }
         return accounts;
     }
@@ -98,7 +98,7 @@ public class Bank {
      * @return запрашиваемый счет
      */
 
-    public Account getActualAccount(String passport, String requisites) {
+    Account getActualAccount(String passport, String requisites) {
         Account account = null;
         final ArrayList<Account> userAccounts = getUserAccounts(passport);
         if (!userAccounts.isEmpty()) {
@@ -119,7 +119,7 @@ public class Bank {
      * @param amount - количество денег
      */
 
-    public boolean transferMoney (String srcPassport, String srcRequisite, String descPassport, String descRequisite, double amount) {
+    boolean transferMoney(String srcPassport, String srcRequisite, String descPassport, String descRequisite, double amount) {
         boolean result = false;
         Account srcAccount = getActualAccount(srcPassport, srcRequisite);
         Account descAccount = getActualAccount(descPassport, descRequisite);
