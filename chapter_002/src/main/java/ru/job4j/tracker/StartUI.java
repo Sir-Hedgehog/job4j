@@ -1,9 +1,11 @@
 package ru.job4j.tracker;
 
+import java.util.function.Consumer;
+
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 11.10.2018
+ * @since 31.01.2019
  */
 
 public class StartUI {
@@ -11,21 +13,23 @@ public class StartUI {
     private boolean working = true;
     private final Input input;
     private final Tracker tracker;
+    private final Consumer<String> output;
 
     /**
      * Конструтор, инициализирующий поле.
      * @param input ввод данных.
      */
-    public StartUI(Input input, Tracker tracker) {
+    StartUI(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
     }
 
     /**
      * Основой цикл программы.
      */
-    public void init() {
-        MenuTracker menu = new MenuTracker(this.input, this.tracker);
+    void init() {
+        MenuTracker menu = new MenuTracker(this.input, this.tracker, this.output);
         menu.fillActions(this);
         do {
             menu.show();
@@ -36,7 +40,7 @@ public class StartUI {
     /**
      * Выход из программы.
      */
-    public void stop() {
+    void stop() {
         this.working = false;
     }
 
@@ -44,6 +48,6 @@ public class StartUI {
      * Запуск программы.
      */
     public static void main(String[] args) {
-        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
+        new StartUI(new ValidateInput(new ConsoleInput()), new Tracker(), System.out::println).init();
     }
 }

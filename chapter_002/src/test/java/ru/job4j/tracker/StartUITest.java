@@ -2,25 +2,36 @@ package ru.job4j.tracker;
 
 import org.junit.Test;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
+import static java.lang.System.out;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 11.12.2018
+ * @since 31.01.2019
  */
 
 public class StartUITest {
+
+    private final Consumer<String> output = new Consumer<String>() {
+        private final PrintStream stdout = new PrintStream(out);
+        @Override
+        public void accept(String string) {
+            stdout.println(string);
+        }
+    };
 
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0).getName(), is("test name"));
     }
 
@@ -35,7 +46,7 @@ public class StartUITest {
         tracker.add(list.get(1));
         tracker.add(list.get(2));
         Input input = new StubInput(new String[]{"1", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll(), is(list));
     }
 
@@ -44,7 +55,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findById(item.getId()).getName(), is("test replace"));
     }
 
@@ -56,7 +67,7 @@ public class StartUITest {
         Item second = new Item("test name", "desc");
         tracker.add(second);
         Input input = new StubInput(new String[]{"3", first.getId(), "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0), is(second));
     }
 
@@ -66,7 +77,7 @@ public class StartUITest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"4", item.getId(), "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0), is(item));
     }
 
@@ -77,7 +88,7 @@ public class StartUITest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"5", "test name", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0), is(item));
     }
 }
