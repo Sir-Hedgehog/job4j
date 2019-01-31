@@ -15,7 +15,6 @@ class MenuTracker {
     private final Input input;
     private final Tracker tracker;
     private final Consumer<String> output;
-
     private List<UserAction> actions = new ArrayList<>();
 
     /**
@@ -31,7 +30,7 @@ class MenuTracker {
     }
 
     /**
-     * Метод заполняет массив.
+     * Метод заполняет список.
      */
     void fillActions(StartUI ui) {
         this.actions.add(new AddItem(0, "Добавить новую заявку"));
@@ -55,7 +54,7 @@ class MenuTracker {
      * Метод выводит на экран меню.
      */
     void show() {
-        System.out.println("Меню");
+        output.accept("Меню");
         for (UserAction action : this.actions) {
             if (action != null) {
                 System.out.println(action.info());

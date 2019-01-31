@@ -25,6 +25,11 @@ public class StartUIConsoleTest {
         public void accept(String string) {
             stdout.println(string);
         }
+
+        @Override
+        public String toString() {
+            return out.toString();
+        }
     };
 
     private String showMenu() {
