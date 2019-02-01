@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 31.01.2019
+ * @since 01.02.2019
  */
 
 class MenuTracker {
@@ -57,7 +57,7 @@ class MenuTracker {
         output.accept("Меню");
         for (UserAction action : this.actions) {
             if (action != null) {
-                System.out.println(action.info());
+                output.accept(action.info());
             }
         }
     }
@@ -188,7 +188,7 @@ class MenuTracker {
             output.accept("------------ Результат поиска --------------");
             if (list.size() > 0) {
                 for (int index = 0; index < list.size(); index++) {
-                    output.accept(String.format("Заявка с наименованием %s №: %d: %s", name, index + 1, list.get(index).toString()));
+                    output.accept(String.format("Заявка с наименованием %s №%d: %s", name, index + 1, list.get(index).toString()));
                 }
             } else {
                 output.accept("------------ Заявка не найдена! --------------");

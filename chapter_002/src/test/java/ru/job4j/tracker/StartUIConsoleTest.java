@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 31.01.2019
+ * @since 01.02.2019
  */
 
 public class StartUIConsoleTest {
@@ -42,16 +42,6 @@ public class StartUIConsoleTest {
                 + "5. Найти заявки по имени" + System.lineSeparator()
                 + "6. Выйти" + System.lineSeparator();
     }
-
-    /*@Before
-    public void loadOutput() {
-        System.setOut(new PrintStream(this.out));
-    }
-
-    @After
-    public void backOutput() {
-        System.setOut(this.stdout);
-    }*/
 
     @Test
     public void whenUserSearchAllItemsThenAdminHadSeenThat() {
@@ -126,9 +116,8 @@ public class StartUIConsoleTest {
         new StartUI(input, tracker, output).init();
         String expect = showMenu() + "------------ Поиск по имени --------------" + System.lineSeparator()
                 + "------------ Результат поиска --------------" + System.lineSeparator()
-                + "Заявка с наименованием test name №1: " + System.lineSeparator()
-                + item + System.lineSeparator()
-                + showMenu();
+                + "Заявка с наименованием test name №1: " + item
+                + System.lineSeparator() + showMenu();
         assertThat(this.output.toString(), is(expect));
     }
 }
