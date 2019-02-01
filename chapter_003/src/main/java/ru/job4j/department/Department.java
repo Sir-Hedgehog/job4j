@@ -1,42 +1,28 @@
 package ru.job4j.department;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 25.01.2019
+ * @since 01.02.2019
  */
 
 class Department {
-     List<String> toList(String[] array) {
-        return new ArrayList<>(Arrays.asList(array));
-    }
+    TreeSet<String> naturalOrder = new TreeSet<>();
+    TreeSet<String> reversedOrder = new TreeSet<>((first, second) -> {
+        int result = second.compareTo(first);
+        if (second.length() == first.length()) {
+            result = 0;
+        }
+        return result;
+    });
 
-    List<String> sortNaturalOrder(List<String> input) {
-        input.sort(
-                new Comparator<String>() {
-                    @Override
-                    public int compare(String first, String second) {
-                        return first.compareTo(second);
-                    }
-                }
-        );
-        return input;
-    }
-
-    List<String> sortReverseOrder(List<String> input) {
-        input.sort(
-                new Comparator<String>() {
-                    @Override
-                    public int compare(String first, String second) {
-                        return second.compareTo(first);
-                    }
-                }
-        );
-        return input;
+    public void add(String department) {
+        String[] split = department.split("\\\\");
+        for (String line : split) {
+            naturalOrder.add(line);
+            reversedOrder.add(line);
+        }
     }
 }
