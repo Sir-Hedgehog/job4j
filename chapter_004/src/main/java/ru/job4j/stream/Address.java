@@ -15,7 +15,7 @@ public class Address {
         this.apartment = apartment;
     }
 
-    public String getCity() {
+    String getCity() {
         return city;
     }
 
