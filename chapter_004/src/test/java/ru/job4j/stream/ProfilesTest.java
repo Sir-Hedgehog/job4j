@@ -16,7 +16,6 @@ public class ProfilesTest {
         list.add(new Profile(new Address("Москва", "Старокачаловская", 145, 45)));
         list.add(new Profile(new Address("Курск", "Ленина", 15, 2)));
         list.add(new Profile(new Address("Санкт-Петербург", "Невская", 17, 7)));
-        profiles.collect(list);
         List<Address> result = profiles.collect(list);
         List<Address> expected = new ArrayList<>();
         expected.add(new Address("Москва", "Старокачаловская", 145, 45));
