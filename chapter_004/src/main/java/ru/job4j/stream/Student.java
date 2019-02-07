@@ -4,13 +4,25 @@ import java.util.Objects;
 
 public class Student {
     private int score;
+    private String surname;
+
+    Student() {
+    }
+
+    Student(String surname) {
+        this.surname = surname;
+    }
 
     Student(int score) {
         this.score = score;
     }
 
-    public int getScore() {
+    int getScore() {
         return score;
+    }
+
+    String getSurname() {
+        return surname;
     }
 
     @Override
