@@ -16,6 +16,6 @@ class Profiles {
     }
 
     List<Address> uniqueAndSort(List<Address> addresses) {
-        return addresses.stream().distinct().sorted(Comparator.comparing(address -> address.getCity())).collect(Collectors.toList());
+        return addresses.stream().sorted(Comparator.comparing(address -> address.getCity())).distinct().collect(Collectors.toList());
     }
 }
