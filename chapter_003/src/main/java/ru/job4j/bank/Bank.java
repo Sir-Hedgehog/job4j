@@ -109,10 +109,10 @@ class Bank {
     Account getActualAccount(String passport, String requisites) {
         Account account = null;
         final ArrayList<Account> userAccounts = getUserAccounts(passport);
-        if (!userAccounts.isEmpty()) {
+        if (userAccounts != null && !userAccounts.isEmpty()) {
             account = userAccounts.stream()
-                    .filter(acc -> acc.getRequisites()
-                            .equals(requisites)).findFirst()
+                    .filter(acc -> acc.getRequisites().equals(requisites))
+                    .findFirst()
                     .orElse(null);
         }
         return account;
