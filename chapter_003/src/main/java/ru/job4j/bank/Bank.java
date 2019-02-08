@@ -23,7 +23,7 @@ class Bank {
 
     void addUser(User user) {
         ArrayList<Account> accounts = new ArrayList<>();
-        this.map.put(user, accounts);
+        this.map.putIfAbsent(user, accounts);
     }
 
     /**
@@ -54,11 +54,13 @@ class Bank {
 
     void addAccountToUser(String passport, Account account) {
         final List<User> current = new ArrayList<>(this.map.keySet());
-        User added = current.stream()
-                .filter(user -> user.getPassport().equals(passport))
-                .findFirst()
-                .orElse(null);
-        this.map.get(added).add(account);
+        if (!current.isEmpty()) {
+            User added = current.stream()
+                    .filter(user -> user.getPassport().equals(passport))
+                    .findFirst()
+                    .orElse(null);
+            this.map.get(added).add(account);
+        }
     }
 
     /**
@@ -69,18 +71,13 @@ class Bank {
 
     void deleteAccountFromUser(String passport, Account account) {
         final List<User> current = new ArrayList<>(this.map.keySet());
-        User removed = current.stream()
-                .filter(user -> user.getPassport().equals(passport))
-                .findFirst()
-                .orElse(null);
-        this.map.get(removed).remove(account);
-
-        /*for (User user : this.map.keySet()) {
-            if (user.getPassport().equals(passport)) {
-                this.map.get(user).remove(account);
-                break;
-            }
-        }*/
+        if (!current.isEmpty()) {
+            User removed = current.stream()
+                    .filter(user -> user.getPassport().equals(passport))
+                    .findFirst()
+                    .orElse(null);
+            this.map.get(removed).remove(account);
+        }
     }
 
     /**
@@ -90,20 +87,15 @@ class Bank {
      */
 
     ArrayList<Account> getUserAccounts(String passport) {
-        ArrayList<Account> accounts;
+        ArrayList<Account> accounts = null;
         final List<User> current = new ArrayList<>(this.map.keySet());
-        User users = current.stream()
-                .filter(user -> user.getPassport().equals(passport))
-                .findFirst()
-                .orElse(null);
-        accounts = this.map.get(users);
-
-        /*for (User user : this.map.keySet()) {
-            if (user.getPassport().equals(passport)) {
-                accounts = this.map.get(user);
-                break;
-            }
-        }*/
+        if (!current.isEmpty()) {
+            User users = current.stream()
+                    .filter(user -> user.getPassport().equals(passport))
+                    .findFirst()
+                    .orElse(null);
+            accounts = this.map.get(users);
+        }
         return accounts;
     }
 
