@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 01.02.2019
+ * @since 10.02.2019
  */
 
 class Department {
@@ -20,9 +20,12 @@ class Department {
 
     public void add(String department) {
         String[] split = department.split("\\\\");
+        StringBuilder current = new StringBuilder();
         for (String line : split) {
-            naturalOrder.add(line);
-            reversedOrder.add(line);
+            current = current.append(line);
+            naturalOrder.add(current.toString());
+            reversedOrder.add(current.toString());
+            current = current.append("\\");
         }
     }
 }
