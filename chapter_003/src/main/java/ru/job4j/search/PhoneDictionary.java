@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 19.11.2018
+ * @since 11.02.2018
  */
 
 public class PhoneDictionary {
@@ -21,9 +21,9 @@ public class PhoneDictionary {
      * @param key Ключ поиска.
      * @return Список подошедших пользователей.
      */
-    public List<Person> find(String key) {
+    List<Person> find(String key) {
         List<Person> result = new ArrayList<>();
-        for (int index = 0; index < this.persons.size(); index++) {
+        for (var index = 0; index < this.persons.size(); index++) {
             Person person = this.persons.get(index);
             if (person.getName().contains(key)
                     || person.getSurname().contains(key)

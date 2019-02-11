@@ -5,10 +5,10 @@ import java.util.LinkedList;
 /**
  * @author Sir-Hedgehog
  * @version $Id$
- * @since 21.11.2018
+ * @since 11.02.2018
  */
 
-public class PriorityQueue {
+class PriorityQueue {
     private LinkedList<Task> tasks = new LinkedList<>();
 
     /**
@@ -17,9 +17,9 @@ public class PriorityQueue {
      * Для вставки используем add(int index, E value)
      * @param task задача
      */
-    public void put(Task task) {
-        int out = 0;
-        for (int in = 0; in < this.tasks.size(); in++) {
+    void put(Task task) {
+        var out = 0;
+        for (var in = 0; in < this.tasks.size(); in++) {
             if (this.tasks.get(in).getPriority() > task.getPriority()) {
                 out = in;
                 break;
@@ -28,7 +28,7 @@ public class PriorityQueue {
         this.tasks.add(out, task);
     }
 
-    public Task take() {
+    Task take() {
         return this.tasks.poll();
     }
 }
