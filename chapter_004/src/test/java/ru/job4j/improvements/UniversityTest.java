@@ -23,9 +23,9 @@ public class UniversityTest {
         list.add(student3);
         list.add(student4);
         List<Student> result = university.levelOf(list, 70);
-        List<Student> expected = new ArrayList<>();
-        expected.add(new Student("Копьев", 87));
-        expected.add(new Student("Юрский", 71));
+        List<Student> expected = List.of(
+                new Student("Копьев", 87),
+                new Student("Юрский", 71));
         assertThat(result, is(expected));
     }
 }

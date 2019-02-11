@@ -13,7 +13,7 @@ public class DiapasonTest {
     public void whenLinearFunctionThenLinearResults() {
         Diapason function = new Diapason();
         List<Double> result = function.diapason(5, 8, x -> 2 * x + 1);
-        List<Double> expected = Arrays.asList(11D, 13D, 15D);
+        List<Double> expected = List.of(11D, 13D, 15D);
         assertThat(result, is(expected));
     }
 
@@ -21,7 +21,7 @@ public class DiapasonTest {
     public void whenSquareFunctionThenSquareResults() {
         Diapason function = new Diapason();
         List<Double> result = function.diapason(4, 7, x -> x * x);
-        List<Double> expected = Arrays.asList(16D, 25D, 36D);
+        List<Double> expected = List.of(16D, 25D, 36D);
         assertThat(result, is(expected));
     }
 
@@ -29,7 +29,7 @@ public class DiapasonTest {
     public void whenLogFunctionThenLogResults() {
         Diapason function = new Diapason();
         List<Double> result = function.diapason(2, 5, x -> Math.log10(x));
-        List<Double> expected = Arrays.asList(0.3010299956639812D, 0.47712125471966244D, 0.6020599913279624D);
+        List<Double> expected = List.of(0.3010299956639812D, 0.47712125471966244D, 0.6020599913279624D);
         assertThat(result, is(expected));
     }
 

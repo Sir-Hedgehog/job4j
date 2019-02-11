@@ -12,16 +12,7 @@ public class MatrixTest {
         Matrix matrix = new Matrix();
         Integer[][] array = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
         List<Integer> result = matrix.collect(array);
-        List<Integer> expected = new ArrayList<>();
-        expected.add(1);
-        expected.add(2);
-        expected.add(3);
-        expected.add(4);
-        expected.add(5);
-        expected.add(6);
-        expected.add(7);
-        expected.add(8);
-        expected.add(9);
+        List<Integer> expected = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
         assertThat(result, is(expected));
     }
 }

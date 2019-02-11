@@ -66,7 +66,7 @@ public class ConvertList2ArrayTest {
         list.add(new int[]{1, 2});
         list.add(new int[]{3, 4, 5, 6});
         List<Integer> result = convertList.convert(list);
-        List<Integer> expect = Arrays.asList(0, 1, 2, 3, 4, 5, 6);
+        List<Integer> expect = List.of(0, 1, 2, 3, 4, 5, 6);
         assertThat(result, is(expect));
     }
 }

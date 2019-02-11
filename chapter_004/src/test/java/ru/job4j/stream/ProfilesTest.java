@@ -17,10 +17,10 @@ public class ProfilesTest {
         list.add(new Profile(new Address("Курск", "Ленина", 15, 2)));
         list.add(new Profile(new Address("Санкт-Петербург", "Невская", 17, 7)));
         List<Address> result = profiles.collect(list);
-        List<Address> expected = new ArrayList<>();
-        expected.add(new Address("Москва", "Старокачаловская", 145, 45));
-        expected.add(new Address("Курск", "Ленина", 15, 2));
-        expected.add(new Address("Санкт-Петербург", "Невская", 17, 7));
+        List<Address> expected = List.of(
+                new Address("Москва", "Старокачаловская", 145, 45),
+                new Address("Курск", "Ленина", 15, 2),
+                new Address("Санкт-Петербург", "Невская", 17, 7));
         assertThat(result, is(expected));
     }
 
@@ -34,10 +34,10 @@ public class ProfilesTest {
         list.add(new Address("Курск", "Ленина", 15, 2));
         list.add(new Address("Санкт-Петербург", "Невская", 17, 7));
         List<Address> result = profiles.uniqueAndSort(list);
-        List<Address> expected = new ArrayList<>();
-        expected.add(new Address("Курск", "Ленина", 15, 2));
-        expected.add(new Address("Москва", "Старокачаловская", 145, 45));
-        expected.add(new Address("Санкт-Петербург", "Невская", 17, 7));
+        List<Address> expected = List.of(
+                new Address("Курск", "Ленина", 15, 2),
+                new Address("Москва", "Старокачаловская", 145, 45),
+                new Address("Санкт-Петербург", "Невская", 17, 7));
         assertThat(result, is(expected));
     }
 
