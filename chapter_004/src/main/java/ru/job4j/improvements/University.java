@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 10.02.2019
+ */
+
 class University {
 
     List<Student> levelOf(List<Student> students, int bound) {
