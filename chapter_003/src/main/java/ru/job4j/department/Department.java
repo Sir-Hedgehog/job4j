@@ -5,15 +5,15 @@ import java.util.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 12.02.2019
+ * @since 13.02.2019
  */
 
 class Department {
     TreeSet<String> naturalOrder = new TreeSet<>();
     TreeSet<String> reversedOrder = new TreeSet<>((first, second) -> {
         int result = second.compareTo(first);
-        if (second.length() == first.length() && result == 0) {
-            result = 0;
+        if (result == 0) {
+            result = Integer.compare(first.length(), second.length());
         }
         return result;
     });
