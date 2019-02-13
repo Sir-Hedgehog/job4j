@@ -10,9 +10,9 @@ import java.util.TreeSet;
  * @since 18.12.2018
  */
 
-public class SortUser {
+class SortUser {
 
-    public TreeSet<User> sort(List<User> list) {
+    TreeSet<User> sort(List<User> list) {
         TreeSet<User> users = new TreeSet<>();
         for (User user : list) {
             users.add(user);
@@ -20,7 +20,7 @@ public class SortUser {
         return users;
     }
 
-    public List<User> sortNameLength(List<User> input) {
+    List<User> sortNameLength(List<User> input) {
         input.sort(
                 new Comparator<User>() {
                     @Override
@@ -34,7 +34,7 @@ public class SortUser {
         return input;
     }
 
-    public List<User> sortByAllFields(List<User> input) {
+    List<User> sortByAllFields(List<User> input) {
         input.sort(
                 new Comparator<User>() {
                     @Override
