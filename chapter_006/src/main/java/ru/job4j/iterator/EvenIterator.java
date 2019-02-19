@@ -35,11 +35,6 @@ class EvenIterator implements Iterator {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        if (numbers[parity] % 2 != 0) {
-            parity++;
-        } else {
-            parity++;
-        }
-        return numbers[parity - 1];
+        return numbers[parity++];
     }
 }
