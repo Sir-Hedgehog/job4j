@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 21.02.2019
+ * @since 22.02.2019
  */
 
 public class SimpleArray<T> implements Iterable<T> {
@@ -21,20 +21,11 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     void set(int index, T model) {
-        for (Object current : this.models) {
-            if (current != null && this.models[index] == current) {
-                this.models[index] = model;
-            }
-        }
+        this.models[index] = model;
     }
 
     void remove(int index) {
-        for (Object current : this.models) {
-            if (current != null && this.models[index] == current) {
-                System.arraycopy(this.models, index + 1, this.models, index, this.models.length - index - 1);
-                break;
-            }
-        }
+        System.arraycopy(this.models, index + 1, this.models, index, this.models.length - index - 1);
     }
 
     T get(int index) {
