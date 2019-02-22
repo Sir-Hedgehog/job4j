@@ -21,7 +21,11 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     void set(int index, T model) {
-        this.models[index] = model;
+        if (index < this.models.length) {
+            this.models[index] = model;
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
     }
 
     void remove(int index) {

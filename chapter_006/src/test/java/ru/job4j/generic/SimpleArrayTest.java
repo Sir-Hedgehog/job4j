@@ -23,7 +23,7 @@ public class SimpleArrayTest {
         assertThat(it.next(), is(simple.get(1)));
     }
 
-    @Test
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void whenSetStringElementAndRealizeOnlyNextThenNewArray() {
         SimpleArray<String> simple = new SimpleArray<>(4);
         simple.add("Galaxy");
@@ -31,7 +31,7 @@ public class SimpleArrayTest {
         simple.add("Note");
         simple.add("8S");
         Iterator<String> it = simple.iterator();
-        simple.set(1, "Danger");
+        simple.set(4, "Danger");
         assertThat(it.next(), is(simple.get(0)));
         assertThat(it.next(), is("Danger"));
         assertThat(it.next(), is(simple.get(2)));
