@@ -21,7 +21,7 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     void set(int index, T model) {
-        if (this.models[index] != null) {
+        if (index < position && index > -1) {
             this.models[index] = model;
         }
     }
@@ -41,7 +41,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return current < models.length && models[current] != null;
+                return current < position;
             }
 
             @Override
