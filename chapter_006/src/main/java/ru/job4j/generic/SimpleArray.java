@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 22.02.2019
+ * @since 23.02.2019
  */
 
 public class SimpleArray<T> implements Iterable<T> {
@@ -21,10 +21,8 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     void set(int index, T model) {
-        if (index < this.models.length) {
+        if (this.models[index] != null) {
             this.models[index] = model;
-        } else {
-            throw new ArrayIndexOutOfBoundsException();
         }
     }
 
