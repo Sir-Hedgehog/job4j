@@ -15,8 +15,8 @@ public class SimpleArrayTest {
         simple.add(4);
         simple.add(7);
         Iterator<Integer> it = simple.iterator();
-        simple.remove(1);
-        simple.remove(3);
+        assertThat(simple.remove(1), is(true));
+        assertThat(simple.remove(3), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(simple.get(0)));
         assertThat(it.hasNext(), is(true));
@@ -31,7 +31,7 @@ public class SimpleArrayTest {
         simple.add("Note");
         simple.add("8S");
         Iterator<String> it = simple.iterator();
-        simple.set(1, "Danger");
+        assertThat(simple.set(1, "Danger"), is(true));
         assertThat(it.next(), is(simple.get(0)));
         assertThat(it.next(), is("Danger"));
         assertThat(it.next(), is(simple.get(2)));
@@ -45,7 +45,7 @@ public class SimpleArrayTest {
         simple.add('S');
         simple.add('U');
         Iterator<Character> it = simple.iterator();
-        simple.set(2, 'E');
+        assertThat(simple.set(2, 'E'), is(true));
         assertThat(it.next(), is(simple.get(0)));
         assertThat(it.next(), is(simple.get(1)));
         assertThat(it.next(), is('E'));
