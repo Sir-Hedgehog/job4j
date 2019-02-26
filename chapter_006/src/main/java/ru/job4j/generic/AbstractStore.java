@@ -53,11 +53,14 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
      * @return индекс элемента списка по идентификатору
      */
     private int findIndex(String id) {
-        int number = 0;
-        for (int index = -1; !base.iterator().hasNext(); index++) {
-            if (base.get(index).getId().equals(id)) {
+        int number = -1;
+        int index = 0;
+        for (Base container : base) {
+            if (container.getId().equals(id)) {
                 number = index;
+                break;
             }
+            index++;
         }
         return number;
     }
