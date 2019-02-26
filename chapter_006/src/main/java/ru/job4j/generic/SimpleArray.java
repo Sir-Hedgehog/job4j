@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 25.02.2019
+ * @since 26.02.2019
  */
 
 public class SimpleArray<T> implements Iterable<T> {
@@ -16,10 +16,19 @@ public class SimpleArray<T> implements Iterable<T> {
         this.models = new Object[size];
     }
 
+    /**
+     * Метод реализует добавление элемента в хранилище
+     * @param model новый элемент
+     */
     void add(T model) {
         this.models[position++] = model;
     }
 
+    /**
+     * Метод обновляет элемент
+     * @param model существующий элемент
+     * @param index индекс
+     */
     boolean set(int index, T model) {
         boolean result = false;
         if (index < position && index > -1) {
@@ -29,6 +38,10 @@ public class SimpleArray<T> implements Iterable<T> {
         return result;
     }
 
+    /**
+     * Метод удаляет элемент
+     * @param index индекс элемента
+     */
     boolean remove(int index) {
         boolean result = false;
         if (index < position && index > -1) {
@@ -38,6 +51,11 @@ public class SimpleArray<T> implements Iterable<T> {
         return result;
     }
 
+    /**
+     * Метод выдает элемент по индексу
+     * @param index вводится индекс
+     * @return существующий элемент
+     */
     T get(int index) {
         return (T) this.models[index];
     }
