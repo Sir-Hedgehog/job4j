@@ -6,14 +6,14 @@ package ru.job4j.list;
  * @since 26.02.2019
  */
 
-class SimpleArrayList<E> {
+public class SimpleArrayList<E> {
     private int size;
     private Node<E> first;
 
     /**
      * Метод вставляет в начало списка данные
      */
-    void add(E date) {
+    public void add(E date) {
         Node<E> newLink = new Node<>(date);
         newLink.next = this.first;
         this.first = newLink;
@@ -24,7 +24,7 @@ class SimpleArrayList<E> {
      * Метод удаляет первый элемент в списке
      * @return обновленный первый элемент списка
      */
-    E delete() {
+    public E delete() {
         Node<E> result = this.first.next;
         this.first = result;
         this.size--;
@@ -35,7 +35,7 @@ class SimpleArrayList<E> {
      * Метод получения элемента по индексу
      * @return существующий элемент
      */
-    E get(int index) {
+    public E get(int index) {
         Node<E> result = this.first;
         for (int i = 0; i < index; i++) {
             result = result.next;
@@ -47,7 +47,7 @@ class SimpleArrayList<E> {
      * Метод получения размера коллекции
      * @return размер коллекции
      */
-    int getSize() {
+    public int getSize() {
         return this.size;
     }
 
