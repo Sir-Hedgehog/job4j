@@ -1,5 +1,11 @@
 package ru.job4j.generic;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 26.02.2019
+ */
+
 public class UserStore<E extends User> implements Store<E> {
     private SimpleArray<E> user = new SimpleArray<>(3);
 
@@ -11,11 +17,10 @@ public class UserStore<E extends User> implements Store<E> {
     @Override
     public boolean replace(String id, E model) {
         boolean result = false;
-        for (int index = 0; !user.iterator().hasNext(); index++) {
-            if (user.get(index).getId().equals(id)) {
-                user.set(index, model);
-                result = true;
-            }
+        int index = this.findIndex(id);
+        if (index > -1) {
+            user.set(index, model);
+            result = true;
         }
         return result;
     }
@@ -23,11 +28,10 @@ public class UserStore<E extends User> implements Store<E> {
     @Override
     public boolean delete(String id) {
         boolean result = false;
-        for (int index = 0; !user.iterator().hasNext(); index++) {
-            if (user.get(index).getId().equals(id)) {
-                user.remove(index);
-                result = true;
-            }
+        int index = this.findIndex(id);
+        if (index > -1) {
+            user.remove(index);
+            result = true;
         }
         return result;
     }
@@ -35,12 +39,21 @@ public class UserStore<E extends User> implements Store<E> {
     @Override
     public E findById(String id) {
         E result = null;
-        for (int index = 0; !user.iterator().hasNext(); index++) {
-            if (user.get(index).getId().equals(id)) {
-                result = user.get(index);
-            }
+        int index = this.findIndex(id);
+        if (index > -1) {
+            result = user.get(index);
         }
         return result;
+    }
+
+    private int findIndex(String id) {
+        int number = 0;
+        for (int index = 0; !user.iterator().hasNext(); index++) {
+            if (user.get(index).getId().equals(id)) {
+                number = index;
+            }
+        }
+        return number;
     }
 }
 

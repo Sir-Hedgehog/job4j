@@ -1,5 +1,11 @@
 package ru.job4j.generic;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 26.02.2019
+ */
+
 public class RoleStore<T extends Role> implements Store<T> {
     private SimpleArray<T> role = new SimpleArray<>(3);
 
@@ -11,12 +17,10 @@ public class RoleStore<T extends Role> implements Store<T> {
     @Override
     public boolean replace(String id, T model) {
         boolean result = false;
-        for (int index = 0; !role.iterator().hasNext(); index++) {
-            if (role.get(index).getId().equals(id)) {
-                role.set(index, model);
-                result = true;
-                break;
-            }
+        int index = this.findIndex(id);
+        if (index > -1) {
+            role.set(index, model);
+            result = true;
         }
         return result;
     }
@@ -24,12 +28,10 @@ public class RoleStore<T extends Role> implements Store<T> {
     @Override
     public boolean delete(String id) {
         boolean result = false;
-        for (int index = 0; !role.iterator().hasNext(); index++) {
-            if (role.get(index).getId().equals(id)) {
-                role.remove(index);
-                result = true;
-                break;
-            }
+        int index = this.findIndex(id);
+        if (index > -1) {
+            role.remove(index);
+            result = true;
         }
         return result;
     }
@@ -37,12 +39,20 @@ public class RoleStore<T extends Role> implements Store<T> {
     @Override
     public T findById(String id) {
         T result = null;
-        for (int index = 0; !role.iterator().hasNext(); index++) {
-            if (role.get(index).getId().equals(id)) {
-                result = role.get(index);
-                break;
-            }
+        int index = this.findIndex(id);
+        if (index > -1) {
+            result = role.get(index);
         }
         return result;
+    }
+
+    private int findIndex(String id) {
+        int number = 0;
+        for (int index = 0; !role.iterator().hasNext(); index++) {
+            if (role.get(index).getId().equals(id)) {
+                number = index;
+            }
+        }
+        return number;
     }
 }
