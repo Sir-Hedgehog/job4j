@@ -1,6 +1,5 @@
 package ru.job4j.generic;
 
-import java.util.Iterator;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,6 +32,6 @@ public class StoresTest {
         roles.add(role2);
         assertThat(roles.delete(role.getId()), is(true));
         assertThat(roles.findById("456"), is(role1));
-        assertThat(roles.replace(role2.getId(), new User("834")), is(true));
+        assertThat(roles.replace(role2.getId(), new Role("834")), is(true));
     }
 }
