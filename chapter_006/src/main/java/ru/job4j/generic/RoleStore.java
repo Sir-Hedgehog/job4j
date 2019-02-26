@@ -47,12 +47,13 @@ public class RoleStore<T extends Role> implements Store<T> {
     }
 
     private int findIndex(String id) {
-        int number = 0;
-        for (int index = 0; !role.iterator().hasNext(); index++) {
+        int index = 0;
+        while (!role.iterator().hasNext()) {
             if (role.get(index).getId().equals(id)) {
-                number = index;
+                break;
             }
+            role.iterator().next();
         }
-        return number;
+        return index;
     }
 }

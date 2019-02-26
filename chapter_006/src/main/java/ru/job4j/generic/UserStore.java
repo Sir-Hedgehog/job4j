@@ -47,13 +47,14 @@ public class UserStore<E extends User> implements Store<E> {
     }
 
     private int findIndex(String id) {
-        int number = 0;
-        for (int index = 0; !user.iterator().hasNext(); index++) {
+        int index = 0;
+        while (!user.iterator().hasNext()) {
             if (user.get(index).getId().equals(id)) {
-                number = index;
+                break;
             }
+            user.iterator().next();
         }
-        return number;
+        return index;
     }
 }
 
