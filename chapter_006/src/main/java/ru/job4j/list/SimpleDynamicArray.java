@@ -3,11 +3,12 @@ package ru.job4j.list;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 26.02.2019
+ * @since 27.02.2019
  */
 
 public class SimpleDynamicArray<E> implements Iterable<E> {
@@ -23,9 +24,13 @@ public class SimpleDynamicArray<E> implements Iterable<E> {
     void add(E value) {
         this.values[position++] = value;
         if (position == this.values.length - 1) {
-            this.values = Arrays.copyOf(this.values, this.values.length + 3);
-            modCount++;
+           this.increaseSize();
         }
+    }
+
+    private void increaseSize() {
+        this.values = Arrays.copyOf(this.values, this.values.length + 3);
+        modCount++;
     }
 
     /**
@@ -52,6 +57,9 @@ public class SimpleDynamicArray<E> implements Iterable<E> {
             public E next() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
+                }
+                if (!this.hasNext()) {
+                    throw new NoSuchElementException();
                 }
                 return (E) values[current++];
             }
