@@ -22,6 +22,5 @@ public class SimpleStackTest<T> {
         assertThat(it.next(), is(2));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
-
     }
 }
