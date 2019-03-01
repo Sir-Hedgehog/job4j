@@ -46,8 +46,6 @@ public class DynamicArrayList<E> implements Iterable<E> {
         }
     }
 
-    //private Node<E> head;
-
     @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
