@@ -7,24 +7,35 @@ import java.util.NoSuchElementException;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 27.02.2019
+ * @since 04.02.2019
  */
 
 public class SimpleStack<T> implements Iterable<T> {
     private int modCount = 0;
+    private int size = 0;
     private Node<T> first;
 
     public void push(T date) {
         Node<T> newLink = new Node<>(date);
         newLink.next = this.first;
         this.first = newLink;
-        modCount++;
+        this.modCount++;
+        this.size++;
     }
 
     public T poll() {
         Node<T> result = this.first;
         this.first = this.first.next;
+        this.size--;
         return result.date;
+    }
+
+    public boolean isEmpty() {
+        return this.getSize() == 0;
+    }
+
+    public int getSize() {
+        return this.size;
     }
 
     private static class Node<T> {
