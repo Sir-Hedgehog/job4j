@@ -15,17 +15,18 @@ public class SimpleDynamicArray<E> implements Iterable<E> {
     private int modCount = 0;
     private Object[] values = new Object[3];
     private int position = 0;
-
+    private int size = 0;
 
     /**
      * Метод реализует добавление элемента в хранилище
      * @param value новый элемент
      */
-    void add(E value) {
+    public void add(E value) {
         this.values[position++] = value;
         if (position == this.values.length - 1) {
            this.increaseSize();
         }
+        size++;
     }
 
     /**
@@ -41,8 +42,16 @@ public class SimpleDynamicArray<E> implements Iterable<E> {
      * @param index вводится индекс
      * @return существующий элемент
      */
-    E get(int index) {
+    public E get(int index) {
         return (E) this.values[index];
+    }
+
+    /**
+     * Метод показывает количество элементов списка
+     * @return количество элементов списка
+     */
+    public int getSize() {
+        return this.size;
     }
 
     @Override

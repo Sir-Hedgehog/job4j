@@ -23,6 +23,5 @@ public class SimpleDynamicArrayTest {
         assertThat(it.next(), is(simple.get(2)));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(simple.get(3)));
-
     }
 }
