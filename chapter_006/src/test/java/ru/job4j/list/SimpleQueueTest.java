@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 
 public class SimpleQueueTest {
     @Test
-    public void whenAddManyIntegerElementsAndRealizeNextAndHasNextThenNewDynamicArrayList() {
+    public void whenAddIntegerElementsAndRealizeNextAndHasNextThenNewQueue() {
         SimpleStack<Integer> one = new SimpleStack<>();
         SimpleStack<Integer> two = new SimpleStack<>();
         SimpleQueue<Integer> queue = new SimpleQueue<>(one, two);
