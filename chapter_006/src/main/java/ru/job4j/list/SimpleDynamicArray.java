@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 27.02.2019
+ * @since 04.03.2019
  */
 
 public class SimpleDynamicArray<E> implements Iterable<E> {
@@ -28,6 +28,9 @@ public class SimpleDynamicArray<E> implements Iterable<E> {
         }
     }
 
+    /**
+     * Метод увеличивает размер хранилища
+     */
     private void increaseSize() {
         this.values = Arrays.copyOf(this.values, this.values.length + 3);
         modCount++;
