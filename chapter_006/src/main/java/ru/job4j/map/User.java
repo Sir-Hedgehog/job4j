@@ -3,6 +3,12 @@ package ru.job4j.map;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 05.03.2019
+ */
+
 public class User {
     private String name;
     private int children;
@@ -26,5 +32,10 @@ public class User {
         return children == user.children
                 && Objects.equals(name, user.name)
                 && Objects.equals(birthday, user.birthday);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children, birthday);
     }
 }
