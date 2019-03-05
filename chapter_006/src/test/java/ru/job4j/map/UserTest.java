@@ -15,6 +15,7 @@ public class UserTest {
         map.put(first, 55);
         map.put(second, 55);
         System.out.println(map);
+        System.out.println(map.get(first).equals(map.get(second)));
         assertThat(map.get(first), is(map.get(second)));
     }
 }
