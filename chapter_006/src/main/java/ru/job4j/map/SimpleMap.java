@@ -1,6 +1,5 @@
 package ru.job4j.map;
 
-import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -8,13 +7,19 @@ import java.util.NoSuchElementException;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 06.03.2019
+ * @since 09.03.2019
  */
 
 public class SimpleMap<K, V> implements Iterable {
     private int modCount = 0;
-    private Node<K, V>[] table = new Node[10];
+    private Node<K, V>[] table;
     private int size = 0;
+    private float threshold;
+
+    SimpleMap() {
+        this.table = new Node[10];
+        this.threshold = this.table.length * 0.8f;
+    }
 
     /**
      * Метод реализует добавление элемента в хранилище
@@ -23,6 +28,10 @@ public class SimpleMap<K, V> implements Iterable {
      */
     boolean insert(K key, V value) {
         boolean result;
+        if (size >= threshold) {
+            threshold *= 2;
+            this.increaseSize();
+        }
         Node<K, V> node = new Node<>(key, value);
         int index = this.hash(key);
         if (this.table[index] != null) {
@@ -30,9 +39,6 @@ public class SimpleMap<K, V> implements Iterable {
         } else {
             this.table[index] = node;
             result = true;
-        }
-        if (this.size == this.table.length) {
-            this.increaseSize();
         }
         size++;
         modCount++;
@@ -51,7 +57,14 @@ public class SimpleMap<K, V> implements Iterable {
      * Метод увеличивает размер хранилища
      */
     private void increaseSize() {
-        this.table = Arrays.copyOf(this.table, this.table.length * 2);
+        Node<K, V>[] oldTable = this.table;
+        this.table = new Node[oldTable.length * 2];
+        size = 0;
+        for (Node<K, V> node : oldTable) {
+            if (node != null) {
+                this.insert(node.key, node.value);
+            }
+        }
     }
 
     /**
