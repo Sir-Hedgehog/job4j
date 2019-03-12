@@ -44,6 +44,5 @@ public class TreeTest {
         assertThat(it.next(), is(12));
         assertThat(it.hasNext(), is(false));
         assertThat(tree.findBy(7).isPresent(), is(false));
-
     }
 }

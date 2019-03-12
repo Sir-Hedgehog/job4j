@@ -5,13 +5,13 @@ import java.util.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 11.03.2019
+ * @since 12.03.2019
  */
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
     private int modCount = 0;
-    private int size = 0;
+    private Queue<Node<E>> queue = new LinkedList<>();
 
     public Tree(Node<E> root) {
         this.root = root;
@@ -26,7 +26,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             top.add(low);
             result = true;
             modCount++;
-            size++;
         }
         return result;
     }
@@ -53,12 +52,12 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     public Iterator<E> iterator() {
         return new Iterator<>() {
             private int expectedModCount = modCount;
-            private int current = 0;
-            List<Node<E>> list = new LinkedList<>();
+            Queue<Node<E>> queue = new LinkedList<>();
 
             @Override
             public boolean hasNext() {
-                return current < size;
+                queue.offer(root);
+                return queue != null;
             }
 
             @Override
@@ -69,7 +68,11 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
                 if (!this.hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return list.get(current++).getValue();
+                Node<E> result = queue.poll();
+                for (Node<E> child : result.leaves()) {
+                    queue.offer(child);
+                }
+                return result.getValue();
             }
         };
     }
