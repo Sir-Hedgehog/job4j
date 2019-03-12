@@ -10,6 +10,7 @@ import java.util.*;
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
+    private int modCount = 0;
     private int size = 0;
 
     public Tree(Node<E> root) {
@@ -18,26 +19,14 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
     @Override
     public boolean add(E parent, E child) {
-        boolean result = true;
-        List<Node<E>> data = new ArrayList<>();
-        data.add(this.root);
+        boolean result = false;
         Node<E> top = new Node<>(parent);
         Node<E> low = new Node<>(child);
-        while (!data.isEmpty()) {
-            if (top.leaves().contains(low)) {
-                result = false;
-                break;
-            }
-            if (this.root == top) {
-                this.root.add(low);
-                size++;
-                break;
-            }
-            if (this.root != top && root.leaves().contains(top)) {
-                top.add(low);
-                size++;
-                break;
-            }
+        if (this.findBy(parent).isPresent() && !this.findBy(child).isPresent()) {
+            top.add(low);
+            result = true;
+            modCount++;
+            size++;
         }
         return result;
     }
@@ -61,7 +50,27 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     }
 
     @Override
-    public Iterator iterator() {
-        return null;
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            private int expectedModCount = modCount;
+            private int current = 0;
+            List<Node<E>> list = new LinkedList<>();
+
+            @Override
+            public boolean hasNext() {
+                return current < size;
+            }
+
+            @Override
+            public E next() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                if (!this.hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return list.get(current++).getValue();
+            }
+        };
     }
 }
