@@ -5,13 +5,12 @@ import java.util.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 12.03.2019
+ * @since 13.03.2019
  */
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
     private int modCount = 0;
-    private Queue<Node<E>> queue = new LinkedList<>();
 
     public Tree(Node<E> root) {
         this.root = root;
@@ -20,10 +19,10 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     @Override
     public boolean add(E parent, E child) {
         boolean result = false;
-        Node<E> top = new Node<>(parent);
         Node<E> low = new Node<>(child);
-        if (this.findBy(parent).isPresent() && !this.findBy(child).isPresent()) {
-            top.add(low);
+        final Optional<Node<E>> byParent = this.findBy(parent);
+        if (byParent.isPresent() && this.findBy(child).isEmpty()) {
+            byParent.get().leaves().add(low);
             result = true;
             modCount++;
         }
@@ -52,11 +51,10 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     public Iterator<E> iterator() {
         return new Iterator<>() {
             private int expectedModCount = modCount;
-            Queue<Node<E>> queue = new LinkedList<>();
+            Queue<Node<E>> queue = new LinkedList<>(Collections.singleton(root));
 
             @Override
             public boolean hasNext() {
-                queue.offer(root);
                 return queue != null;
             }
 
