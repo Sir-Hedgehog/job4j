@@ -9,7 +9,7 @@ import java.util.*;
  */
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
-    private final Node<E> root;
+    private Node<E> root;
     private int modCount = 0;
 
     public Tree(Node<E> root) {
