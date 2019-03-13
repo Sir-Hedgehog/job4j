@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class TreeTest {
     @Test
     public void when6ElementsFindLastThen6() {
-        Node<Integer> root = new Node(1);
+        Node<Integer> root = new Node<>(1);
         Tree<Integer> tree = new Tree<>(root);
         tree.add(1, 2);
         tree.add(1, 3);
@@ -36,7 +36,7 @@ public class TreeTest {
 
     @Test
     public void when6ElementsFindNotExitThenOptionEmpty() {
-        Node<Integer> root = new Node(10);
+        Node<Integer> root = new Node<>(10);
         Tree<Integer> tree = new Tree<>(root);
         tree.add(10, 11);
         Iterator it = tree.iterator();
@@ -50,7 +50,7 @@ public class TreeTest {
 
     @Test
     public void whenTreeIsBinaryThenReturnTrue() {
-        Node<Integer> root = new Node(1);
+        Node<Integer> root = new Node<>(1);
         Tree<Integer> tree = new Tree<>(root);
         tree.add(1, 2);
         tree.add(1, 3);
@@ -63,7 +63,7 @@ public class TreeTest {
 
     @Test
     public void whenTreeIsNotBinaryThenReturnFalse() {
-        Node<Integer> root = new Node(1);
+        Node<Integer> root = new Node<>(1);
         Tree<Integer> tree = new Tree<>(root);
         tree.add(1, 2);
         tree.add(1, 3);
