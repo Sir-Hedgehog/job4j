@@ -3,8 +3,9 @@ package ru.job4j.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node<E extends Comparable<E>> {
+public class Node<E extends Comparable<E>> implements Comparable<Node<E>> {
     private final List<Node<E>> children = new ArrayList<>();
+    private Node<E> node;
     private final E value;
 
     public E getValue() {
@@ -25,5 +26,10 @@ public class Node<E extends Comparable<E>> {
 
     public boolean eqValue(E that) {
         return this.value.compareTo(that) == 0;
+    }
+
+    @Override
+    public int compareTo(Node<E> node) {
+        return node.compareTo(this.node);
     }
 }

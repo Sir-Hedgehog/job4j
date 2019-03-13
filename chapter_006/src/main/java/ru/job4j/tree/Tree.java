@@ -55,7 +55,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
             @Override
             public boolean hasNext() {
-                return queue != null;
+                return !queue.isEmpty();
             }
 
             @Override
