@@ -1,12 +1,14 @@
 package ru.job4j.list;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 14.03.2019
+ * @since 15.03.2019
  */
 
 public class Analysis {
@@ -15,19 +17,19 @@ public class Analysis {
         int removed = 0;
         int offered = 0;
         int varied = 0;
-        for (User out : previous) {
-            if (!current.contains(out)) {
-                removed += 1;
+        Map<Integer, String> map = new HashMap<>();
+        for (User user : previous) {
+            if (!current.contains(user)) {
+                removed++;
             }
-            for (User in : current) {
-                if (out.id == in.id && !out.name.equals(in.name)) {
-                    varied += 1;
-                }
-            }
+            map.put(user.id, user.name);
         }
-        for (User index : current) {
-            if (!previous.contains(index)) {
-                offered += 1;
+        for (User user : current) {
+            if (!previous.contains(user)) {
+                offered++;
+            }
+            if (map.containsKey(user.id) && !map.containsValue(user.name)) {
+                varied++;
             }
         }
         return new Info(offered, varied, removed);
