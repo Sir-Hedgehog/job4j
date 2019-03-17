@@ -1,6 +1,8 @@
 package ru.job4j.io;
 
 import org.junit.Test;
+
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -8,7 +10,7 @@ import static org.junit.Assert.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 16.03.2019
+ * @since 17.03.2019
  */
 
 public class EvenNumberTest {
@@ -36,5 +38,12 @@ public class EvenNumberTest {
         assertThat(result1, is(true));
         assertThat(result2, is(false));
         assertThat(result3, is(true));
+    }
+
+    @Test
+    public void whenReadByteArrayThenTrue() {
+        EvenNumber evenNumber = new EvenNumber();
+        final boolean number = evenNumber.isNumber(new ByteArrayInputStream("12345678912341221256789123456780".getBytes()));
+        assertTrue(number);
     }
 }
