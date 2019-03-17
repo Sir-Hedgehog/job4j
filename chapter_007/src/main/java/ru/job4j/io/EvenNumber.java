@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
@@ -18,7 +17,7 @@ public class EvenNumber {
             do {
                 lastByte = number;
                 number = in.read();
-            } while (number != -1);
+            } while (number != -1 && number >= 48 && number <= 57);
             if (lastByte % 2 == 0) {
                 result = true;
             }

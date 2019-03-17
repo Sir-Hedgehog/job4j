@@ -26,4 +26,11 @@ public class EvenNumberTest {
         final boolean number = evenNumber.isNumber(new ByteArrayInputStream("12345678912341221256789123456781".getBytes()));
         assertFalse(number);
     }
+
+    @Test
+    public void whenReadByteArrayOfCharactersThenFalse() {
+        EvenNumber evenNumber = new EvenNumber();
+        final boolean number = evenNumber.isNumber(new ByteArrayInputStream("мамамылараму222".getBytes()));
+        assertFalse(number);
+    }
 }
