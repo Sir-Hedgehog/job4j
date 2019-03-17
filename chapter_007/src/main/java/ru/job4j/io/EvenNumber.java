@@ -1,6 +1,5 @@
 package ru.job4j.io;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -13,10 +12,14 @@ import java.io.InputStream;
 public class EvenNumber {
     boolean isNumber(InputStream in) {
         boolean result = false;
-        int number;
-        try (DataInputStream br = new DataInputStream(in)) {
-            number = br.readInt();
-            if (number % 2 == 0) {
+        try {
+            int number = -1;
+            int lastByte;
+            do {
+                lastByte = number;
+                number = in.read();
+            } while (number != -1);
+            if (lastByte % 2 == 0) {
                 result = true;
             }
         } catch (IOException io) {
