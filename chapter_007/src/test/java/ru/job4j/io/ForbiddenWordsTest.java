@@ -23,7 +23,7 @@ public class ForbiddenWordsTest {
         byte[] byteArray = (out).toByteArray();
         StringBuilder line = new StringBuilder();
         for (String str : result) {
-            line.append(str);
+            line.append(str.replaceAll(str, str + " "));
         }
         assertEquals(line.toString(), new String(byteArray));
     }

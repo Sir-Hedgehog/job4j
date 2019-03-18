@@ -18,7 +18,7 @@ public class ForbiddenWords {
             }
             try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out))) {
                 for (String filterWord : words) {
-                    bw.write(filterWord);
+                    bw.write(filterWord + " ");
                 }
             } catch (IOException io) {
                 io.printStackTrace();
