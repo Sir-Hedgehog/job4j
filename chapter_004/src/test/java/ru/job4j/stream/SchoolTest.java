@@ -15,7 +15,7 @@ public class SchoolTest {
         list.add(new Student(76));
         list.add(new Student(98));
         list.add(new Student(50));
-        List<Student> result = school.collect(list, predicate  -> predicate.getScore() >= 70 && predicate.getScore() <= 100);
+        List<Student> result = school.collect(list, predicate -> predicate.getScore() >= 70 && predicate.getScore() <= 100);
         List<Student> expected = List.of(
                 new Student(76),
                 new Student(98));
