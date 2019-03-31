@@ -11,29 +11,33 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 28.03.2019
+ * @since 31.03.2019
  */
 
 public class SearchTest {
+    private static final String SEPARATOR = File.separator;
     @Test
-    public void whenSearchNecessaryExpansionsThenShowsResult() {
+    public void whenSearchNecessaryExpansionsThenShowResult() {
         Search search = new Search();
         List<String> list = new ArrayList<>();
+        list.add("lnk");
         list.add("txt");
-        list.add("docx");
-        String way = System.getProperty("java.io.tmpdir");
-        List<File> files = search.list(way, list);
-        List<File> result = new ArrayList<>();
-        File file1 = new File("C:\\Temp\\Moto\\Quad\\Ural.docx");
-        File file2 = new File("C:\\Temp\\TV\\Sharp.txt");
-        File file3 = new File("C:\\Temp\\TV\\Toshiba.docx");
-        result.add(file1);
-        result.add(file2);
-        result.add(file3);
-        for (File expect : files) {
-            for (File conclusion : result) {
-                assertThat(expect, is(conclusion));
-            }
-        }
+        String way = System.getProperty("java.io.tmpdir") + SEPARATOR;
+        List<File> result = search.list(way, list);
+        List<File> expect = new ArrayList<>();
+        File file1 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\ImageDebug\\AutoPosToneMap.txt");
+        File file2 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\acrord32_sbx\\BroadcastMsg_1553542561.txt");
+        File file3 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\RedBoxLog.txt");
+        File file4 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\DOpera\\ready\\resources\\license.txt");
+        File file5 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\Браузер Opera.lnk");
+        expect.add(file1);
+        expect.add(file2);
+        expect.add(file3);
+        expect.add(file4);
+        expect.add(file5);
+        List<File> sortResult = search.sortName(result);
+        assertThat(sortResult, is(expect));
     }
 }
+
+
