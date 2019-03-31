@@ -15,8 +15,12 @@ public class Rating implements Comparable<Rating> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Rating rating = (Rating) o;
         return Objects.equals(evaluation, rating.evaluation);
     }
