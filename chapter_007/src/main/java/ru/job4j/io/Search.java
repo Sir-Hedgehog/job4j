@@ -38,9 +38,4 @@ public class Search {
         }
         return result;
     }
-
-    List<File> sortName(List<File> input) {
-        input.sort(Comparator.comparing(File::getName));
-        return input;
-    }
 }

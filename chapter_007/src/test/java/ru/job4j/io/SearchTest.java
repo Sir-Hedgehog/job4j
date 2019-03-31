@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -25,18 +26,14 @@ public class SearchTest {
         String way = System.getProperty("java.io.tmpdir") + SEPARATOR;
         List<File> result = search.list(way, list);
         List<File> expect = new ArrayList<>();
-        File file1 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\ImageDebug\\AutoPosToneMap.txt");
-        File file2 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\acrord32_sbx\\BroadcastMsg_1553542561.txt");
-        File file3 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\RedBoxLog.txt");
-        File file4 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\DOpera\\ready\\resources\\license.txt");
-        File file5 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\Браузер Opera.lnk");
+        File file1 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\acrord32_sbx\\BroadcastMsg_1553542561.txt");
+        File file2 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\DOpera\\ready\\resources\\license.txt");
+        File file3 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\Браузер Opera.lnk");
         expect.add(file1);
         expect.add(file2);
         expect.add(file3);
-        expect.add(file4);
-        expect.add(file5);
-        List<File> sortResult = search.sortName(result);
-        assertThat(sortResult, is(expect));
+        Collections.sort(result);
+        assertThat(result, is(expect));
     }
 }
 
