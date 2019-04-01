@@ -40,7 +40,7 @@ public class SearchTest {
         file3.createNewFile();
         file4.createNewFile();
         file5.createNewFile();
-        List<File> result = search.list(tmpDir, list);
+        List<File> result = search.list("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\Basic", list);
         List<File> expect = new ArrayList<>();
         File expectFile1 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\Basic\\CurrentDir1\\File3.txt");
         File expectFile2 = new File("C:\\Users\\18B8~1\\AppData\\Local\\Temp\\Basic\\CurrentDir2\\File4.txt");
