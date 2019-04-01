@@ -19,11 +19,7 @@ public class Search {
             File element = data.poll();
             if (!element.isDirectory()) {
                 String fileName = element.getName();
-                String extension = "";
-                int index = fileName.lastIndexOf('.');
-                if (index > 0) {
-                    extension = fileName.substring(index + 1);
-                }
+                String extension = this.filter(fileName);
                 if (expansions.contains(extension)) {
                     result.add(element);
                 }
@@ -37,5 +33,14 @@ public class Search {
             }
         }
         return result;
+    }
+
+    private String filter(String name) {
+        String extension = "";
+        int index = name.lastIndexOf('.');
+        if (index > 0) {
+            extension = name.substring(index + 1);
+        }
+        return extension;
     }
 }
