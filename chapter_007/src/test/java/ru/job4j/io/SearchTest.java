@@ -28,7 +28,7 @@ public class SearchTest {
         basicDir.mkdir();
         File currentDir1 = new File(basicDir.getPath() + divider + "CurrentDir1");
         currentDir1.mkdir();
-        File currentDir2 = new File(basicDir.getPath() + divider + "\\CurrentDir2");
+        File currentDir2 = new File(basicDir.getPath() + divider + "CurrentDir2");
         currentDir2.mkdir();
         File file1 = new File(basicDir, "File1.txt");
         File file2 = new File(currentDir1, "File2.xlsx");
