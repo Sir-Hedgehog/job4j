@@ -24,7 +24,7 @@ public class SearchTest {
         List<String> list = new ArrayList<>();
         list.add("txt");
         String tmpDir = System.getProperty("java.io.tmpdir");
-        File basicDir = new File(tmpDir + "Basic");
+        File basicDir = new File(tmpDir + divider + "Basic");
         basicDir.mkdir();
         File currentDir1 = new File(basicDir.getPath() + divider + "CurrentDir1");
         currentDir1.mkdir();
