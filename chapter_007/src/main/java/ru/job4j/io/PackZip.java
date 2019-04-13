@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -8,7 +9,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 12.04.2019
+ * @since 13.04.2019
  */
 
 public class PackZip {
@@ -26,6 +27,8 @@ public class PackZip {
     private void form(ZipOutputStream zos, File source, List<String> expansions) throws IOException {
         byte[] buffer = new byte[4096];
         File[] files = source.listFiles();
+        List<String> listOfNames = new ArrayList<>();
+        List<String> listOfFiles = new ArrayList<>();
         if (files != null) {
             for (File file : files) {
                 if (file.isDirectory()) {
@@ -33,23 +36,33 @@ public class PackZip {
                     continue;
                 }
                 if (exclude(file, expansions)) {
-                    FileInputStream fis = new FileInputStream(file);
-                    zos.putNextEntry(new ZipEntry(file.getPath()));
-                    while (fis.read(buffer) != -1) {
-                        zos.write(buffer);
+                    listOfNames.add(file.getName());
+                    listOfFiles.add(file.getPath());
+                    String[] temp = {};
+                    String[] filesToZip = listOfFiles.toArray(temp);
+                    String[] namesToZip = listOfNames.toArray(temp);
+                    for (int index = 0; index < filesToZip.length; index++) {
+                        zos.putNextEntry(new ZipEntry(namesToZip[index]));
+                        try (FileInputStream fis = new FileInputStream(filesToZip[index])) {
+                            while (fis.read(buffer) != -1) {
+                                zos.write(buffer);
+                            }
+                            zos.closeEntry();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    zos.closeEntry();
-                    fis.close();
                 }
             }
         }
     }
 
     private boolean exclude(File file, List<String> expansions) {
+        Search search = new Search();
         boolean result = true;
         if (expansions != null) {
-            for (String current : expansions) {
-                if (file.getName().endsWith(current)) {
+            while (true) {
+                if (search.list(file.getPath(), expansions) != null) {
                     result = false;
                     break;
                 }
