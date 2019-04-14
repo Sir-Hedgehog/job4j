@@ -15,7 +15,6 @@ public class PackZip {
     private byte[] buffer = new byte[4096];
     private Search search = new Search();
 
-
     public void achieve(Args args) throws IOException {
         String zip = args.output();
         try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zip))) {
@@ -28,12 +27,17 @@ public class PackZip {
     }
 
     private void form(ZipOutputStream zos, File source, List<String> expansions) throws IOException {
-        List<File> list = search.listOfOthers(source.getName(), expansions);
+        List<File> list = search.listOfOthers(source.getPath(), expansions);
         for (File file : list) {
-            zos.putNextEntry(new ZipEntry(file.getAbsolutePath().substring(file.getName().length())));
+            if (file.isDirectory()) {
+                form(zos, file, expansions);
+                continue;
+            }
             try (FileInputStream fis = new FileInputStream(file)) {
-                while (fis.read(buffer) != -1) {
-                    zos.write(buffer);
+                zos.putNextEntry(new ZipEntry(file.getPath().substring(source.getName().length() - 2)));
+                int length;
+                while ((length = fis.read(buffer)) > 0) {
+                    zos.write(buffer, 0, length);
                 }
                 zos.closeEntry();
             } catch (FileNotFoundException e) {
