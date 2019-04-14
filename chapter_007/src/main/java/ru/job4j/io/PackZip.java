@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -34,7 +35,8 @@ public class PackZip {
                 continue;
             }
             try (FileInputStream fis = new FileInputStream(file)) {
-                zos.putNextEntry(new ZipEntry(file.getPath().substring(source.getName().length() - 2)));
+                final Path relation = source.toPath().relativize(file.toPath());
+                zos.putNextEntry(new ZipEntry(relation.toString()));
                 int length;
                 while ((length = fis.read(buffer)) > 0) {
                     zos.write(buffer, 0, length);
