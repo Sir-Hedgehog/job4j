@@ -6,10 +6,15 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 07.05.2019
+ */
+
 public class ConsoleChat {
     private boolean work = true;
     public List<String> discuss(File source) throws IOException {
-        String str = "";
         String current = "";
         List<String> list = new ArrayList<>();
         List<String> result = new ArrayList<>();
@@ -18,25 +23,28 @@ public class ConsoleChat {
         while (scanner.hasNextLine()) {
             list.add(scanner.nextLine());
         }
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in, System.getProperty("console.encoding", "utf-8")));
         while (work) {
-            str = br.readLine();
-            if (!str.equals("Стоп") && !str.equals("Продолжить") && !str.equals("Закончить")) {
-                result.add(str);
-                int random = new Random().nextInt(list.size());
-                current = list.get(random);
-                result.add(current);
-            } else if (str.equals("Стоп")) {
+            String str1 = "";
+            String str2 = "";
+            if ((str1 = br.readLine()).equals("Стоп")) {
                 result.add("Стоп");
                 fr.close();
-            } else if (str.equals("Продолжить")) {
+                while (!(str2 = br.readLine()).equals("Продолжить")) {
+                    result.add(str2);
+                }
                 result.add("Продолжить");
                 this.discuss(source);
-            } else if (str.equals("Закончить")) {
+            } else if (str1.equals("Закончить")) {
                 result.add("Закончить");
                 fr.close();
                 work = false;
                 break;
+            } else if (!str1.equals("Стоп") && !str1.equals("Закончить")) {
+                result.add(str1);
+                int random = new Random().nextInt(list.size());
+                current = list.get(random);
+                result.add(current);
             }
         }
         return result;
