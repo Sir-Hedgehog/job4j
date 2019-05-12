@@ -25,9 +25,11 @@ public class ConsoleChat {
         }
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in, System.getProperty("console.encoding", "utf-8")));
         while (work) {
-            String str1 = "";
+            String str1 = br.readLine();
             String str2 = "";
-            if ((str1 = br.readLine()).equals("Стоп")) {
+            final boolean stop = str1.equals("Стоп");
+            System.out.println(str1);
+            if (stop) {
                 result.add("Стоп");
                 fr.close();
                 while (!(str2 = br.readLine()).equals("Продолжить")) {
