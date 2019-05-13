@@ -1,8 +1,13 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 13.05.2019
+ */
 
 public class ChatTest {
     public static void main(String[] args) throws IOException {
@@ -11,15 +16,14 @@ public class ChatTest {
         List<String> list = chat.discuss(file);
         System.out.println(list);
 
-        /*System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("stdout.log")), true));
+        //System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("stdout.log")), true));
 
-        final String divider = File.separator;
+        /*final String divider = File.separator;
         String tmpDir = System.getProperty("java.io.tmpdir");
         File chatDir = new File(tmpDir + divider + "Chat");
         chatDir.mkdir();
         File test = new File(chatDir, "Chat.txt");
         file.createNewFile();
-        List<String> list = new ArrayList();
         String line;
         while ((line = br.readLine()) != null) {
             list.add(line);
