@@ -14,12 +14,12 @@ import java.util.Scanner;
 
 public class ConsoleChat {
     private boolean work = true;
-    public List<String> discuss(File source) throws IOException {
+    public List<String> discuss(InputStream source) throws IOException {
         String current;
         List<String> list = new ArrayList<>();
         List<String> result = new ArrayList<>();
-        FileReader fr = new FileReader(source);
-        Scanner scanner = new Scanner(fr);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(source));
+        Scanner scanner = new Scanner(reader);
         while (scanner.hasNextLine()) {
             list.add(scanner.nextLine());
         }
@@ -30,14 +30,14 @@ public class ConsoleChat {
             final boolean stop = str1.equals("Стоп");
             if (stop) {
                 result.add("Стоп");
-                fr.close();
+                reader.close();
                 while (!(str2 = br.readLine()).equals("Продолжить")) {
                     result.add(str2);
                 }
                 result.add("Продолжить");
             } else if (str1.equals("Закончить")) {
                 result.add("Закончить");
-                fr.close();
+                reader.close();
                 work = false;
             } else if (!str1.equals("Стоп") && !str1.equals("Закончить")) {
                 result.add(str1);
