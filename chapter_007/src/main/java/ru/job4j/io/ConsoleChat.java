@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 13.05.2019
+ * @since 14.05.2019
  */
 
 public class ConsoleChat {
@@ -26,12 +26,12 @@ public class ConsoleChat {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in, System.getProperty("console.encoding", "utf-8")));
         while (work) {
             String str1 = br.readLine();
-            String str2;
             final boolean stop = str1.equals("Стоп");
             if (stop) {
+                String str2 = br.readLine();
                 result.add("Стоп");
                 reader.close();
-                while (!(str2 = br.readLine()).equals("Продолжить")) {
+                while (!str2.equals("Продолжить")) {
                     result.add(str2);
                 }
                 result.add("Продолжить");
