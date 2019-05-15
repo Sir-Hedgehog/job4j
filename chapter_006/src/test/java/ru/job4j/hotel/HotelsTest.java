@@ -1,22 +1,31 @@
 package ru.job4j.hotel;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 15.05.2019
+ */
+
 public class HotelsTest {
     @Test
-    @Ignore
-    public void whenThereIsRatingOfHotelsThenStar() {
+    public void whenThereIsRatingsOfFiveHotelsThenShowStars() {
         Hotels hotels = new Hotels();
-        Rating[] rating = {new Rating(10),
-                new Rating(45),
-                new Rating(13),
-                new Rating(67),
-                new Rating(90)};
-        int[] result = hotels.determineStars(5, rating);
-        int[] expect = {1, 3, 2, 4, 5};
-        assertThat(result, is(expect));
+        Integer[] input = {13, 56, 97, 90, 4};
+        int[] output = hotels.determine(5, input);
+        int[] expect = {2, 3, 5, 4, 1};
+        assertThat(output, is(expect));
     }
+
+    /*@Test
+    public void whenThereIsRatingsOfMoreThenFiveHotelsThenShowStars() {
+        Hotels hotels = new Hotels();
+        Integer[] input = {13, 56, 97, 90, 4, 68, 80, 69, 51, 7};
+        int[] output = hotels.determine(10, input);
+        int[] expect = {2, 3, 5, 5, 1, 3, 4, 4, 2, 1};
+        assertThat(output, is(expect));
+    }*/
 }

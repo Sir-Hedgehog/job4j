@@ -5,28 +5,37 @@ import java.util.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 21.03.2019
+ * @since 15.05.2019
  */
 
 public class Hotels {
-    private int star;
-
-    public int[] determineStars(int quantity, Rating[] rating) {
-        List<Rating> list = Arrays.asList(rating);
-        Map<Rating, Integer> map = new TreeMap<>();
-        int[] result = null;
+    public int[] determine(int quantity, Integer[] rating) {
+        List<Integer> list = Arrays.asList(rating);
+        Map<Integer, Integer> map = new TreeMap<>();
+        int[] result = new int[rating.length];
         if (quantity > 4 && quantity % 5 == 0 && list.size() == quantity) {
-            for (Rating index : list) {
-                if (index.getEvaluation() >= 1 && index.getEvaluation() <= 100) {
-                    map.put(index, quantity);
-                }
+            for (int index = 0; index < quantity; index++) {
+                map.put(index, rate(list.get(index)));
             }
-            for (int star = 0; star < quantity; star++) {
-                map.get(list.get(star));
-                result[star] = star;
+            Collections.sort(list);
+            for (int out = 0; out < map.size(); out++) {
+                for (int in = 0; in < list.size(); in++) {
+                    if (list.get(in).equals(map.get(out))) {
+                        result[out] = in + 1;
+                        break;
+                    }
+                }
             }
         }
         return result;
+    }
+
+    private int rate(int input) {
+        int output = 0;
+        if (input >= 1 && input <= 100) {
+            output = input;
+        }
+        return output;
     }
 }
 
