@@ -14,7 +14,7 @@ import java.net.Socket;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 14.05.2019
+ * @since 15.05.2019
  */
 
 public class ServerTest {
@@ -33,11 +33,11 @@ public class ServerTest {
 
     @Test
     public void whenAskAnswerThenChooseRandom() throws IOException {
-        this.testServer("Выход", "До новых встреч!\r\n");
+        this.testServer("Выход", String.format("До новых встреч!%s", LN));
     }
 
     @Test
     public void whenAskHelloThenWelcomeFromOracle() throws IOException {
-        this.testServer(Joiner.on(LN).join("Привет", "Выход"), "Здравствуй, мой друг, я Оракл!\r\n\r\nДо новых встреч!\r\n");
+        this.testServer(Joiner.on(LN).join("Привет", "Выход"), String.format("Здравствуй, мой друг, я Оракл!%s%sДо новых встреч!%s", LN, LN, LN));
     }
 }

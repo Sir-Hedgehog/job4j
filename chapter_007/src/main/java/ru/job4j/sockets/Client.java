@@ -31,6 +31,11 @@ public class Client {
             while (!str.isEmpty()) {
                 System.out.println(str);
             }
-        } while (!word.equals("Выход"));
+        } while (!word.equals("Exit"));
+    }
+
+    public static void main(String[] args) throws IOException {
+        Client client = new Client();
+        client.go();
     }
 }
