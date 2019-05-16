@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 15.05.2019
+ * @since 16.05.2019
  */
 
 public class Hotels {
@@ -21,8 +21,17 @@ public class Hotels {
             for (int out = 0; out < map.size(); out++) {
                 for (int in = 0; in < list.size(); in++) {
                     if (list.get(in).equals(map.get(out))) {
-                        result[out] = in + 1;
-                        break;
+                        if (map.size() > 5) {
+                            float variable = in + 1;
+                            int current = map.size() / 5;
+                            int total = (int) Math.ceil(variable / current);
+                            result[out] = total;
+                            break;
+                        }
+                        if (map.size() == 5) {
+                            result[out] = in + 1;
+                            break;
+                        }
                     }
                 }
             }
