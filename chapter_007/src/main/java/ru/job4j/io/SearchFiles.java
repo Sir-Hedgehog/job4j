@@ -1,31 +1,35 @@
 package ru.job4j.io;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
+import java.util.regex.Pattern;
+
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 21.05.2019
+ */
 
 public class SearchFiles {
+    private final Map<String, String> commands;
 
-    List<File> find(String parent, List<String> congruences) {
+    public SearchFiles(Map<String, String> commands) {
+        this.commands = commands;
+    }
+
+    public List<File> findFiles() {
         List<File> result = new ArrayList<>();
-        Queue<File> data = new LinkedList<>();
-        File file = new File(parent);
-        data.offer(file);
-        while (!data.isEmpty()) {
-            File element = data.poll();
-            if (!element.isDirectory()) {
-                String fileName = element.getName();
-                String congruence = this.coincide(fileName);
-                if (congruences.contains(congruence)) {
-                    result.add(element);
-                }
-            } else {
-                File[] files = element.listFiles();
-                if (files != null) {
-                    for (File child : files) {
-                        data.offer(child);
+        String typeOfSearch = getTypeOfSearch();
+        Queue<File> queueDir = new LinkedList<>();
+        queueDir.offer(new File(commands.get("-d")));
+        while(!queueDir.isEmpty()) {
+            File element = queueDir.poll();
+            for (File file : element.listFiles()) {
+                if (file.isDirectory()) {
+                    queueDir.offer(file);
+                } else {
+                    if (checkFile(file, typeOfSearch)) {
+                        result.add(file);
                     }
                 }
             }
@@ -33,12 +37,56 @@ public class SearchFiles {
         return result;
     }
 
-    private String coincide(String name) {
-        String congruence = "";
-        int index = name.length();
-        if (index > 1) {
-            congruence = name.substring(index);
+    private String getTypeOfSearch() {
+        String result = null;
+        for(String key : commands.keySet()) {
+            if (key.equals("-m")) {
+                result = key;
+            } else if (key.equals("-f")) {
+                result = key;
+            } else if (key.equals("-r")) {
+                result = key;
+            }
         }
-        return congruence;
+        return result;
+    }
+
+    private boolean checkFile(File file, String typeOfSearch) {
+        boolean result = false;
+        if (typeOfSearch.equals("-m")) {
+            result = checkFileByMask(file, commands.get("-m"));
+        } else if (typeOfSearch.equals("-f")) {
+            result = checkFileByFullName(file, commands.get("-f"));
+        } else if (typeOfSearch.equals("-r")) {
+            result = checkFileByRegEx(file, commands.get("-r"));
+        }
+        return result;
+    }
+
+    private boolean checkFileByMask(File file, String mask) {
+        boolean result = false;
+        String fileName = file.getName();
+        if(!mask.contains("*")) {
+            result = this.checkFileByFullName(file, mask);
+        } else {
+            String[] parts = mask.split("\\*");
+            for (String part : parts) {
+                if (part.isEmpty()) {
+                    continue;
+                }
+                if (!fileName.contains(part)) {
+                    result = false;
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean checkFileByFullName(File file, String fullName) {
+        return file.getName().equals(fullName);
+    }
+
+    private boolean checkFileByRegEx(File file, String regEx) {
+        return Pattern.matches(regEx, file.getName());
     }
 }
