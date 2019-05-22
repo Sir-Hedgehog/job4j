@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 21.05.2019
+ * @since 22.05.2019
  */
 
 public class SearchProgram {

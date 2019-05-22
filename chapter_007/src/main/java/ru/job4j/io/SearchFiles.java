@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 21.05.2019
+ * @since 22.05.2019
  */
 
 public class SearchFiles {
@@ -22,7 +22,7 @@ public class SearchFiles {
         String typeOfSearch = getTypeOfSearch();
         Queue<File> queueDir = new LinkedList<>();
         queueDir.offer(new File(commands.get("-d")));
-        while(!queueDir.isEmpty()) {
+        while (!queueDir.isEmpty()) {
             //File element = queueDir.poll();
             for (File file : queueDir.poll().listFiles()) {
                 if (file.isDirectory()) {
@@ -39,7 +39,7 @@ public class SearchFiles {
 
     private String getTypeOfSearch() {
         String result = null;
-        for(String key : commands.keySet()) {
+        for (String key : commands.keySet()) {
             if (key.equals("-m")) {
                 result = key;
             } else if (key.equals("-f")) {
@@ -66,7 +66,7 @@ public class SearchFiles {
     private boolean checkFileByMask(File file, String mask) {
         boolean result = true;
         String fileName = file.getName();
-        if(!mask.contains("*")) {
+        if (!mask.contains("*")) {
             result = this.checkFileByFullName(file, mask);
         } else {
             String[] parts = mask.split("\\*");

@@ -10,7 +10,7 @@ import java.util.regex.PatternSyntaxException;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 21.05.2019
+ * @since 22.05.2019
  */
 
 public class Validator {
@@ -58,7 +58,7 @@ public class Validator {
     private List<String> getTypeOfSearch() {
         List<String> result = new ArrayList<>();
         for (String key : commands.keySet()) {
-            if (key.equals("-f") || key.equals("-m") || key.equals("-r")){
+            if (key.equals("-f") || key.equals("-m") || key.equals("-r")) {
                 result.add(key);
             }
         }
