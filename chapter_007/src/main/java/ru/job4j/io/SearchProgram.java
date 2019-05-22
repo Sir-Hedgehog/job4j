@@ -77,7 +77,7 @@ public class SearchProgram {
                 case "-m": arguments.put(arg, null); break;
                 case "-f": arguments.put(arg, null); break;
                 case "-r": arguments.put(arg, arguments.get("-n")); break;
-                case "-o": str = "-n"; break;
+                case "-o": str = "-o"; break;
                 case "-help": arguments.put(arg, null); break;
                 default: break;
             }

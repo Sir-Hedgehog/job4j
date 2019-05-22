@@ -23,8 +23,8 @@ public class SearchFiles {
         Queue<File> queueDir = new LinkedList<>();
         queueDir.offer(new File(commands.get("-d")));
         while(!queueDir.isEmpty()) {
-            File element = queueDir.poll();
-            for (File file : element.listFiles()) {
+            //File element = queueDir.poll();
+            for (File file : queueDir.poll().listFiles()) {
                 if (file.isDirectory()) {
                     queueDir.offer(file);
                 } else {
@@ -54,9 +54,9 @@ public class SearchFiles {
     private boolean checkFile(File file, String typeOfSearch) {
         boolean result = false;
         if (typeOfSearch.equals("-m")) {
-            result = checkFileByMask(file, commands.get("-m"));
+            result = checkFileByMask(file, commands.get("-n"));
         } else if (typeOfSearch.equals("-f")) {
-            result = checkFileByFullName(file, commands.get("-f"));
+            result = checkFileByFullName(file, commands.get("-n"));
         } else if (typeOfSearch.equals("-r")) {
             result = checkFileByRegEx(file, commands.get("-r"));
         }
@@ -64,7 +64,7 @@ public class SearchFiles {
     }
 
     private boolean checkFileByMask(File file, String mask) {
-        boolean result = false;
+        boolean result = true;
         String fileName = file.getName();
         if(!mask.contains("*")) {
             result = this.checkFileByFullName(file, mask);

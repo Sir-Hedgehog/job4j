@@ -27,7 +27,7 @@ public class Validator {
 
     public boolean validate() {
         boolean result = false;
-        if (checkDirectory(commands.get("-d")) && checkRegEx(commands.get("-r")) && checkAll()) {
+        if (checkAll() && checkDirectory(commands.get("-d")) && checkRegEx(commands.get("-r"))) {
             result = true;
         }
         return result;
@@ -69,8 +69,9 @@ public class Validator {
         boolean result = true;
         if (!commands.containsKey("-d") || commands.get("-d") == null
             || !commands.containsKey("-n") || commands.get("-n") == null
-            || !commands.containsKey("-o") || commands.get("-o") == null)
+            || !commands.containsKey("-o") || commands.get("-o") == null) {
             result = false;
+        }
         if (this.getTypeOfSearch().size() != 1) {
             result = false;
         }
