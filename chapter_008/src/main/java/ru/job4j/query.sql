@@ -7,42 +7,39 @@ create table product (
 	id serial primary key,
 	name varchar(2000),
 	type_id int references type(id),
-	expired_date varchar(2000),
-	price int,
-	quantity int
+	expired_date timestamp,
+	price int
 )
 
---Сыр (тип 2)
-select * from product as p
-where p.type_id = 2
+--Cheese
+select * from product as p, type as t 
+where p.type_id = t.id and t.name like '%СЫР%' 
 
---Мороженое
+--Ice-cream
 select * from product as p
 where p.name like '%Мороженое%'
 
---Срок годности за июнь
+--The expiration date of June
 select * from product as p
-where p.expired_date like '%06.2019%';
+where extract(month from p.expired_date) - extract(month from current_date) = 1;
 
---Самый дорогой продукт
+--The most expensive product
 select * from product as p
 where p.price = (select max(price) from product);
 
---Количество продуктов определенного типа (например, молоко(тип 2))
-select * from product as p
-where p.type_id = 2
+--Quantity of all products of the certain type
+select count(*) from product as p, type as t
+where t.id = p.type_id and t.name like '%МОРОЖЕНОЕ%'
 
---Количество всех продуктов определенного типа
-select * from product as p
-where p.type_id = 2 and quantity < 11
+--Cheese and milk
+select * from product as p, type as t 
+where p.type_id = t.id and t.name ~ ('СЫР|МОЛОКО')
 
---Сыр и молоко (тип 1 и 2, соответственно)
-select * from product as p
-where p.type_id in (1, 2)
+--Type of products, which are less then 10 points
+select t.name, count(p.id) < 10
+from type as t, product as p
+group by t.name
 
---Тип продуктов, цена которых меньше 350 руб.
-select * from product as p
-where p.price < 100 
+--All products and its types
+select t.name, p.name from type as t left outer join product as p on p.type_id = t.id
 
---Все продукты и их тип
-select * from product 
