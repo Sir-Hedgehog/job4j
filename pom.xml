@@ -84,6 +84,17 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.0.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>chapter_007.src.main.java.ru.job4j.io.SearchProgram</mainClass>
+                            <packageName>chapter_007.src.main.java.ru.job4j.io</packageName>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>target/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
