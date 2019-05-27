@@ -36,9 +36,8 @@ select * from product as p, type as t
 where p.type_id = t.id and t.name ~ ('яшп|лнкнйн')
 
 --Type of products, which are less then 10 points
-select t.name, count(p.id) < 10
-from type as t, product as p
-group by t.name
+SELECT t.name FROM product AS p LEFT JOIN type AS t ON t.id = p.type_id
+GROUP BY t.name HAVING COUNT(p.id) < 10
 
 --All products and its types
 select t.name, p.name from type as t left outer join product as p on p.type_id = t.id
