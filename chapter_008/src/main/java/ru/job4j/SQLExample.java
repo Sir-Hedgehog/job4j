@@ -3,6 +3,12 @@ package ru.job4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 27.05.2019
+ */
+
 import java.sql.*;
 
 public class SQLExample {
