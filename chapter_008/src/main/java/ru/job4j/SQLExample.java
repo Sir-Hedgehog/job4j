@@ -2,7 +2,6 @@ package ru.job4j;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import jdk.internal.net.http.common.Log;
 
 import java.sql.*;
 
@@ -16,9 +15,14 @@ public class SQLExample {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, userName, password);
-            PreparedStatement st = conn.prepareStatement("insert into type(name) values(?)");
-            st.setString (1, "ПЕЧЕНЬЕ");
+            //PreparedStatement st = conn.prepareStatement("insert into type(name) values(?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement st = conn.prepareStatement("delete from type where id = ?");
+            st.setInt (1, 6);
             st.executeUpdate();
+            /*ResultSet generatedKeys = st.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                System.out.println(generatedKeys.getInt(1));
+            }*/
             /*PreparedStatement st = conn.prepareStatement("select * from car as c where c.id in (?, ?)");
             st.setInt (1, 1);
             st.setInt (2, 3);
