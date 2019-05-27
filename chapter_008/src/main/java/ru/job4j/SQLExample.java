@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.*;
 
 public class SQLExample {
-    private static final Logger log = LoggerFactory.getLogger(SQLExample.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SQLExample.class);
 
     public static void main(String[] args) {
         String url = "jdbc:postgresql://localhost:5432/Query";
@@ -17,7 +17,7 @@ public class SQLExample {
             conn = DriverManager.getConnection(url, userName, password);
             //PreparedStatement st = conn.prepareStatement("insert into type(name) values(?)", Statement.RETURN_GENERATED_KEYS);
             PreparedStatement st = conn.prepareStatement("delete from type where id = ?");
-            st.setInt (1, 6);
+            st.setInt(1, 6);
             st.executeUpdate();
             /*ResultSet generatedKeys = st.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -33,13 +33,13 @@ public class SQLExample {
             rs.close();
             st.close();*/
         } catch (SQLException e) {
-            log.error(e.getMessage(), e);
+            LOG.error(e.getMessage(), e);
         } finally {
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    log.error(e.getMessage(), e);
+                    LOG.error(e.getMessage(), e);
                 }
             }
         }
