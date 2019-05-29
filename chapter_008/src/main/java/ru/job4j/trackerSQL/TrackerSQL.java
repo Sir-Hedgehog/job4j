@@ -16,15 +16,16 @@ public class TrackerSQL implements ITracker {
     private Connection connection;
 
     public boolean init() {
-        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties"); Statement st = connection.createStatement()) {
             Properties config = new Properties();
             config.load(in);
-            Class.forName(config.getProperty("driver-class-name"));
+            Class.forName(config.getProperty("org.postgresql.Driver"));
             this.connection = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
+                    config.getProperty("jdbc:postgresql://localhost:5432/Query"),
+                    config.getProperty("postgres"),
                     config.getProperty("password")
             );
+            st.executeUpdate("CREATE TABLE IF NOT EXISTS tracker (id serial primary key, name varchar(2000), description varchar(2000))");
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -89,10 +90,18 @@ public class TrackerSQL implements ITracker {
     public List<Item> findAll() {
         List<Item> list = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement("SELECT * FROM item")) {
-            st.executeQuery();
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Item item = new Item();
+                item.setId(rs.getString(1));
+                item.setName(rs.getString(2));
+                item.setDesc(rs.getString(3));
+                list.add(item);
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
+        return list;
     }
 
     /**
