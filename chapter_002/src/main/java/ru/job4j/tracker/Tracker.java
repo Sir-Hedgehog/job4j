@@ -11,7 +11,7 @@ import java.util.Random;
  * @since 12.12.2018
  */
 
-public class Tracker {
+public class Tracker implements ITracker {
     List<Item> items = new ArrayList<>();
     private static final Random RANDOM = new Random();
 
@@ -56,7 +56,6 @@ public class Tracker {
      * Метод удаляет заявку
      * @param id идентификатор заявки
      */
-
     public boolean delete(String id) {
         boolean result = false;
         for (int index = 0; index != this.items.size(); index++) {
@@ -91,7 +90,6 @@ public class Tracker {
         }
         return result;
     }
-
 
     /**
      * Метод выдает список по имени

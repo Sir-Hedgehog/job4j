@@ -28,8 +28,8 @@ public class SQLExample {
             /*ResultSet generatedKeys = st.getGeneratedKeys();
             if (generatedKeys.next()) {
                 System.out.println(generatedKeys.getInt(1));
-            }*/
-            /*PreparedStatement st = conn.prepareStatement("select * from car as c where c.id in (?, ?)");
+            }
+            PreparedStatement st = conn.prepareStatement("select * from car as c where c.id in (?, ?)");
             st.setInt (1, 1);
             st.setInt (2, 3);
             ResultSet rs = st.executeQuery();
