@@ -11,12 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 30.05.2019
+ */
+
 public class TrackerSQL implements ITracker {
     private static final Logger LOG = LoggerFactory.getLogger(TrackerSQL.class);
     private Connection connection;
 
     public boolean init() {
-        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties"); Statement st = connection.createStatement()) {
+        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("org.postgresql.Driver"));
@@ -25,7 +31,11 @@ public class TrackerSQL implements ITracker {
                     config.getProperty("postgres"),
                     config.getProperty("password")
             );
-            st.executeUpdate("CREATE TABLE IF NOT EXISTS tracker (id serial primary key, name varchar(2000), description varchar(2000))");
+            try (Statement st = connection.createStatement()) {
+                st.executeUpdate("CREATE TABLE IF NOT EXISTS tracker (id serial primary key, name varchar(2000), description varchar(2000))");
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+            }
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
