@@ -22,7 +22,7 @@ public class TrackerSQLTest {
     }
 
     @Test
-    public void checkAdd() {
+    public void whenAddNewItemThenTrackerHasSameItem() {
         TrackerSQL sql = new TrackerSQL();
         Item item = new Item("Frank", "Blue screen");
         sql.add(item);
@@ -62,7 +62,6 @@ public class TrackerSQLTest {
         tracker.add(list.get(1));
         tracker.add(list.get(2));
         assertThat(tracker.findAll(), is(list));
-
     }
 
     @Test

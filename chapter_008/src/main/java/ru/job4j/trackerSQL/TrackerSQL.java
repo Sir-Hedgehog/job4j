@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
@@ -20,15 +21,20 @@ import java.util.Properties;
 public class TrackerSQL implements ITracker {
     private static final Logger LOG = LoggerFactory.getLogger(TrackerSQL.class);
     private Connection connection;
+    private static final Random RANDOM = new Random();
+
+    private String generateId() {
+        return String.valueOf(RANDOM.nextInt());
+    }
 
     public boolean init() {
         try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
-            Class.forName(config.getProperty("org.postgresql.Driver"));
+            Class.forName(config.getProperty("driver-class-name"));
             this.connection = DriverManager.getConnection(
-                    config.getProperty("jdbc:postgresql://localhost:5432/Query"),
-                    config.getProperty("postgres"),
+                    config.getProperty("url"),
+                    config.getProperty("username"),
                     config.getProperty("password")
             );
             try (Statement st = connection.createStatement()) {
@@ -49,9 +55,11 @@ public class TrackerSQL implements ITracker {
      */
     @Override
     public Item add(Item item) {
-        try (PreparedStatement st = connection.prepareStatement("INSERT INTO item(name, description) values(?, ?)")) {
-            st.setString(1, item.getName());
-            st.setString(2, item.getDesc());
+        try (PreparedStatement st = connection.prepareStatement("INSERT INTO item(id, name, description) values(?, ?, ?)")) {
+            item.setId(this.generateId());
+            st.setString(1, item.getId());
+            st.setString(2, item.getName());
+            st.setString(3, item.getDesc());
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
