@@ -55,11 +55,10 @@ public class TrackerSQL implements ITracker {
      */
     @Override
     public Item add(Item item) {
-        try (PreparedStatement st = connection.prepareStatement("INSERT INTO item(id, name, description) values(?, ?, ?)")) {
+        try (PreparedStatement st = connection.prepareStatement("INSERT INTO item(name, description) values(?, ?)")) {
             item.setId(this.generateId());
-            st.setString(1, item.getId());
-            st.setString(2, item.getName());
-            st.setString(3, item.getDesc());
+            st.setString(1, item.getName());
+            st.setString(2, item.getDesc());
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
