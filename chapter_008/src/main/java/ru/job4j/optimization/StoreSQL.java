@@ -5,12 +5,20 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.*;
+import java.util.concurrent.Executor;
+
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 14.07.2019
+ */
 
 public class StoreSQL implements AutoCloseable {
     private final Config config;
-    private Connection connect;
+    private ConnectionSQLLite sql = new ConnectionSQLLite();
     private static final Logger LOG = LoggerFactory.getLogger(StoreSQL.class);
     private static final Random RANDOM = new Random();
+    private Connection connection = null;
 
     private int generateId() {
         return RANDOM.nextInt();
@@ -20,34 +28,76 @@ public class StoreSQL implements AutoCloseable {
         this.config = config;
     }
 
-    public void generate(int size) {
-        try (Statement statement = connect.createStatement()) {
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS store (field integer)");
-            for (int index = 0; index < size; index++) {
-                try (PreparedStatement ps = connect.prepareStatement("INSERT INTO store (field) values(?)")) {
-                    ps.setInt(index, this.generateId());
-                } catch (SQLException e) {
-                    LOG.error(e.getMessage(), e);
-                }
+    private void createTable() {
+        String table = "CREATE TABLE IF NOT EXISTS Entry (field integer)";
+        try {
+            connection.setAutoCommit(false);
+            try (Statement statement = connection.createStatement()) {
+                statement.executeQuery(table);
+                connection.commit();
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+                connection.rollback();
             }
         } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
+            e.printStackTrace();
         }
     }
 
-    public List<Integer> load() {
-        List<Integer> list = new ArrayList<>();
-        try (Statement statement = connect.createStatement()) {
-            String s = "SELECT * FROM store";
+    private void dropTable() {
+        String table = "DROP TABLE IF EXISTS Entry";
+        try {
+            connection.setAutoCommit(false);
+            try (Statement statement = connection.createStatement()) {
+                connection.setAutoCommit(false);
+                statement.executeQuery(table);
+                connection.commit();
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+                connection.rollback();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void generate(int size) {
+        createTable();
+        dropTable();
+        try {
+            connection.setAutoCommit(false);
+            try (PreparedStatement ps = sql.getConnection().prepareStatement("INSERT INTO Entry(field) VALUES(?)")) {
+                for (int index = 0; index < size; index++) {
+                    ps.setInt(index, this.generateId());
+                }
+                connection.commit();
+            }
+            catch(SQLException e) {
+                LOG.error(e.getMessage(), e);
+                connection.rollback();
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Entry> load() {
+        List<Entry> list = new ArrayList<>();
+        try (Statement statement = sql.getConnection().createStatement()) {
+            String s = "SELECT field FROM Entry";
+            connection.setAutoCommit(false);
             try {
                 ResultSet rs = statement.executeQuery(s);
+                int index = 1;
                 while (rs.next()) {
-                    int index = 1;
-                    list.add(rs.getInt(index));
+                    list.add(new Entry(rs.getInt(index)));
                     ++index;
                 }
+                connection.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
+                connection.rollback();
             }
         }
         catch (SQLException e) {
@@ -58,8 +108,8 @@ public class StoreSQL implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        if (connect != null) {
-            connect.close();
+        if (sql.getConnection() != null) {
+            sql.getConnection().close();
         }
     }
 }
