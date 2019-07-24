@@ -5,8 +5,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,6 +26,7 @@ public class StoreXML {
     @XmlRootElement
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Entries {
+
         private List<Entry> values;
 
         public Entries() {
@@ -46,21 +45,18 @@ public class StoreXML {
         }
     }
 
-    public void save(List<Entry> values) {
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Entries.class);
-            Entries entries = new Entries(values);
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            jaxbMarshaller.marshal(entries, System.out);
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
+    public File save(List<Entry> values) throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(Entries.class);
+        Entries entries = new Entries(values);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        jaxbMarshaller.marshal(entries, target);
+        return target;
     }
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         StoreXML store = new StoreXML();
         List<Entry> list = new ArrayList<>(Arrays.asList(new Entry(1), new Entry(2)));
         store.save(list);
-    }
+    }*/
 }

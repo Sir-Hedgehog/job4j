@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class ConnectionSQLLite {
     private Connection connection;
 
-    public Connection getConnection() {
+   /* public Connection getConnection() {
         getConnect();
         return connection;
     }
@@ -28,5 +28,5 @@ public class ConnectionSQLLite {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
