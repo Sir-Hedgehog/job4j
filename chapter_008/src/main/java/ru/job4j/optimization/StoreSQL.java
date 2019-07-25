@@ -75,8 +75,8 @@ public class StoreSQL implements AutoCloseable {
     public List<Entry> load() {
         List<Entry> list = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            String s = "SELECT number FROM Entry";
-            ResultSet rs = statement.executeQuery(s);
+            String str = "SELECT number FROM Entry";
+            ResultSet rs = statement.executeQuery(str);
             while (rs.next()) {
                 list.add(new Entry(rs.getInt("number")));
             }

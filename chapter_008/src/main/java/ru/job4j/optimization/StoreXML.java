@@ -45,9 +45,9 @@ public class StoreXML {
         }
     }
 
-    public File save(List<Entry> values) throws JAXBException {
+    public File save(List<Entry> entry) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(Entries.class);
-        Entries entries = new Entries(values);
+        Entries entries = new Entries(entry);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         jaxbMarshaller.marshal(entries, target);

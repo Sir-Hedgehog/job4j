@@ -23,10 +23,18 @@ public class OptimizationTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    public StoreXML.Entries help(File file) throws Exception {
+    private StoreXML.Entries help(File file) throws Exception {
         JAXBContext context = JAXBContext.newInstance(StoreXML.Entries.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         return (StoreXML.Entries) unmarshaller.unmarshal(file);
+    }
+
+    private boolean checkResult(long totalTime) {
+        boolean result = false;
+        if (totalTime < 300000) {
+            result = true;
+        }
+        return result;
     }
 
     @Test
@@ -58,7 +66,7 @@ public class OptimizationTest {
     @Test
     public void whenTestConvertXSLTThenOK() throws Exception {
         File source = folder.newFile();
-        File scheme = new File(getClass().getClassLoader().getResource("convertation.xsl").getFile());
+        File scheme = new File(Objects.requireNonNull(getClass().getClassLoader().getResource("convertation.xsl")).getFile());
         File dest = folder.newFile();
         List<Entry> list = new ArrayList<>();
         list.add(new Entry(1));
@@ -68,7 +76,34 @@ public class OptimizationTest {
         ConvertXSLT xslt = new ConvertXSLT();
         xslt.convert(source, dest, scheme);
         SAXChanger sax = new SAXChanger(dest);
-        int result = sax.parseNumber();
-        assertThat(result, is(3));
+        Long result = sax.parseNumber();
+        assertThat(result, is(3L));
+    }
+
+    @Test
+    public void whenTestSpeedThenOK() throws Exception {
+        long startTime = System.currentTimeMillis();
+        //Config -> StoreSQL
+        Config config = new Config();
+        config.init();
+        List<Entry> list;
+        StoreSQL sql = new StoreSQL(config);
+        sql.generate(1000000);
+        list = sql.load();
+        //StoreSQL -> StoreXML
+        File source = folder.newFile();
+        StoreXML xml = new StoreXML(source);
+        xml.save(list);
+        //StoreXML -> ConvertXSLT -> SAXChanger
+        File dest = folder.newFile();
+        File scheme = new File(getClass().getClassLoader().getResource("convertation.xsl").getFile());
+        ConvertXSLT xslt = new ConvertXSLT();
+        xslt.convert(source, dest, scheme);
+        SAXChanger sax = new SAXChanger(dest);
+        Long result = sax.parseNumber();
+        assertThat(result, is(500000500000L));
+        long stopTime = System.currentTimeMillis();
+        long totalTime = stopTime - startTime;
+        assertThat(checkResult(totalTime), is (true));
     }
 }

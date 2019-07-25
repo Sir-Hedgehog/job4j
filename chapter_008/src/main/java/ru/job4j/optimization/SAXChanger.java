@@ -18,25 +18,25 @@ public class SAXChanger {
     }
 
     public class XMLHandler extends DefaultHandler {
-        private int sum = 0;
+        private Long sum = 0L;
 
         @Override
         public void startElement(String uri, String localName, String entry, Attributes attributes) {
             try {
-                if (entry.equals("values")) {
-                    sum += Integer.parseInt(attributes.getValue("number"));
+                if (entry.equals("entry")) {
+                    sum += Long.parseLong(attributes.getValue("number"));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        public int getSum() {
+        public Long getSum() {
             return sum;
         }
     }
 
-    public int parseNumber() throws ParserConfigurationException, SAXException, IOException {
+    public Long parseNumber() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
         XMLHandler handler = new XMLHandler();

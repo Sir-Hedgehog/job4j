@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Entry {
     private Integer number;
 
-    public Entry(int number) {
+    public Entry(Integer number) {
         this.number = number;
     }
 
@@ -27,7 +27,7 @@ public class Entry {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
