@@ -23,29 +23,6 @@ public class StoreXML {
     public StoreXML() {
     }
 
-    @XmlRootElement
-    @XmlAccessorType(XmlAccessType.FIELD)
-    public static class Entries {
-
-        @XmlElement(name = "entry")
-        private List<Entry> values;
-
-        public Entries() {
-        }
-
-        public Entries(List<Entry> values) {
-            this.values = values;
-        }
-
-        public List<Entry> getValues() {
-            return values;
-        }
-
-        public void setValues(List<Entry> values) {
-            this.values = values;
-        }
-    }
-
     public File save(List<Entry> entry) throws JAXBException {
         JAXBContext jaxbContext = JAXBContext.newInstance(Entries.class);
         Entries entries = new Entries(entry);

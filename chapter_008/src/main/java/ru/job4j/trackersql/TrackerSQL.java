@@ -1,4 +1,4 @@
-package ru.job4j.trackerSQL;
+package ru.job4j.trackersql;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

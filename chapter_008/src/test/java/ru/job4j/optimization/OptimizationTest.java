@@ -25,10 +25,10 @@ public class OptimizationTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    private StoreXML.Entries help(File file) throws Exception {
-        JAXBContext context = JAXBContext.newInstance(StoreXML.Entries.class);
+    private Entries help(File file) throws Exception {
+        JAXBContext context = JAXBContext.newInstance(Entries.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        return (StoreXML.Entries) unmarshaller.unmarshal(file);
+        return (Entries) unmarshaller.unmarshal(file);
     }
 
     private boolean checkResult(long totalTime) {
@@ -62,7 +62,7 @@ public class OptimizationTest {
         list.add(new Entry(2));
         StoreXML store = new StoreXML(file);
         store.save(list);
-        StoreXML.Entries total = this.help(file);
+        Entries total = this.help(file);
         assertThat(list, is(total.getValues()));
     }
 
@@ -108,7 +108,7 @@ public class OptimizationTest {
         assertThat(result, is(500000500000L));
         long stopTime = System.currentTimeMillis();
         long totalTime = stopTime - startTime;
-        assertThat(checkResult(totalTime), is (true));
+        assertThat(checkResult(totalTime), is(true));
         sql.dropTable();
     }
 }
