@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 14.07.2019
+ * @since 27.07.2019
  */
 
 public class StoreXML {
@@ -27,6 +27,7 @@ public class StoreXML {
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Entries {
 
+        @XmlElement(name = "entry")
         private List<Entry> values;
 
         public Entries() {
@@ -53,10 +54,4 @@ public class StoreXML {
         jaxbMarshaller.marshal(entries, target);
         return target;
     }
-
-    /*public static void main(String[] args) throws Exception {
-        StoreXML store = new StoreXML();
-        List<Entry> list = new ArrayList<>(Arrays.asList(new Entry(1), new Entry(2)));
-        store.save(list);
-    }*/
 }

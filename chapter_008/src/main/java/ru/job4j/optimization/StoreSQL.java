@@ -9,12 +9,11 @@ import java.util.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 14.07.2019
+ * @since 27.07.2019
  */
 
 public class StoreSQL implements AutoCloseable {
     private final Config config;
-    //private ConnectionSQLLite sql = new ConnectionSQLLite();
     private static final Logger LOG = LoggerFactory.getLogger(StoreSQL.class);
     private Connection connection;
 
@@ -41,7 +40,7 @@ public class StoreSQL implements AutoCloseable {
         }
     }
 
-    private void dropTable() {
+    public void dropTable() {
         String table = "DROP TABLE IF EXISTS Entry";
         try (Statement statement = connection.createStatement()) {
             statement.executeUpdate(table);
@@ -75,7 +74,7 @@ public class StoreSQL implements AutoCloseable {
     public List<Entry> load() {
         List<Entry> list = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
-            String str = "SELECT number FROM Entry";
+            String str = "SELECT number FROM entry";
             ResultSet rs = statement.executeQuery(str);
             while (rs.next()) {
                 list.add(new Entry(rs.getInt("number")));

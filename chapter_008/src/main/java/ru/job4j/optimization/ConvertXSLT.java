@@ -10,7 +10,7 @@ import java.io.File;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 14.07.2019
+ * @since 27.07.2019
  */
 
 public class ConvertXSLT {

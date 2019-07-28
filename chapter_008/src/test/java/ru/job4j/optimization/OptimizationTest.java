@@ -1,22 +1,24 @@
 package ru.job4j.optimization;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.parsers.SAXParser;
-
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
+
+/**
+ * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
+ * @version $Id$
+ * @since 28.07.2019
+ */
 
 public class OptimizationTest {
 
@@ -37,15 +39,16 @@ public class OptimizationTest {
         return result;
     }
 
+    //@Ignore
     @Test
     public void whenTestStoreSQLThenOK() {
-        Config config = new Config();
-        config.init();
+        Config configuration = new Config();
+        configuration.init();
         List<Entry> list;
         List<Entry> expected = new ArrayList<>();
         expected.add(new Entry(1));
         expected.add(new Entry(2));
-        StoreSQL store = new StoreSQL(config);
+        StoreSQL store = new StoreSQL(configuration);
         store.generate(2);
         list = store.load();
         assertThat(list, is(expected));
@@ -59,8 +62,8 @@ public class OptimizationTest {
         list.add(new Entry(2));
         StoreXML store = new StoreXML(file);
         store.save(list);
-        StoreXML.Entries result = this.help(file);
-        assertThat(list, is(result.getValues()));
+        StoreXML.Entries total = this.help(file);
+        assertThat(list, is(total.getValues()));
     }
 
     @Test
@@ -80,20 +83,21 @@ public class OptimizationTest {
         assertThat(result, is(3L));
     }
 
+    @Ignore
     @Test
-    public void whenTestSpeedThenOK() throws Exception {
+    public void whenTestStoresSpeedThenOK() throws Exception {
         long startTime = System.currentTimeMillis();
         //Config -> StoreSQL
         Config config = new Config();
         config.init();
-        List<Entry> list;
+        List<Entry> entries;
         StoreSQL sql = new StoreSQL(config);
         sql.generate(1000000);
-        list = sql.load();
+        entries = sql.load();
         //StoreSQL -> StoreXML
         File source = folder.newFile();
         StoreXML xml = new StoreXML(source);
-        xml.save(list);
+        xml.save(entries);
         //StoreXML -> ConvertXSLT -> SAXChanger
         File dest = folder.newFile();
         File scheme = new File(getClass().getClassLoader().getResource("convertation.xsl").getFile());
@@ -105,5 +109,6 @@ public class OptimizationTest {
         long stopTime = System.currentTimeMillis();
         long totalTime = stopTime - startTime;
         assertThat(checkResult(totalTime), is (true));
+        sql.dropTable();
     }
 }
