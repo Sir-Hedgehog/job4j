@@ -15,7 +15,7 @@ import java.util.Random;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 30.05.2019
+ * @since 30.07.2019
  */
 
 public class TrackerSQL implements ITracker {
@@ -131,9 +131,10 @@ public class TrackerSQL implements ITracker {
         List<Item> list = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement("SELECT * FROM item WHERE name = ?")) {
             st.setString(1, key);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                list.add(new Item(rs.getString("name")));
+            ResultSet name = st.executeQuery();
+            ResultSet desc = st.executeQuery();
+            while (name.next()) {
+                list.add(new Item(name.getString("name"), desc.getString("desc")));
             }
             return list;
         } catch (SQLException e) {
@@ -149,14 +150,16 @@ public class TrackerSQL implements ITracker {
      */
     @Override
     public Item findById(String id) {
-        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM item WHERE id = ?")) {
+        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM item WHERE desc = ?")) {
             st.setString(1, id);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                return new Item(rs.getString("id"));
+            ResultSet name = st.executeQuery();
+            ResultSet desc = st.executeQuery();
+            while (desc.next()) {
+                return new Item(desc.getString("name"), desc.getString("desc"));
             }
             st.close();
-            rs.close();
+            name.close();
+            desc.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }

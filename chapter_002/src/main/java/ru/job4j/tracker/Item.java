@@ -11,17 +11,13 @@ public class Item {
     private String name;
     private String desc;
 
-    public Item() {
-
-    }
-
-    public Item(String id) {
-        this.id = id;
-    }
-
     public Item(String name, String desc) {
         this.name = name;
         this.desc = desc;
+    }
+
+    public Item() {
+
     }
 
     public String getName() {
