@@ -1,51 +1,30 @@
 package ru.job4j.trackersql;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.job4j.tracker.ITracker;
-import ru.job4j.tracker.Item;
-
-import java.io.InputStream;
+import org.slf4j.*;
+import ru.job4j.tracker.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 30.07.2019
+ * @since 10.08.2019
  */
 
-public class TrackerSQL implements ITracker {
+public class TrackerSQL implements ITracker, AutoCloseable {
     private static final Logger LOG = LoggerFactory.getLogger(TrackerSQL.class);
     private Connection connection;
-    private static final Random RANDOM = new Random();
 
-    private String generateId() {
-        return String.valueOf(RANDOM.nextInt());
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
     }
 
-    public boolean init() {
-        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            Class.forName(config.getProperty("driver-class-name"));
-            this.connection = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-            );
-            try (Statement st = connection.createStatement()) {
-                st.executeUpdate("CREATE TABLE IF NOT EXISTS tracker (id serial primary key, name varchar(2000), description varchar(2000))");
-            } catch (SQLException e) {
-                LOG.error(e.getMessage(), e);
-            }
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
+    public void createTable() {
+        try (Statement st = this.connection.createStatement()) {
+            st.executeUpdate("CREATE TABLE IF NOT EXISTS tracker (id serial primary key, name varchar(2000), description varchar(2000))");
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
         }
-        return this.connection != null;
     }
 
     /**
@@ -55,11 +34,16 @@ public class TrackerSQL implements ITracker {
      */
     @Override
     public Item add(Item item) {
-        try (PreparedStatement st = connection.prepareStatement("INSERT INTO item(name, description) values(?, ?)")) {
-            item.setId(this.generateId());
-            st.setString(1, item.getName());
-            st.setString(2, item.getDesc());
-        } catch (SQLException e) {
+        try (final PreparedStatement ps = this.connection.prepareStatement("INSERT INTO tracker(name, description) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, item.getName());
+            ps.setString(2, item.getDesc());
+            ps.executeUpdate();
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    item.setId(generatedKeys.getString(1));
+                }
+            }
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
         return item;
@@ -72,10 +56,12 @@ public class TrackerSQL implements ITracker {
      */
     @Override
     public boolean replace(String id, Item item) {
-        try (PreparedStatement st = connection.prepareStatement("UPDATE item SET name = ?, desc = ? WHERE = ?")) {
+        try (PreparedStatement st = connection.prepareStatement("UPDATE tracker SET name = ?, description = ? WHERE id = ? ")) {
             st.setString(1, item.getName());
             st.setString(2, item.getDesc());
-            st.setString(3, id);
+            st.setInt(3, Integer.parseInt(id));
+            st.executeUpdate();
+            return true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
@@ -88,10 +74,9 @@ public class TrackerSQL implements ITracker {
      */
     @Override
     public boolean delete(String id) {
-        try (PreparedStatement st = connection.prepareStatement("DELETE FROM item WHERE id = ?")) {
-            st.setString(1, id);
+        try (PreparedStatement st = connection.prepareStatement("DELETE FROM tracker WHERE id = ?")) {
+            st.setInt(1, Integer.parseInt(id));
             st.executeUpdate();
-            st.close();
             return true;
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
@@ -106,13 +91,11 @@ public class TrackerSQL implements ITracker {
     @Override
     public List<Item> findAll() {
         List<Item> list = new ArrayList<>();
-        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM item")) {
+        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM tracker")) {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Item item = new Item();
-                item.setId(rs.getString(1));
-                item.setName(rs.getString(2));
-                item.setDesc(rs.getString(3));
+                Item item = new Item(rs.getString("name"), rs.getString("description"));
+                item.setId(String.valueOf(rs.getInt("id")));
                 list.add(item);
             }
         } catch (SQLException e) {
@@ -129,12 +112,13 @@ public class TrackerSQL implements ITracker {
     @Override
     public List<Item> findByName(String key) {
         List<Item> list = new ArrayList<>();
-        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM item WHERE name = ?")) {
+        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM tracker WHERE name = ?")) {
             st.setString(1, key);
-            ResultSet name = st.executeQuery();
-            ResultSet desc = st.executeQuery();
-            while (name.next()) {
-                list.add(new Item(name.getString("name"), desc.getString("desc")));
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Item item = new Item(rs.getString("name"), rs.getString("description"));
+                item.setId(String.valueOf(rs.getInt("id")));
+                list.add(item);
             }
             return list;
         } catch (SQLException e) {
@@ -150,19 +134,27 @@ public class TrackerSQL implements ITracker {
      */
     @Override
     public Item findById(String id) {
-        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM item WHERE desc = ?")) {
-            st.setString(1, id);
-            ResultSet name = st.executeQuery();
-            ResultSet desc = st.executeQuery();
-            while (desc.next()) {
-                return new Item(desc.getString("name"), desc.getString("desc"));
+        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM tracker WHERE id = ?")) {
+            st.setInt(1, Integer.parseInt(id));
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Item item = new Item(rs.getString("name"), rs.getString("description"));
+                item.setId(String.valueOf(rs.getInt(1)));
+                if (id.equals(item.getId())) {
+                    return item;
+                }
             }
-            st.close();
-            name.close();
-            desc.close();
         } catch (SQLException e) {
             LOG.error(e.getMessage(), e);
         }
         throw new IllegalStateException(String.format("Заявка с идентификатором %s не существует", id));
+    }
+
+    @Override
+
+    public void close() throws Exception {
+        if (connection != null) {
+            connection.close();
+        }
     }
 }
