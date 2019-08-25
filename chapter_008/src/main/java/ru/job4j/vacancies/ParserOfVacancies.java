@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 18.08.2019
+ * @since 23.08.2019
  */
 
 public class ParserOfVacancies {
@@ -64,34 +64,39 @@ public class ParserOfVacancies {
     }
 
     public List<Template> saveVacancies() throws IOException {
-        int index = 0;
-        return this.saveTd(this.saveDates(index), index);
+        List<Template> list = new ArrayList<>();
+        for (int index = 1; index < 50; index++) {
+            list.addAll(this.saveTd(this.saveDates(index), index));
+        }
+        return list;
     }
 
     private Elements saveDates(int index) throws IOException {
         Document document = Jsoup.connect("https://www.sql.ru/forum/job/" + index).get();
         Elements elementsOfDate = document.getElementsByAttributeValue("class", "altCol");
-        Elements filter = null;
-        for (Element element : elementsOfDate) {
+        Elements newElementsOfDate = new Elements();
+        for (int number = 0; number < elementsOfDate.size(); number++) {
+            if (number % 2 != 0) {
+                newElementsOfDate.add(elementsOfDate.get(number));
+            }
+        }
+        Elements filter = new Elements();
+        for (Element element : newElementsOfDate) {
             if (element.text().contains("вчера, ")
                     || element.text().contains("сегодня, ")
                     || element.text().contains(" 19, ")) {
                 filter.add(element);
-            } else {
-                ++index;
-                break;
             }
-            ++index;
         }
         return filter;
     }
 
-    private List<Template> saveTd (Elements elementsOfDate, int index) throws IOException {
+    private Set<Template> saveTd (Elements newElementsOfDate, int index) throws IOException {
         Set<Template> set = new LinkedHashSet<>();
         List<Template> list = new ArrayList<>();
         Document document = Jsoup.connect("https://www.sql.ru/forum/job/" + index).get();
         Elements elementsOfTd = document.getElementsByAttributeValue("class", "postslisttopic");
-        for (int number = 0; number < elementsOfDate.size(); number++) {
+        for (int number = 0; number < newElementsOfDate.size(); number++) {
             Element elementOfHref = elementsOfTd.get(number).child(0);
             if (elementOfHref.text().toLowerCase().contains("java")
                     && !elementOfHref.text().toLowerCase().contains("script")) {
@@ -100,10 +105,10 @@ public class ParserOfVacancies {
                 Document description = Jsoup.connect(link).get();
                 Elements messages = description.getElementsByAttributeValue("class", "msgBody");
                 String text = messages.get(1).text();
-                set.add(new Template(name, text, link));
+                list.add(new Template(name, text, link));
             }
-            list.addAll(set);
+            set.addAll(list);
         }
-        return list;
+        return set;
     }
 }
