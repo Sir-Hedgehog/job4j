@@ -36,7 +36,7 @@ public class Tracker implements ITracker {
 
     /**
      * Метод обновляет заявку
-     * @param item существующая заявка
+     * @param item новая заявка
      * @param id идентификатор
      */
     public boolean replace(String id, Item item) {
