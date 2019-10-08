@@ -1,6 +1,7 @@
 package ru.job4j.scripts;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
@@ -20,6 +21,7 @@ public class SaneOrder {
      * @param unsorted - неотсортированный список скриптов
      * @return - отсортированный список скриптов
      */
+
     public Set<Integer> order(List<VulnerabilityScript> unsorted) {
         Deque<VulnerabilityScript> deque = new LinkedList<>();
         Set<Integer> result = new LinkedHashSet<>();
