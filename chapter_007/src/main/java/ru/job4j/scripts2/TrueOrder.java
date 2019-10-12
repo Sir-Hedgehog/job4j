@@ -1,38 +1,34 @@
 package ru.job4j.scripts2;
 
+import ru.job4j.scripts.VulnerabilityScript;
+
 import java.util.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version $Id$
- * @since 08.10.2019
+ * @since 12.10.2019
  */
 
 public class TrueOrder {
     /**
-     * Метод выстраивает отсортированный список
-     * @param unsorted - неотсортированный список скриптов
+     * Метод выстраивает отсортированный список скриптов
+     * @param unsorted - неотсортированная картотека скриптов
      * @return - отсортированный список скриптов
      */
     public List<Integer> order(Map<Integer, List<Integer>> unsorted, Integer script) {
-        List<Integer> result = new ArrayList<>();
-        Set<Integer> set = new LinkedHashSet<>();
-        result.add(script);
-        for (List<Integer> current : unsorted.values()) {
-            if (!current.isEmpty()) {
-                set.addAll(current);
+        Set<Integer> intermediary = new LinkedHashSet<>();
+        Deque<Integer> deque = new LinkedList<>();
+        intermediary.add(script);
+        deque.add(script);
+        while (!unsorted.isEmpty()) {
+            Integer current = deque.pollFirst();
+            if (unsorted.containsKey(current)) {
+                deque.addAll(unsorted.get(current));
+                intermediary.addAll(unsorted.get(current));
+                unsorted.remove(current);
             }
         }
-        for (Integer current : unsorted.keySet()) {
-            if (!set.contains(current)) {
-                result.add(current);
-            }
-        }
-        for (Integer current : unsorted.keySet()) {
-            if (set.contains(current)) {
-                result.add(current);
-            }
-        }
-        return result;
+        return new ArrayList<>(intermediary);
     }
 }
