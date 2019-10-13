@@ -63,6 +63,10 @@ public class ParserOfVacancies {
     public ParserOfVacancies() {
     }
 
+    /**
+     * Метод создает результирующий список с отобранными по критерию вакансиями
+     * @return - результирующий список
+     */
     public List<Template> saveVacancies() throws IOException {
         List<Template> list = new ArrayList<>();
         for (int index = 1; index < 50; index++) {
@@ -71,6 +75,11 @@ public class ParserOfVacancies {
         return list;
     }
 
+    /**
+     * Метод сортирует вакансии по дате
+     * @param index - индекс внешнего цикла
+     * @return - полученные элементы
+     */
     private Elements saveDates(int index) throws IOException {
         Document document = Jsoup.connect("https://www.sql.ru/forum/job/" + index).get();
         Elements elementsOfDate = document.getElementsByAttributeValue("class", "altCol");
@@ -91,7 +100,13 @@ public class ParserOfVacancies {
         return filter;
     }
 
-    private Set<Template> saveTd (Elements newElementsOfDate, int index) throws IOException {
+    /**
+     * Метод сортирует java-вакансии
+     * @param index- индекс внешнего цикла
+     * @param newElementsOfDate - элементы, отсортированные по дате
+     * @return - результирующее множество с java-вакансиями
+     */
+    private Set<Template> saveTd(Elements newElementsOfDate, int index) throws IOException {
         Set<Template> set = new LinkedHashSet<>();
         List<Template> list = new ArrayList<>();
         Document document = Jsoup.connect("https://www.sql.ru/forum/job/" + index).get();

@@ -1,8 +1,6 @@
 package ru.job4j.vacancies;
 
 import org.junit.Test;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
 import ru.job4j.trackersql.ConnectionRollback;
 import java.io.InputStream;
 import java.sql.*;
@@ -31,7 +29,6 @@ public class VacancyTest {
             throw new IllegalStateException(e);
         }
     }
-
     @Test
     public void whenTestStoreSQLThenOK() throws Exception {
         ParserOfVacancies parser = new ParserOfVacancies();
@@ -41,17 +38,4 @@ public class VacancyTest {
         String template = manager.edit(list);
         assertThat(template, is("Senior Java Ee Developer"));
     }
-
-    /*@Test
-    public void whenStartAfterEveryDayThenOK() throws Exception {
-        JobDetail jobDetail = JobBuilder.newJob(ParserOfVacancies.class).build();
-        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-        Trigger trigger = TriggerBuilder
-                .newTrigger()
-                .withIdentity("CronTrigger")
-                .withSchedule(CronScheduleBuilder.cronSchedule("0 0 12 * * ?"))
-                .build();
-        scheduler.start();
-        scheduler.scheduleJob(jobDetail, trigger);
-    }*/
 }

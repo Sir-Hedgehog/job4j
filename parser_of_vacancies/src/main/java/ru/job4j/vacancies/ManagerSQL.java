@@ -19,6 +19,9 @@ public class ManagerSQL implements AutoCloseable {
         this.connection = connection;
     }
 
+    /**
+     * Метод создает таблицу в БД с необходимыми ячейками
+     */
     private void createTable() {
         String table = "CREATE TABLE IF NOT EXISTS vacancy (id serial primary key, name varchar(2000), text varchar(50000), link varchar(2000))";
         try (Statement statement = connection.createStatement()) {
@@ -28,6 +31,9 @@ public class ManagerSQL implements AutoCloseable {
         }
     }
 
+    /**
+     * Метод удаляет таблицу в БД с целью обновления
+     */
     private void dropTable() {
         String table = "DROP TABLE IF EXISTS vacancy";
         try (Statement statement = connection.createStatement()) {
@@ -37,6 +43,11 @@ public class ManagerSQL implements AutoCloseable {
         }
     }
 
+    /**
+     * Метод вносит необходимые изменения в существующую таблицу БД
+     * @param list - список вакансий
+     * @return - выводит первую вакансию текущего года для тестирования данного метода
+     */
     public String edit(List<ParserOfVacancies.Template> list) {
         dropTable();
         createTable();
@@ -66,6 +77,9 @@ public class ManagerSQL implements AutoCloseable {
         return list.get(list.size() - 1).getName();
     }
 
+    /**
+     * Метод реалирует функционал интерфейса AutoCloseable по закрытию connection
+     */
     public void close() throws Exception {
         if (connection != null) {
             connection.close();
