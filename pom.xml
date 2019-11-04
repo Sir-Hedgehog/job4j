@@ -199,6 +199,7 @@
                             <consoleOutput>true</consoleOutput>
                             <failsOnError>true</failsOnError>
                             <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                            <excludes>**/module-info.java</excludes>
                         </configuration>
                         <goals>
                             <goal>check</goal>
@@ -235,7 +236,6 @@
             </plugin>
         </plugins>
     </build>
-
     <profiles>
         <profile>
             <id>test</id>
