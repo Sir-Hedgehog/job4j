@@ -1,4 +1,4 @@
-package ru.job4j.scripts2;
+package ru.job4j.scripts;
 
 import org.junit.Test;
 import java.util.*;

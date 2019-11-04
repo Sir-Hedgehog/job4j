@@ -1,6 +1,4 @@
-package ru.job4j.scripts2;
-
-import ru.job4j.scripts.VulnerabilityScript;
+package ru.job4j.scripts;
 
 import java.util.*;
 
