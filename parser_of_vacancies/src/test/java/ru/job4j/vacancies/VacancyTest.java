@@ -1,7 +1,6 @@
 package ru.job4j.vacancies;
 
 import org.junit.Test;
-import ru.job4j.trackersql.ConnectionRollback;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.*;

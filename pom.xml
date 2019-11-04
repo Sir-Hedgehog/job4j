@@ -23,10 +23,10 @@
         <module>chapter_008</module>
         <module>tictactoe</module>
         <module>puzzle</module>
-        <module>parser_of_vacancies</module>
         <module>list_of_scripts</module>
         <module>map_of_scripts</module>
         <module>chapter_009</module>
+        <module>parser_of_vacancies</module>
     </modules>
 
     <dependencies>

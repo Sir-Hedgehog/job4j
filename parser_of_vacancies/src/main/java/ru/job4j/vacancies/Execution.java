@@ -5,7 +5,7 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.job4j.trackersql.ConnectionRollback;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Date;
