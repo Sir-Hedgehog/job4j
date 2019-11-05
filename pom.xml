@@ -27,6 +27,7 @@
         <module>map_of_scripts</module>
         <module>chapter_009</module>
         <module>parser_of_vacancies</module>
+        <module>mail</module>
     </modules>
 
     <dependencies>
