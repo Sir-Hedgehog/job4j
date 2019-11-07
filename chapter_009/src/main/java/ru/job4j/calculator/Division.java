@@ -1,13 +1,8 @@
 package ru.job4j.calculator;
 
-/**
- * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version $Id$
- * @since 31.10.2019
- */
-
-public class Division {
-    public double divide(double number1, double number2) {
-        return number1 / number2;
+public class Division {   
+    public void getResult(double first, String mark, double second) {
+        double result = first / second;
+        System.out.println("The result: " + result);
     }
 }
