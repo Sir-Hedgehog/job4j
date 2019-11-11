@@ -2,21 +2,21 @@ package ru.job4j.calculator;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version $Id$
- * @since 07.11.2019
+ * @version 1.0
+ * @since 11.11.2019
  */
 
-public class Subtraction {
+public class Ctg {
 
     /**
-     * Метод производит вычитание
+     * Косинус числа
      * @param first - первое число
      * @param mark - операция
      * @param second - второе число
      */
 
     public void getResult(double first, String mark, double second) {
-        double result = first - second;
+        double result = 1 / Math.toDegrees(Math.atan(Math.tan(first / second)));
         System.out.println("The result: " + result);
     }
 }
