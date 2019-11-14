@@ -2,22 +2,16 @@ package ru.job4j.calculator;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
+ * @version 2.0
  * @since 14.11.2019
  */
 
-public class CompoundExpression implements Result {
+public class CompoundExpression extends CalculatorFacade {
     private final SumAndDegree sumAndDegree = new SumAndDegree();
-    private double first;
-    private String mark;
-    private double second;
     private double degree;
 
-
     public CompoundExpression(double first, String mark, double second, double degree) {
-        this.first = first;
-        this.mark = mark;
-        this.second = second;
+        super(first, mark, second);
         this.degree = degree;
     }
 

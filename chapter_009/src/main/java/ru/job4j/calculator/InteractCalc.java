@@ -34,7 +34,7 @@ public class InteractCalc {
             if (agreement.toLowerCase().trim().equals("y")) {
                 System.out.println("Enter the second number: ");
                 degree = numbers.nextInt();
-                CompoundExpression compoundExpression = new CompoundExpression(number1, operation, number2, degree);
+                CalculatorFacade compoundExpression = new CompoundExpression(number1, operation, number2, degree);
                 compoundExpression.getResult();
             } else {
                 CalculatorFacade calc = new EngineeringCalc(number1, operation, number2);
