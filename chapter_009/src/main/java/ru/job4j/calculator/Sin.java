@@ -6,16 +6,15 @@ package ru.job4j.calculator;
  * @since 11.11.2019
  */
 
-public class Sin {
+ public class Sin {
 
     /**
      * Синус числа
      * @param first - первое число
-     * @param mark - операция
-     * @param second - второе число
+     * @param second - первое число
      */
 
-    public void getResult(double first, String mark, double second) {
+    public void getResult(double first, double second) {
         double result = Math.toDegrees(Math.asin(Math.sin(first / second)));
         System.out.println("The result: " + result);
     }

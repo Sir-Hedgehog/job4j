@@ -10,12 +10,11 @@ public class Division {
 
     /**
      * Метод производит деление
-     * @param first- неотсортированный список скриптов
-     * @param mark- неотсортированный список скриптов
-     * @param second - неотсортированный список скриптов
+     * @param first- первое число
+     * @param second - второе число
      */
 
-    public void getResult(double first, String mark, double second) {
+    public void getResult(double first, double second) {
         double result = first / second;
         System.out.println("The result: " + result);
     }

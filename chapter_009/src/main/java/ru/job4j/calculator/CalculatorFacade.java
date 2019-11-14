@@ -2,15 +2,29 @@ package ru.job4j.calculator;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 07.11.2019
+ * @version 2.0
+ * @since 13.11.2019
  */
 
-public class CalculatorFacade {
+public class CalculatorFacade implements Result {
     private final Adding adding = new Adding();
     private final Subtraction subtraction = new Subtraction();
     private final Multiplication multiplication = new Multiplication();
     private final Division division = new Division();
+    protected double first;
+    String mark;
+    protected double second;
+
+    public CalculatorFacade(double first, String mark, double second) {
+        this.first = first;
+        this.mark = mark;
+        this.second = second;
+    }
+
+    @Override
+    public void getResult() {
+        calculate(this.first, this.mark, this.second);
+    }
 
     /**
      * Метод определяет операцию в зависимости от знака
@@ -18,18 +32,15 @@ public class CalculatorFacade {
      * @param mark - операция
      * @param second - второе число
      */
-
-    public void getResult(double first, String mark, double second) {
+    public void calculate(double first, String mark, double second) {
         if (mark.equals("+")) {
-            adding.getResult(first, mark, second);
+            adding.getResult(first, second);
         } else if (mark.equals("-")) {
-            subtraction.getResult(first, mark, second);
+            subtraction.getResult(first, second);
         } else if (mark.equals("*")) {
-            multiplication.getResult(first, mark, second);
+            multiplication.getResult(first, second);
         } else if (mark.equals("/")) {
-            division.getResult(first, mark, second);
-        } else {
-            System.out.println("If you did't get an answer, then you entered incorrect operation. Try to repeat your expression");
+            division.getResult(first, second);
         }
     }
 }

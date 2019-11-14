@@ -11,11 +11,10 @@ public class Cos {
     /**
      * Косинус числа
      * @param first - первое число
-     * @param mark - операция
-     * @param second - второе число
+     * @param second - первое число
      */
 
-    public void getResult(double first, String mark, double second) {
+    public void getResult(double first, double second) {
         double result = Math.toDegrees(Math.acos(Math.cos(first / second)));
         System.out.println("The result: " + result);
     }

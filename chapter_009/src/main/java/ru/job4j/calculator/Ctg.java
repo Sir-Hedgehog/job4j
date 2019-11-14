@@ -11,11 +11,10 @@ public class Ctg {
     /**
      * Косинус числа
      * @param first - первое число
-     * @param mark - операция
-     * @param second - второе число
+     * @param second - первое число
      */
 
-    public void getResult(double first, String mark, double second) {
+    public void getResult(double first, double second) {
         double result = 1 / Math.toDegrees(Math.atan(Math.tan(first / second)));
         System.out.println("The result: " + result);
     }

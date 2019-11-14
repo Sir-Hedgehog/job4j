@@ -6,16 +6,15 @@ package ru.job4j.calculator;
  * @since 07.11.2019
  */
 
-public class Subtraction {
+public class Subtraction  {
 
     /**
      * Метод производит вычитание
      * @param first - первое число
-     * @param mark - операция
      * @param second - второе число
      */
 
-    public void getResult(double first, String mark, double second) {
+    public void getResult(double first, double second) {
         double result = first - second;
         System.out.println("The result: " + result);
     }

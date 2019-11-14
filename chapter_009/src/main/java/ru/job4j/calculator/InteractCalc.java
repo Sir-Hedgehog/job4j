@@ -4,17 +4,20 @@ import java.util.Scanner;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 11.11.2019
+ * @version 3.0
+ * @since 14.11.2019
  */
 
-public class InteractCalc { 
-    public static void main(String[] args) {     
+public class InteractCalc {
+    public static void main(String[] args) {
         int number1;
         int number2;
+        int degree;
         String operation;
+        String agreement;
         Scanner numbers = new Scanner(System.in);
         Scanner operations = new Scanner(System.in);
+        Scanner agreements = new Scanner(System.in);
        
         System.out.println("Enter the first number: ");
         number1 = numbers.nextInt();
@@ -24,7 +27,19 @@ public class InteractCalc {
        
         System.out.println("Enter the second number: ");
         number2 = numbers.nextInt();
-        TrigonometricCalc calc = new TrigonometricCalc();
-        calc.getResult(number1, operation, number2);
+
+        if (operation.equals("+")) {
+            System.out.println("Do you want to enter a degree? [y/n]");
+            agreement = agreements.next();
+            if (agreement.toLowerCase().trim().equals("y")) {
+                System.out.println("Enter the second number: ");
+                degree = numbers.nextInt();
+                CompoundExpression compoundExpression = new CompoundExpression(number1, operation, number2, degree);
+                compoundExpression.getResult();
+            } else {
+                CalculatorFacade calc = new EngineeringCalc(number1, operation, number2);
+                calc.getResult();
+            }
+        }
     }
 }
