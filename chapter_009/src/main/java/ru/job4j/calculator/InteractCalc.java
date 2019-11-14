@@ -32,7 +32,7 @@ public class InteractCalc {
             System.out.println("Do you want to enter a degree? [y/n]");
             agreement = agreements.next();
             if (agreement.toLowerCase().trim().equals("y")) {
-                System.out.println("Enter the second number: ");
+                System.out.println("Enter the degree: ");
                 degree = numbers.nextInt();
                 CalculatorFacade compoundExpression = new CompoundExpression(number1, operation, number2, degree);
                 compoundExpression.getResult();

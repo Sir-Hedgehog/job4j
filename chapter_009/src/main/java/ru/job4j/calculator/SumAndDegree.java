@@ -10,8 +10,8 @@ public class SumAndDegree {
     /**
      * Сумма и степень выражения
      * @param first - первое число
-     * @param second - первое число
-     * @param degree - первое число
+     * @param second - второе число
+     * @param degree - степень
      */
 
     public void getResult(double first, double second, double degree) {

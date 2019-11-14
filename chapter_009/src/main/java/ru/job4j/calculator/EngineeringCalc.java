@@ -12,7 +12,6 @@ public class EngineeringCalc extends CalculatorFacade {
     private final Tg tg = new Tg();
     private final Ctg ctg = new Ctg();
 
-
     public EngineeringCalc(double first, String mark, double second) {
         super(first, mark, second);
     }
