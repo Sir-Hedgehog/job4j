@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version 1.0
- * @since 22.11.2019
+ * @since 23.11.2019
  */
 
 public class Trash  {
