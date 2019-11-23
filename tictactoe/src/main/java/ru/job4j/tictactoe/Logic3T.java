@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  * @since 11.02.2019
  */
 
-class Logic3T {
+public class Logic3T {
     private final Figure3T[][] table;
 
     Logic3T(Figure3T[][] table) {
