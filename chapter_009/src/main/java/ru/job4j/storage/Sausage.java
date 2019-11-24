@@ -4,8 +4,8 @@ import java.time.LocalDate;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 23.11.2019
+ * @version 2.0
+ * @since 24.11.2019
  */
 
 public class Sausage extends Food {
