@@ -9,8 +9,8 @@ import java.util.Map;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 24.11.2019
+ * @version 3.0
+ * @since 25.11.2019
  */
 
 public class Shop implements Store {
@@ -23,7 +23,6 @@ public class Shop implements Store {
      * @param food - товар
      */
 
-    @Override
     public void setFood(Food food) {
         if (percent > 25.0 && percent <= 75.0) {
             foods.add(food.getName());
