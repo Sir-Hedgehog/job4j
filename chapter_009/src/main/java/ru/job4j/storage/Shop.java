@@ -9,12 +9,13 @@ import java.util.Map;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 25.11.2019
+ * @version 4.0
+ * @since 27.11.2019
  */
 
 public class Shop implements Store {
     private double percent;
+    private double discount;
     private List<String> foods = new ArrayList<>();
     private Map<String, Double> discountFoods = new HashMap<>();
 
@@ -22,7 +23,6 @@ public class Shop implements Store {
      * Метод распределяет товар в зависимости от степени годности
      * @param food - товар
      */
-
     public void setFood(Food food) {
         if (percent > 25.0 && percent <= 75.0) {
             foods.add(food.getName());
@@ -35,8 +35,8 @@ public class Shop implements Store {
      * Метод устанавливает скидку на товар
      * @param food - товар
      */
-
     private void setDiscountFoods(Food food) {
+        discount = food.getDiscount();
         food.setPrice(food.getPrice() - food.getPrice() * food.getDiscount());
         discountFoods.put(food.getName(), food.getPrice());
     }
@@ -49,9 +49,17 @@ public class Shop implements Store {
      * Метод возвращает карту наименований товаров и цены с учетом скидки
      * @return карта наименований товаров и цены с учетом скидки
      */
-
     public Map<String, Double> getDiscountFoods() {
         return discountFoods;
+    }
+
+    /**
+     * Метод ликвидирует повторный расчет скидки, если при распределении продукт снова попал категорию товара со скидкой
+     * @param foodsWithDiscount - товар с повторным расчетом скидки
+     */
+    public void setOldPriceWithoutDiscount(Map.Entry<String, Double> foodsWithDiscount) {
+        double price = foodsWithDiscount.getValue() / (1 - discount);
+        foodsWithDiscount.setValue(Math.rint(price));
     }
 
     @Override

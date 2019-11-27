@@ -1,9 +1,12 @@
 package ru.job4j.storage;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 25.11.2019
+ * @version 4.0
+ * @since 27.11.2019
  */
 
 public class ControlQuality {
@@ -27,6 +30,23 @@ public class ControlQuality {
             shop.setFood(food);
         } else if (trash.accept(food)) {
             trash.setFood(food);
+        }
+    }
+
+    /**
+     * Метод перераспределяет продукты по хранилищам
+     * @param foods - список продуктов
+     */
+    public void resort(List<Food> foods) {
+        warehouse.getFood().clear();
+        shop.getFood().clear();
+        shop.getDiscountFoods().clear();
+        trash.getFood().clear();
+        for (Food food : foods) {
+            this.distribute(food);
+        }
+        for (Map.Entry<String, Double> foodsWithDiscount : shop.getDiscountFoods().entrySet()) {
+            shop.setOldPriceWithoutDiscount(foodsWithDiscount);
         }
     }
 }
