@@ -57,8 +57,7 @@ public class SearchProgram {
             for (File file : files) {
                 bw.write(file.toString() + LN);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

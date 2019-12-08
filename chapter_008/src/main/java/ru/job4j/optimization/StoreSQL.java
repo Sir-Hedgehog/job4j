@@ -79,8 +79,7 @@ public class StoreSQL implements AutoCloseable {
             while (rs.next()) {
                 list.add(new Entry(rs.getInt("number")));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
