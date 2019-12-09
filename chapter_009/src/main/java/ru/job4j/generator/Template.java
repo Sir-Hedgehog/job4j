@@ -4,8 +4,8 @@ import java.util.Map;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 8.12.2019
+ * @version 3.0
+ * @since 9.12.2019
  */
 
 public interface Template {
