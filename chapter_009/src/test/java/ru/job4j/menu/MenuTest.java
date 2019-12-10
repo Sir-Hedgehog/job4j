@@ -1,146 +1,139 @@
 package ru.job4j.menu;
 
 import org.junit.Test;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 4.12.2019
+ * @version 2.0
+ * @since 10.12.2019
  */
 
 public class MenuTest {
     @Test
     public void whenAllTitlesAreCorrectThenGetSuccess() {
-        HeadManager title1 = new FirstLevel("1. Жизнь замечательных мужчин");
-        HeadManager title2 = new SecondLevel("---- 1.1. Суворов Александр Васильевич");
-        HeadManager title3 = new ThirdLevel("-------- 1.1.1. Битва при Рымнике");
-        HeadManager title4 = new ThirdLevel("-------- 1.1.2. Поход через Альпы");
-        HeadManager title5 = new SecondLevel("---- 1.2. Ушаков Федор Васильевич");
-        HeadManager title6 = new ThirdLevel("-------- 1.2.1. Сражение у мыса Тендра");
-        HeadManager title7 = new FirstLevel("2. Жизнь замечательных женщин");
-        List<String> heads = new ArrayList<>(List.of(
-                title1.order(),
-                title2.order(),
-                title3.order(),
-                title4.order(),
-                title5.order(),
-                title6.order(),
-                title7.order()));
-        for (String title : heads) {
-            System.out.println(title + "\n");
+        HeadManager menuItem1 = new MenuItem("1. Жизнь замечательных мужчин");
+        HeadManager menuItem2 = new MenuItem("1.1. Суворов Александр Васильевич");
+        HeadManager menuItem3 = new MenuItem("1.1.1. Битва при Рымнике");
+        HeadManager menuItem4 = new MenuItem("1.1.2. Поход через Альпы");
+        HeadManager menuItem5 = new MenuItem("1.2. Ушаков Федор Васильевич");
+        HeadManager menuItem6 = new MenuItem("1.2.1. Сражение у мыса Тендра");
+        HeadManager menuItem7 = new MenuItem("2. Жизнь замечательных женщин");
+        TreeMap<String, HeadManager> heads = new TreeMap<>(Map.of(menuItem1.order(), menuItem1,
+                menuItem2.order(), menuItem2,
+                menuItem3.order(), menuItem3,
+                menuItem4.order(), menuItem4,
+                menuItem5.order(), menuItem5,
+                menuItem6.order(), menuItem6,
+                menuItem7.order(), menuItem7));
+        TreeMap<String, HeadManager> expect = new TreeMap<>(Map.of(menuItem1.order(), menuItem1,
+                menuItem2.order(), menuItem2,
+                menuItem3.order(), menuItem3,
+                menuItem4.order(), menuItem4,
+                menuItem5.order(), menuItem5,
+                menuItem6.order(), menuItem6,
+                menuItem7.order(), menuItem7));
+        for (String head : heads.keySet()) {
+            System.out.println(head + "\n");
         }
-        List<String> expect = new ArrayList<>(List.of(
-                title1.order(),
-                title2.order(),
-                title3.order(),
-                title4.order(),
-                title5.order(),
-                title6.order(),
-                title7.order()));
         assertThat(heads, is(expect));
     }
 
     @Test(expected = NullPointerException.class)
     public void whenAllTitlesAreIncorrectThenGetSuccess() {
-        HeadManager title1 = new FirstLevel("1. Жизнь замечательных мужчин");
-        HeadManager title2 = new FirstLevel("---- 1.1. Суворов Александр Васильевич");
-        HeadManager title3 = new ThirdLevel("---+++++--- 1.1-1. Битва при Рымнике");
-        HeadManager title4 = new ThirdLevel(" 1.1.2. Поход через Альпы");
-        HeadManager title5 = new FirstLevel("---- 1.2. Ушаков Федор Васильевич");
-        HeadManager title6 = new ThirdLevel("-------- 1.2.1. Сражение у мыса Тендра");
-        HeadManager title7 = new FirstLevel("2. Жизнь замечательных женщин");
-        List<String> heads = new ArrayList<>(List.of(
-                title1.order(),
-                title2.order(),
-                title3.order(),
-                title4.order(),
-                title5.order(),
-                title6.order(),
-                title7.order()));
-        for (String title : heads) {
+        HeadManager menuItem1 = new MenuItem("1. Жизнь замечательных мужчин");
+        HeadManager menuItem2 = new MenuItem("1.1. Суворов Александр Васильевич");
+        HeadManager menuItem3 = new MenuItem("+++1.1.1. Битва при Рымнике");
+        HeadManager menuItem4 = new MenuItem("абв1.1.2. Поход через Альпы");
+        HeadManager menuItem5 = new MenuItem("/*1.2. Ушаков Федор Васильевич");
+        HeadManager menuItem6 = new MenuItem("1.2.1. Сражение у мыса Тендра");
+        HeadManager menuItem7 = new MenuItem("2. Жизнь замечательных женщин");
+        TreeMap<String, HeadManager> heads = new TreeMap<>(Map.of(menuItem1.order(), menuItem1,
+                menuItem2.order(), menuItem2,
+                menuItem3.order(), menuItem3,
+                menuItem4.order(), menuItem4,
+                menuItem5.order(), menuItem5,
+                menuItem6.order(), menuItem6,
+                menuItem7.order(), menuItem7));
+        for (String title : heads.keySet()) {
             System.out.println(title + "\n");
         }
-        List<String> expect = new ArrayList<>(List.of(
-                title1.order(),
-                title2.order(),
-                title3.order(),
-                title4.order(),
-                title5.order(),
-                title6.order(),
-                title7.order()));
+        TreeMap<String, HeadManager> expect = new TreeMap<>(Map.of(menuItem1.order(), menuItem1,
+                menuItem2.order(), menuItem2,
+                menuItem3.order(), menuItem3,
+                menuItem4.order(), menuItem4,
+                menuItem5.order(), menuItem5,
+                menuItem6.order(), menuItem6,
+                menuItem7.order(), menuItem7));
         assertThat(heads, is(expect));
     }
 
     @Test
     public void whenUserAddNewTitlesThenGetSuccess() {
-        HeadManager title1 = new FirstLevel("1. Жизнь замечательных мужчин");
-        HeadManager title2 = new SecondLevel("---- 1.1. Суворов Александр Васильевич");
-        HeadManager title3 = new ThirdLevel("-------- 1.1.1. Битва при Рымнике");
-        HeadManager title4 = new ThirdLevel("-------- 1.1.2. Поход через Альпы");
-        HeadManager title5 = new SecondLevel("---- 1.2. Ушаков Федор Васильевич");
-        HeadManager title6 = new ThirdLevel("-------- 1.2.1. Сражение у мыса Тендра");
-        HeadManager title7 = new FirstLevel("2. Жизнь замечательных женщин");
-        List<String> heads = new ArrayList<>(List.of(
-                title1.order(),
-                title2.order(),
-                title3.order(),
-                title4.order(),
-                title5.order(),
-                title6.order(),
-                title7.order()));
+        HeadManager menuItem1 = new MenuItem("1. Жизнь замечательных мужчин");
+        HeadManager menuItem2 = new MenuItem("1.1. Суворов Александр Васильевич");
+        HeadManager menuItem3 = new MenuItem("1.1.1. Битва при Рымнике");
+        HeadManager menuItem4 = new MenuItem("1.1.2. Поход через Альпы");
+        HeadManager menuItem5 = new MenuItem("1.2. Ушаков Федор Васильевич");
+        HeadManager menuItem6 = new MenuItem("1.2.1. Сражение у мыса Тендра");
+        HeadManager menuItem7 = new MenuItem("2. Жизнь замечательных женщин");
+        TreeMap<String, HeadManager> heads = new TreeMap<>(Map.of(menuItem1.order(), menuItem1,
+                menuItem2.order(), menuItem2,
+                menuItem3.order(), menuItem3,
+                menuItem4.order(), menuItem4,
+                menuItem5.order(), menuItem5,
+                menuItem6.order(), menuItem6,
+                menuItem7.order(), menuItem7));
         Menu menu = new Menu(heads);
-        HeadManager titleInTheMiddle = new ThirdLevel("-------- 1.1.3. Наследие Суворова");
-        HeadManager titleInTheEnd = new SecondLevel("---- 2.1. Царица Тамара Грузинская");
-        menu.add(title4, titleInTheMiddle);
-        menu.add(title7, titleInTheEnd);
-        List<String> expect = new ArrayList<>(List.of(
-                title1.order(),
-                title2.order(),
-                title3.order(),
-                title4.order(),
-                titleInTheMiddle.order(),
-                title5.order(),
-                title6.order(),
-                title7.order(),
-                titleInTheEnd.order()));
-        assertThat(heads, is(expect));
-        for (String title : heads) {
-            System.out.println(title + "\n");
+        HeadManager titleInTheMiddle = new MenuItem("1.1.3. Наследие Суворова");
+        HeadManager titleInTheEnd = new MenuItem("2.1. Царица Тамара Грузинская");
+        menu.add(titleInTheMiddle);
+        menu.add(titleInTheEnd);
+        TreeMap<String, HeadManager> expect = new TreeMap<>(Map.of(menuItem1.order(), menuItem1,
+                menuItem2.order(), menuItem2,
+                menuItem3.order(), menuItem3,
+                menuItem4.order(), menuItem4,
+                menuItem5.order(), menuItem5,
+                menuItem6.order(), menuItem6,
+                menuItem7.order(), menuItem7,
+                titleInTheMiddle.order(), titleInTheMiddle,
+                titleInTheEnd.order(), titleInTheEnd));
+        for (String head : heads.keySet()) {
+            System.out.println(head + "\n");
         }
+        assertThat(heads, is(expect));
     }
 
     @Test
     public void whenUserDeleteTitlesThenGetSuccess() {
-        HeadManager title1 = new FirstLevel("1. Жизнь замечательных мужчин");
-        HeadManager title2 = new SecondLevel("---- 1.1. Суворов Александр Васильевич");
-        HeadManager title3 = new ThirdLevel("-------- 1.1.1. Битва при Рымнике");
-        HeadManager title4 = new ThirdLevel("-------- 1.1.2. Поход через Альпы");
-        HeadManager title5 = new SecondLevel("---- 1.2. Ушаков Федор Васильевич");
-        HeadManager title6 = new ThirdLevel("-------- 1.2.1. Сражение у мыса Тендра");
-        HeadManager title7 = new FirstLevel("2. Жизнь замечательных женщин");
-        List<String> heads = new ArrayList<>(List.of(
-                title1.order(),
-                title2.order(),
-                title3.order(),
-                title4.order(),
-                title5.order(),
-                title6.order(),
-                title7.order()));
+        HeadManager menuItem1 = new MenuItem("1. Жизнь замечательных мужчин");
+        HeadManager menuItem2 = new MenuItem("1.1. Суворов Александр Васильевич");
+        HeadManager menuItem3 = new MenuItem("1.1.1. Битва при Рымнике");
+        HeadManager menuItem4 = new MenuItem("1.1.2. Поход через Альпы");
+        HeadManager menuItem5 = new MenuItem("1.2. Ушаков Федор Васильевич");
+        HeadManager menuItem6 = new MenuItem("1.2.1. Сражение у мыса Тендра");
+        HeadManager menuItem7 = new MenuItem("2. Жизнь замечательных женщин");
+        TreeMap<String, HeadManager> heads = new TreeMap<>(Map.of(menuItem1.order(), menuItem1,
+                menuItem2.order(), menuItem2,
+                menuItem3.order(), menuItem3,
+                menuItem4.order(), menuItem4,
+                menuItem5.order(), menuItem5,
+                menuItem6.order(), menuItem6,
+                menuItem7.order(), menuItem7));
         Menu menu = new Menu(heads);
-        menu.delete(title4);
-        menu.delete(title7);
-        List<String> expect = new ArrayList<>(List.of(
-                title1.order(),
-                title2.order(),
-                title3.order(),
-                title5.order(),
-                title6.order()));
+        menu.delete(menuItem4);
+        menu.delete(menuItem7);
+        TreeMap<String, HeadManager> expect = new TreeMap<>(Map.of(menuItem1.order(), menuItem1,
+                menuItem2.order(), menuItem2,
+                menuItem3.order(), menuItem3,
+                menuItem5.order(), menuItem5,
+                menuItem6.order(), menuItem6));
         assertThat(heads, is(expect));
-        for (String title : heads) {
+        for (String title : heads.keySet()) {
             System.out.println(title + "\n");
         }
     }

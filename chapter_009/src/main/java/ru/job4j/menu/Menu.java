@@ -1,33 +1,28 @@
 package ru.job4j.menu;
 
-import java.util.List;
+import java.util.TreeMap;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 4.12.2019
+ * @version 2.0
+ * @since 10.12.2019
  */
 
 public class Menu implements Actions {
-    private List<String> heads;
+    private TreeMap<String, HeadManager> heads;
 
-    public Menu(List<String> heads) {
+    public Menu(TreeMap<String, HeadManager> heads) {
         this.heads = heads;
     }
 
     /**
-     * Метод добавляет новый заголовок в зависимости от иерархии содержания
-     * @param existingHead - существующий заголовок, после которого нужно добавить новый заголовок
+     * Метод добавляет новый заголовок
      * @param newHead - новый заголовок
      */
 
     @Override
-    public void add(HeadManager existingHead, HeadManager newHead) {
-        for (int index = 0; index < this.heads.size(); index++) {
-            if (this.heads.get(index).equals(existingHead.order())) {
-                this.heads.add(index + 1, newHead.order());
-            }
-        }
+    public void add(HeadManager newHead) {
+        this.heads.put(newHead.order(), newHead);
     }
 
     /**

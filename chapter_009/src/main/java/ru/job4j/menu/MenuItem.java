@@ -5,36 +5,38 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 4.12.2019
+ * @version 2.0
+ * @since 10.12.2019
  */
 
-public class ThirdLevel implements HeadManager {
+public class MenuItem implements HeadManager {
     private String title;
-    private Pattern pattern = Pattern.compile("^((-){8}(\\s)((([1-9])\\.){3}(\\s))(([А-Я]|[A-Z])([а-яА-Я]|\\s)+|([a-zA-Z]+)))$");
+    private Pattern pattern = Pattern.compile("^(((([1-9])\\.)+(\\s))(([А-Я]|[A-Z])(([а-яА-Я]|\\s)+|([a-zA-Z]|\\s)+)))$");
 
-    public ThirdLevel(String title) {
+    public MenuItem(String title) {
         this.title = title;
     }
 
     /**
-     * Метод проверяет, правильно ли написан заголовок
-     * @return - да или нет
+     * Метод проверяет заголовок на валидность
+     * @return - валидный или нет
      */
 
+    @Override
     public boolean accept() {
         Matcher matcher = pattern.matcher(this.title);
         return matcher.find();
     }
 
     /**
-     * Метод возвращает заголовок в случае прохождения проверки на валидность
+     * Метод возвращает заголовок, в случае если он валидный.
+     * В противном случае возвращает null.
      * @return - заголовок или null
      */
 
     @Override
     public String order() {
-        String result = "";
+        String result;
         if (this.accept()) {
             result = this.title;
         } else {
