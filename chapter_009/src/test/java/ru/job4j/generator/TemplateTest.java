@@ -8,13 +8,13 @@ import static org.junit.Assert.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 9.12.2019
+ * @version 4.0
+ * @since 10.12.2019
  */
 
 public class TemplateTest {
     @Test
-    public void whenInputSomeCorrectValuesThenOutputTemplateText() {
+    public void whenInputSomeCorrectValuesThenOutputTemplateText() throws NoKeysException, ExtraKeysException {
         Template template = new SimpleGenerator();
         String text = "My name is ${name}. "
                 + "My phone number: ${phoneNumber}. "
@@ -29,32 +29,20 @@ public class TemplateTest {
                         "${phoneNumber}", "8-999-765-00-11",
                         "${ipv4}", "255.0.99.13"));
         String result;
-        try {
-            result = template.generate(text, map);
-            assertThat(result, is(expect));
-        } catch (NoKeysException nke) {
-            assertThat(nke.getMessage(), is("Key is not exist!"));
-        } catch (ExtraKeysException eke) {
-            assertThat(eke.getMessage(), is("There are extra keys!"));
-        }
+        result = template.generate(text, map);
+        assertThat(result, is(expect));
     }
 
     @Test
-    public void whenInputOneCorrectValueThenOutputTemplateText() {
+    public void whenInputOneCorrectValueThenOutputTemplateText() throws NoKeysException, ExtraKeysException {
         Template template = new SimpleGenerator();
         String text = "Help, ${sos}, ${sos}, ${sos}!";
         String expect = "Help, Aaa, Aaa, Aaa!";
         Map<String, String> map = new HashMap<>(
                 Map.of("${sos}", "Aaa"));
         String result;
-        try {
-            result = template.generate(text, map);
-            assertThat(result, is(expect));
-        } catch (ExtraKeysException eke) {
-            assertThat(eke.getMessage(), is("There are extra keys!"));
-        } catch (NoKeysException nke) {
-            assertThat(nke.getMessage(), is("Key is not exist!"));
-        }
+        result = template.generate(text, map);
+        assertThat(result, is(expect));
     }
 
     @Test(expected = NoKeysException.class)
