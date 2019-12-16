@@ -28,6 +28,7 @@
         <module>map_of_scripts</module>
         <module>parser_of_vacancies</module>
         <module>mail</module>
+        <module>array_of_numbers</module>
     </modules>
 
     <dependencies>
