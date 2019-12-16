@@ -2,27 +2,34 @@ package ru.job4j.tictactoe;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 12.12.2019
+ * @version 2.0
+ * @since 16.12.2019
  */
 
 public class Checker {
     private int calculator = -1;
+    private Player player1;
+    private Player player2;
+
+    public Checker(Player player1, Player player2) {
+        this.player1 = player1;
+        this.player2 = player2;
+    }
 
     /**
      * Метод проверяет наступление окончания игры
-     * @param field - состояния поля
+     * @param field - состояние поля
      * @return - наступило окончание игры или нет
      */
 
     public boolean checkTheEnd(Field field) {
         boolean result = false;
         calculator++;
-        if (checkWin(field) && field.getMark() == 'x') {
-            System.out.println("И перед нами победитель! Пользователь умнее компьютера!");
+        if (checkWin(field) && field.getMark() == player1.getMark()) {
+            System.out.println("И перед нами победитель! " + player1.getName() + " - чемпион!");
             result = true;
-        } else if (checkWin(field) && field.getMark() == 'o') {
-            System.out.println("И перед нами победитель! Скайнет умнее человека!");
+        } else if (checkWin(field) && field.getMark() == player2.getMark()) {
+            System.out.println("И перед нами победитель! " + player2.getName() + " - чемпион!");
             result = true;
         } else if (field.getArray().length * field.getArray().length == calculator) {
             System.out.println("Игра окончена! Победила дружба!");
@@ -40,13 +47,13 @@ public class Checker {
     private boolean checkWin(Field field) {
         boolean result = false;
         int diagonal1, diagonal2, horizon, vertical;
-        for (int i = 0; i < field.getArray().length; i++) {
+        for (int out = 0; out < field.getArray().length; out++) {
             horizon = 0; vertical = 0;
-            for (int j = 0; j < field.getArray().length; j++) {
-                if (field.getArray()[i][j] == field.getMark()) {
+            for (int in = 0; in < field.getArray().length; in++) {
+                if (field.getArray()[out][in] == field.getMark()) {
                     horizon++;
                 }
-                if (field.getArray()[j][i] == field.getMark()) {
+                if (field.getArray()[in][out] == field.getMark()) {
                     vertical++;
                 }
             }
@@ -55,11 +62,11 @@ public class Checker {
             }
         }
         diagonal1 = 0; diagonal2 = 0;
-        for (int i = 0; i < field.getArray().length; i++) {
-            if (field.getArray()[i][i] == field.getMark()) {
+        for (int index = 0; index < field.getArray().length; index++) {
+            if (field.getArray()[index][index] == field.getMark()) {
                 diagonal1++;
             }
-            if (field.getArray()[i][field.getArray().length - i - 1] == field.getMark()) {
+            if (field.getArray()[index][field.getArray().length - index - 1] == field.getMark()) {
                 diagonal2++;
             }
         }

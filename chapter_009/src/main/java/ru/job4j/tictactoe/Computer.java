@@ -2,34 +2,57 @@ package ru.job4j.tictactoe;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 12.12.2019
+ * @version 2.0
+ * @since 16.12.2019
  */
 
-public class Computer implements Step {
+public class Computer implements WithoutFeedback {
     private Field field;
+    private char mark;
+    private String name;
+    private static int counter = 0;
 
-    public Computer(Field field) {
+    public Computer(Field field, char mark) {
         this.field = field;
+        this.mark = mark;
+        this.name = "Компьютер" + ++counter;
     }
 
     /**
      * Метод устанавливает ход компьютера, если он возможен.
      * Если он невозможен, то даем компьютеру возможность сделать другой ход.
-     * @param x - координата x
-     * @param y - координата y
      */
 
     @Override
-    public void step(int x, int y) {
-        if (this.field.canMove(x, y, 'o')) {
+    public void step() {
+        int x = (int) (1 + Math.random() * field.getArray().length);
+        int y = (int) (1 + Math.random() * field.getArray().length);
+        if (this.field.canMove(x, y, this.getMark())) {
             this.field.paintField();
         } else {
-            while (!this.field.canMove(x, y, 'o')) {
+            while (!this.field.canMove(x, y, this.getMark())) {
                 x = (int) (1 + Math.random() * field.getArray().length);
                 y = (int) (1 + Math.random() * field.getArray().length);
             }
             this.field.paintField();
         }
+    }
+
+    /**
+     * Метод получает имя игрока
+     */
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Метод получает крестик или нолик
+     */
+
+    @Override
+    public char getMark() {
+        return this.mark;
     }
 }
