@@ -29,6 +29,7 @@
         <module>parser_of_vacancies</module>
         <module>mail</module>
         <module>array_of_numbers</module>
+        <module>chapter_010</module>
     </modules>
 
     <dependencies>
