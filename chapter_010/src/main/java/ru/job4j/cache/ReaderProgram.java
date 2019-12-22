@@ -5,13 +5,13 @@ import java.io.IOException;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
+ * @version 2.0
  * @since 22.12.2019
  */
 
 public class ReaderProgram extends Cache {
-    public ReaderProgram(String key, Object content) {
-        super(key, content);
+    public ReaderProgram(String content) {
+        super(content);
     }
 
     /**

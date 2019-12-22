@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
+ * @version 2.0
  * @since 22.12.2019
  */
 
@@ -18,23 +18,23 @@ public class CacheTest {
         Object object1 = null;
         Object object2 = null;
         String path = "\\projects\\job4j\\chapter_010\\src\\main\\resources\\";
-        ReaderProgram sportProgram = new ReaderProgram("Sport.txt", "Sport");
+        ReaderProgram sportProgram = new ReaderProgram("Sport.txt");
         try {
             sportProgram.read(new FileReader(path + "Sport.txt"));
-            object1 = sportProgram.getKey();
+            object1 = sportProgram.getCache();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ReaderProgram planetProgram = new ReaderProgram("Planets.txt", "Planets");
+        ReaderProgram planetProgram = new ReaderProgram("Planets.txt");
         try {
             planetProgram.read(new FileReader(path + "Planets.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ReaderProgram sportProgram1 = new ReaderProgram("Sport.txt", "Planets");
+        ReaderProgram sportProgram1 = new ReaderProgram("Sport.txt");
         try {
             sportProgram1.read(new FileReader(path + "Sport.txt"));
-            object2 = sportProgram.getKey();
+            object2 = sportProgram.getCache();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

@@ -1,27 +1,29 @@
 package ru.job4j.cache;
 
 import java.lang.ref.SoftReference;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
+ * @version 2.0
  * @since 22.12.2019
  */
 
 public abstract class Cache {
-    private static Map<Object, SoftReference> map = new HashMap<>();
+    private static List<SoftReference> result = new ArrayList<>();
+    private static Set<Object> current = new HashSet<>();
     private Object content;
-    private String key;
+    private SoftReference<Object> softReference;
 
-    public Cache(String key, Object content) {
-        this.key = key;
+    public Cache(Object content) {
         this.content = content;
-        if (!map.containsKey(key)) {
+        if (!current.contains(content)) {
+            current.add(content);
             this.fill();
+            System.out.println(this.softReference);
+        } else {
+            System.out.println("Данный объект уже существует!");
         }
-        System.out.println(this.getKey());
     }
 
     /**
@@ -29,9 +31,8 @@ public abstract class Cache {
      */
 
     private void fill() {
-        SoftReference<Object> softReference;
         softReference = new SoftReference<>(content);
-        map.put(key, softReference);
+        result.add(softReference);
     }
 
     /**
@@ -39,7 +40,7 @@ public abstract class Cache {
      * @return - содержимое текстового файла
      */
 
-    public Object getKey() {
-        return map.get(key);
+    public Object getCache() {
+        return softReference;
     }
 }
