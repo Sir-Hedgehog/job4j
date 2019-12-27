@@ -4,7 +4,7 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
+ * @version 2.0
  * @since 27.12.2019
  */
 
@@ -25,7 +25,7 @@ public class FourthWay implements Runnable {
 
     @Override
     public void run() {
-        while (this.rect.getX() != 0  && this.rect.getY() != 0) {
+        while (this.rect.getX() != 0  && this.rect.getY() != 0 && !Thread.currentThread().isInterrupted()) {
             this.rect.setX(this.rect.getX() - 5);
             this.rect.setY(this.rect.getY() - 2);
             try {
