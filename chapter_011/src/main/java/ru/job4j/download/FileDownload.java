@@ -2,8 +2,8 @@ package ru.job4j.download;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 30.12.2019
+ * @version 2.0
+ * @since 11.01.2020
  */
 
 public class FileDownload {

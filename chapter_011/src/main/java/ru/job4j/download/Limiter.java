@@ -7,13 +7,13 @@ import java.net.URL;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 30.12.2019
+ * @version 2.0
+ * @since 11.01.2020
  */
 
 public class Limiter {
-    private String file; //"https://raw.githubusercontent.com/peterarsentev/course_test/master/pom.xml";
-    private double norm; //200.0;
+    private String file;
+    private double norm;
 
 
     public Limiter(String file, double norm) {
@@ -32,7 +32,7 @@ public class Limiter {
         long endTime;
         long basicDropping;
         try (BufferedInputStream in = new BufferedInputStream(new URL(file).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream("pom_tmp.xml")) {
+             FileOutputStream fileOutputStream = new FileOutputStream("tmp_file")) {
             byte[] dataBuffer = new byte[256];
             int bytesRead;
             startTime = System.nanoTime();
