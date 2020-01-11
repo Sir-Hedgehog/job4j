@@ -4,11 +4,11 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 27.12.2019
+ * @version 3.0
+ * @since 11.01.2020
  */
 
-public class FirstWay implements Runnable {
+public class FirstWay {
     private final Rectangle rect;
     private int limitX;
     private int limitY;
@@ -23,22 +23,23 @@ public class FirstWay implements Runnable {
      * Метод запускает вариант движения мячика с левого верхнего края до правого нижнего
      */
 
-    @Override
-    public void run() {
-        while (this.rect.getX() != limitX - 10 && this.rect.getY() != limitY - 10 && !Thread.currentThread().isInterrupted()) {
+    public void begin() {
+        while (true) {
             this.rect.setX(this.rect.getX() + 5);
             this.rect.setY(this.rect.getY() + 2);
-            System.out.println(this.rect.getX() + "");
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                e.printStackTrace();
+            }
+            if (this.rect.getX() == limitX - 10 || this.rect.getY() == limitY - 10) {
+                break;
             }
         }
         if (this.rect.getX() == limitX - 10) {
-            new Thread(new ThirdWay(rect, limitX, limitY)).start();
+            new ThirdWay(rect, limitX, limitY).begin();
         } else if (this.rect.getY() == limitY - 10) {
-            new Thread(new SecondWay(rect, limitX, limitY)).start();
+            new SecondWay(rect, limitX, limitY).begin();
         }
     }
 }

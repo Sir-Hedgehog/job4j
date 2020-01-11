@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 27.12.2019
+ * @version 3.0
+ * @since 11.01.2020
  */
 
 public class PingPong extends Application {
@@ -27,7 +27,7 @@ public class PingPong extends Application {
         Group group = new Group();
         Rectangle rect = new Rectangle(50, 100, 10, 10);
         group.getChildren().add(rect);
-        Thread thread = new Thread(new FirstWay(rect, limitX, limitY));
+        Thread thread = new Thread(new RectangleMove(rect, limitX, limitY));
         thread.start();
         stage.setOnCloseRequest(event -> thread.interrupt());
         stage.setScene(new Scene(group, limitX, limitY));
