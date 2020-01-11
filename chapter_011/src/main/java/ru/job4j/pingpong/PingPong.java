@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
+ * @version 4.0
  * @since 11.01.2020
  */
 
