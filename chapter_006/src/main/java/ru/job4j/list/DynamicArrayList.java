@@ -6,12 +6,12 @@ import java.util.NoSuchElementException;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version $Id$
- * @since 27.02.2019
+ * @version 2.0
+ * @since 13.01.2019
  */
 
 public class DynamicArrayList<E> implements Iterable<E> {
-    private int modCount = 0;
+    //private int modCount = 0;
     private Node<E> first;
 
     /**
@@ -21,11 +21,12 @@ public class DynamicArrayList<E> implements Iterable<E> {
         Node<E> newLink = new Node<>(date);
         newLink.next = this.first;
         this.first = newLink;
-        modCount++;
+        //modCount++;
     }
 
     /**
      * Метод получения элемента по индексу
+     * @param index - индекс элемента в списке
      * @return существующий элемент
      */
 
@@ -49,7 +50,7 @@ public class DynamicArrayList<E> implements Iterable<E> {
     @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
-            private int expectedModCount = modCount;
+            //private int expectedModCount = modCount;
             Node<E> current = first;
 
             @Override
@@ -59,9 +60,9 @@ public class DynamicArrayList<E> implements Iterable<E> {
 
             @Override
             public E next() {
-                if (expectedModCount != modCount) {
+                /*if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
-                }
+                }*/
                 if (!this.hasNext()) {
                     throw new NoSuchElementException();
                 }
