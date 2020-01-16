@@ -7,7 +7,7 @@ import java.util.Queue;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
+ * @version 3.0
  * @since 16.01.2020
  */
 
