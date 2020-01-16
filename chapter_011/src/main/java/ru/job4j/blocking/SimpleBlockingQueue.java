@@ -7,16 +7,15 @@ import java.util.Queue;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 15.01.2020
+ * @version 2.0
+ * @since 16.01.2020
  */
 
 @ThreadSafe
 public class SimpleBlockingQueue<T> {
     @GuardedBy("this")
-    private Queue<T> queue = new LinkedList<>();
-    public T queueValue;
-    private int size;
+    private final Queue<T> queue = new LinkedList<>();
+    private final int size;
 
     public SimpleBlockingQueue(int size) {
         this.size = size;
@@ -29,7 +28,6 @@ public class SimpleBlockingQueue<T> {
      */
 
     public synchronized void offer(T value) {
-        queueValue = value;
         while (this.size <= queue.size()) {
             try {
                 System.out.println("Операция вставки на данный момент невозможна. Ждем свободные ячейки...");

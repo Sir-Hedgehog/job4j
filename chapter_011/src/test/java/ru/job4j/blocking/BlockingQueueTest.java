@@ -6,8 +6,8 @@ import static org.junit.Assert.assertThat;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 15.01.2020
+ * @version 2.0
+ * @since 16.01.2020
  */
 
 public class BlockingQueueTest {
