@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 5.0
- * @since 12.01.2020
+ * @version 6.0
+ * @since 16.01.2020
  */
 
 public class PingPong extends Application {
