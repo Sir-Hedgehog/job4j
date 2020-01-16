@@ -2,8 +2,8 @@ package ru.job4j.blocking;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 16.01.2020
+ * @version 4.0
+ * @since 17.01.2020
  */
 
 public class Producer<T> {

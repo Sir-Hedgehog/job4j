@@ -7,8 +7,8 @@ import java.util.Queue;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 16.01.2020
+ * @version 4.0
+ * @since 17.01.2020
  */
 
 @ThreadSafe
@@ -37,11 +37,6 @@ public class SimpleBlockingQueue<T> {
                 Thread.currentThread().interrupt();
             }
         }
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         System.out.println("Заполняем очередь...");
         queue.offer(value);
         notify();
@@ -64,11 +59,6 @@ public class SimpleBlockingQueue<T> {
                 Thread.currentThread().interrupt();
             }
         }
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         System.out.println("Высвобождаем очередь...");
         result = queue.poll();
         notify();
@@ -80,7 +70,11 @@ public class SimpleBlockingQueue<T> {
      * @return - размер фактической заполненности очереди
      */
 
-    public synchronized int getSize() {
+    public synchronized int getFactSize() {
         return queue.size();
+    }
+
+    public synchronized int getNominalSize() {
+        return this.size;
     }
 }
