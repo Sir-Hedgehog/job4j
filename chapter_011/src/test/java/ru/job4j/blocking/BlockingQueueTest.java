@@ -1,11 +1,9 @@
 package ru.job4j.blocking;
 
 import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.IntStream;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -96,7 +94,6 @@ public class BlockingQueueTest {
     public void whenEmptyConsistentlyQueueThenInterruptProducer() throws InterruptedException {
         final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
         final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(5);
-        int element = 0;
         for (int index = 0; index < 5; index++) {
             queue.offer(index);
         }
