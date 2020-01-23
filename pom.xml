@@ -31,6 +31,8 @@
         <module>array_of_numbers</module>
         <module>chapter_010</module>
         <module>chapter_011</module>
+        <module>bomberman</module>
+        <module>tictactoe_ood</module>
     </modules>
 
     <dependencies>
