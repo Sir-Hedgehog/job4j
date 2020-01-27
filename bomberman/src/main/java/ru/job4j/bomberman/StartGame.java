@@ -8,7 +8,7 @@ package ru.job4j.bomberman;
 
 public class StartGame {
     public static void main(String[] args) throws InterruptedException {
-        final Board board = new Board(4, 4,5, 5);
+        final Board board = new Board(4, 4, 5, 5);
         Thread first = new Thread(board);
         first.start();
         first.join();
