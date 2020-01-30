@@ -8,13 +8,13 @@ import static org.junit.Assert.assertThat;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 20.01.2020
+ * @version 2.0
+ * @since 30.01.2020
  */
 
 public class BaseCacheTest {
-    private Base base1 = new Base(1);
-    private Base base2 = new Base(2);
+    private Base base1 = new Base(1, "Иван");
+    private Base base2 = new Base(2, "Семен");
     private AtomicReference<Exception> ex = new AtomicReference<>();
 
     private class ThreadStorage extends Thread {
@@ -30,6 +30,7 @@ public class BaseCacheTest {
             try {
                 cache.add(base1);
                 cache.add(base2);
+                base1.setName("Василий");
                 cache.update(base1);
                 cache.delete(base2);
             } catch (OptimisticException oe) {
@@ -39,7 +40,7 @@ public class BaseCacheTest {
     }
 
     @Test
-    public void whenThrowException() throws InterruptedException {
+    public void whenTwoThreadsUseCommonResourceThenThereIsOnlyOneAtomicIncrement() throws InterruptedException {
         BaseCache cache = new BaseCache();
         ThreadStorage thread1 = new ThreadStorage(cache);
         ThreadStorage thread2 = new ThreadStorage(cache);
@@ -48,6 +49,7 @@ public class BaseCacheTest {
         thread1.join();
         thread2.join();
         assertThat(base1.getVersion().intValue(), is(2));
+        assertThat(base1.getName(), is("Василий"));
         //Assert.assertThat(ex.get().getMessage(), is("Ошибка при обновлении данных в потоке!"));
     }
 }

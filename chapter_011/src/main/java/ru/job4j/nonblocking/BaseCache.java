@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 20.01.2020
+ * @version 2.0
+ * @since 30.01.2020
  */
 
 public class BaseCache {
@@ -22,11 +22,12 @@ public class BaseCache {
     }
 
     /**
-     * Метод обновляет версию модели
+     * Метод обновляет версию модели в случае обновления имени пользователя
      * @param model - обновляемая модель
      */
 
     public void update(Base model) {
+        map.computeIfPresent(model.getId(), (key, value) -> this.map.put(model.getId(), model));
         model.setVersion(new AtomicInteger(model.getVersion().incrementAndGet()));
     }
 
