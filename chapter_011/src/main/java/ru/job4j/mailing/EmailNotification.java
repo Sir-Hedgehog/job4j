@@ -4,8 +4,8 @@ import java.util.concurrent.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 23.01.2020
+ * @version 2.0
+ * @since 01.02.2020
  */
 
 public class EmailNotification {
@@ -17,10 +17,10 @@ public class EmailNotification {
      */
 
     public void emailTo(User user) {
-        String name = "Notification " + user.getName();
+        String subject = "Notification " + user.getName();
         String email = " to email " + user.getEmail();
         String body = "\nAdd a new event to " + user.getName() + "\n";
-        this.send(name, body, email);
+        this.send(subject, body, email);
     }
 
     /**
@@ -48,9 +48,7 @@ public class EmailNotification {
      */
 
     private void send(String subject, String body, String email) {
-        pool.submit(() -> subject);
-        pool.submit(() -> email);
-        pool.submit(() -> body);
+        pool.submit(() -> subject + email + body);
         System.out.println(subject + email + body);
     }
 }
