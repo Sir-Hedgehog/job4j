@@ -3,57 +3,66 @@ package ru.job4j.pool;
 import ru.job4j.blocking.SimpleBlockingQueue;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 22.01.2020
+ * @version 2.0
+ * @since 01.02.2020
  */
 
 public class ThreadPool {
     private final List<Thread> threads = new LinkedList<>();
-    private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(3);
-    private final int size = Runtime.getRuntime().availableProcessors();
+    private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(8);
+    private volatile boolean isRunning = true;
 
     /**
-     * Метод осуществляет работу по заполнению очереди и запуску потоков из пула
-     * @param job - процесс работы
+     * В конструкторе создается пул потоков, размер которого равен количеству потоков процессора.
      */
 
-    public void work(Runnable job) throws InterruptedException  {
-        while (threads.size() != size) {
+    public ThreadPool() {
+        int size = Runtime.getRuntime().availableProcessors();
+        for (int index = 0; index < size; index++) {
             Thread thread = new Thread(new ThreadManager());
             threads.add(thread);
-            tasks.offer(job);
             thread.start();
-            thread.join();
         }
     }
 
     /**
-     * Метод закрывает потоки в случае прекращения работы
+     * Метод осуществляет работу по заполнению очереди
+     * @param job - задание
+     */
+
+    public void work(Runnable job) {
+        if (isRunning) {
+            tasks.offer(job);
+        }
+    }
+
+    /**
+     * Метод прерывает потоки в случае прекращения работы
      */
 
     public void shutdown() {
+        isRunning = false;
         for (Thread thread : threads) {
-            if (!thread.isAlive()) {
-                thread.interrupt();
-            }
+            thread.interrupt();
         }
     }
 
     /**
-     * Метод проверяет, все ли потоки закрыты
+     * Метод проверяет, все ли потоки прерваны
      */
 
     public boolean isStopped() {
         boolean result = false;
         for (Thread thread : threads) {
-            if (thread.isAlive()) {
-                result = false;
-                break;
-            } else {
+            if (thread.isInterrupted()) {
                 result = true;
+            } else {
+                break;
             }
         }
         return result;
@@ -63,10 +72,15 @@ public class ThreadPool {
      * Класс, реализующий принцип работы потока
      */
 
-    private class ThreadManager extends Thread {
+    private final class ThreadManager extends Thread {
         @Override
         public void run() {
-            tasks.poll();
+            while (isRunning) {
+                Runnable nextTask = tasks.poll();
+                if (nextTask != null) {
+                    nextTask.run();
+                }
+            }
         }
     }
 }
