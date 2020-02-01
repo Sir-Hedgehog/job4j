@@ -8,7 +8,6 @@ package ru.job4j.tictactoe;
 
 public class Field {
     private int range;
-    private int y;
     private char[][] arrayOfSteps;
     private char mark;
 
