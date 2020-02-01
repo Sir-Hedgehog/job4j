@@ -3,8 +3,6 @@ package ru.job4j.pool;
 import ru.job4j.blocking.SimpleBlockingQueue;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
