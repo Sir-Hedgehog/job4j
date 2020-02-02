@@ -2,8 +2,8 @@ package ru.job4j.bomberman;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 26.01.2020
+ * @version 2.0
+ * @since 02.02.2020
  */
 
 public class StartGame {

@@ -4,8 +4,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 26.01.2020
+ * @version 2.0
+ * @since 02.02.2020
  */
 
 public class Board implements Runnable {
@@ -13,8 +13,7 @@ public class Board implements Runnable {
     private int y;
     private final int limitX;
     private final int limitY;
-    private final ReentrantLock[][] board;
-    private final ReentrantLock step = new ReentrantLock();
+    private ReentrantLock[][] board;
 
     public Board(int x, int y, int limitX, int limitY) {
         this.x = x;
@@ -25,83 +24,44 @@ public class Board implements Runnable {
     }
 
     /**
-     * Метод осуществляет проверку на возможность хода у границ поля.
-     * В случае если бомбермен попытается перейти заданную границу, то он останется на той ячейке.
-     * @return - результат проверки возможности хода бомбермена
+     * Метод генерирует следующий ход бомбермена
+     * @return - получившийся ход
      */
 
-    private boolean checkCell() {
-        boolean result;
-        if (y >= 0 && y < limitY && x >= 0 && x < limitX) {
-            board[x][y] = step;
-            result = true;
+    private ReentrantLock getStep() {
+        int random = (int) (Math.random() * 4) + 1;
+        if (random == 1 && x + 1 < limitX) {
+            System.out.println("Рандом 1");
+            x++;
+            System.out.println("Бомбермен перемещается на ячейку вправо: (" + x + ", " + y + ")");
+        } else if (random == 2 && x - 1 >= 0) {
+            System.out.println("Рандом 2");
+            x--;
+            System.out.println("Бомбермен перемещается на ячейку влево: (" + x + ", " + y + ")");
+        } else if (random == 3 && y - 1 >= 0) {
+            System.out.println("Рандом 3");
+            y--;
+            System.out.println("Бомбермен перемещается на ячейку вверх: (" + x + ", " + y + ")");
+        } else if (random == 4 && y + 1 < limitY) {
+            System.out.println("Рандом 4");
+            y++;
+            System.out.println("Бомбермен перемещается на ячейку вниз: (" + x + ", " + y + ")");
         } else {
-            result = false;
+            System.out.println("Бомбермен стоит на месте");
         }
-        return result;
+        return board[x][y];
     }
 
     /**
      * Метод описывает движение бомбермена
      */
 
-    private void move() {
-        int random = (int) (Math.random() * 4) + 1;
-        if (random == 1) {
-            System.out.println("Рандом 1");
-            if (step.isLocked()) {
-                step.unlock();
-            }
-            x = x + 1;
-            if (checkCell() && step.tryLock()) {
-                step.lock();
-                System.out.println("Бомбермен перемещается на ячейку вниз: (" + x + ", " + y + ")");
-            } else {
-                x = x - 1;
-                step.lock();
-                System.out.println("Бомбермен стоит на месте");
-            }
-        } else if (random == 2) {
-            System.out.println("Рандом 2");
-            if (step.isLocked()) {
-                step.unlock();
-            }
-            x = x - 1;
-            if (checkCell() && step.tryLock()) {
-                step.lock();
-                System.out.println("Бомбермен перемещается на ячейку вверх: (" + x + ", " + y + ")");
-            } else {
-                x = x + 1;
-                step.lock();
-                System.out.println("Бомбермен стоит на месте");
-            }
-        } else if (random == 3) {
-            System.out.println("Рандом 3");
-            if (step.isLocked()) {
-                step.unlock();
-            }
-            y = y + 1;
-            if (checkCell() && step.tryLock()) {
-                step.lock();
-                System.out.println("Бомбермен перемещается на ячейку вправо: (" + x + ", " + y + ")");
-            } else {
-                y = y - 1;
-                step.lock();
-                System.out.println("Бомбермен стоит на месте");
-            }
-        } else if (random == 4) {
-            System.out.println("Рандом 4");
-            if (step.isLocked()) {
-                step.unlock();
-            }
-            y = y - 1;
-            if (checkCell() && step.tryLock()) {
-                step.lock();
-                System.out.println("Бомбермен перемещается на ячейку влево: (" + x + ", " + y + ")");
-            } else {
-                y = y + 1;
-                step.lock();
-                System.out.println("Бомбермен стоит на месте");
+    private void move(ReentrantLock source, ReentrantLock destination) {
+        if (source != null && !source.isLocked()) {
+            source.lock();
+            if (destination.tryLock()) {
+                source.unlock();
+                destination.lock();
             }
         }
     }
@@ -114,7 +74,7 @@ public class Board implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.move();
+            this.move(board[x][y], getStep());
         }
     }
 }
