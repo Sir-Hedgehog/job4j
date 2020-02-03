@@ -1,12 +1,11 @@
 package ru.job4j.nonblocking;
 
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 30.01.2020
+ * @version 3.0
+ * @since 03.02.2020
  */
 
 public class BaseCache {
@@ -22,13 +21,20 @@ public class BaseCache {
     }
 
     /**
-     * Метод обновляет версию модели в случае обновления имени пользователя
+     * Метод обновляет версию модели в случае соответствия версий входящего параметра и существующей модели кэша
      * @param model - обновляемая модель
      */
 
-    public void update(Base model) {
-        map.computeIfPresent(model.getId(), (key, value) -> this.map.put(model.getId(), model));
-        model.setVersion(new AtomicInteger(model.getVersion().incrementAndGet()));
+    public void update(Base model) throws OptimisticException {
+        map.computeIfPresent(model.getId(), (key, value) -> {
+            if (model.getVersion() == value.getVersion()) {
+                this.map.put(model.getId(), model);
+                model.setVersion(value.getVersion() + 1);
+                return model;
+            } else {
+                throw new OptimisticException();
+            }
+        });
     }
 
     /**

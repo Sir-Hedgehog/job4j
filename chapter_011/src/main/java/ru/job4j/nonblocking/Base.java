@@ -1,16 +1,16 @@
 package ru.job4j.nonblocking;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Objects;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 30.01.2020
+ * @version 3.0
+ * @since 03.02.2020
  */
 
 public class Base {
-    private int id;
-    private AtomicInteger version = new AtomicInteger(0);
+    private final int id;
+    private int version = 0;
     private String name;
 
     public Base(int id, String name) {
@@ -18,23 +18,34 @@ public class Base {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getId() {
         return id;
     }
 
-    public AtomicInteger getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(AtomicInteger version) {
+    public void setVersion(int version) {
         this.version = version;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Base base = (Base) o;
+        return id == base.id
+                && version == base.version
+                && Objects.equals(name, base.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, version, name);
     }
 }

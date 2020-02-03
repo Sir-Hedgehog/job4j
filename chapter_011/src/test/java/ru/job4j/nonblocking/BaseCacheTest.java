@@ -8,49 +8,49 @@ import static org.junit.Assert.assertThat;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 30.01.2020
+ * @version 3.0
+ * @since 03.02.2020
  */
 
 public class BaseCacheTest {
-    private Base base1 = new Base(1, "Иван");
-    private Base base2 = new Base(2, "Семен");
+    private Base base;
+    private BaseCache cache = new BaseCache();
     private AtomicReference<Exception> ex = new AtomicReference<>();
-
-    private class ThreadStorage extends Thread {
-
-        private final BaseCache cache;
-
-        private ThreadStorage(final BaseCache cache) {
-            this.cache = cache;
+    private Thread thread1 = new Thread(() -> {
+        try {
+            base = new Base(1, "Иван");
+            cache.update(base);
+        } catch (OptimisticException e) {
+            ex.set(e);
         }
-
-        @Override
-        public void run() {
-            try {
-                cache.add(base1);
-                cache.add(base2);
-                base1.setName("Василий");
-                cache.update(base1);
-                cache.delete(base2);
-            } catch (OptimisticException oe) {
-                ex.set(oe);
-            }
+    });
+    private Thread thread2 = new Thread(() -> {
+        try {
+            base = new Base(1, "Василий");
+            cache.update(base);
+        } catch (OptimisticException e) {
+            ex.set(e);
         }
+    });
+
+    @Test
+    public void whenOneThreadTryUpdateInfoAndVersionsAreEqualThenTrue() throws InterruptedException {
+        base = new Base(1, "Александр");
+        cache.add(base);
+        thread1.start();
+        thread1.join();
+        assertThat(base.getVersion(), is(1));
     }
 
     @Test
-    public void whenTwoThreadsUseCommonResourceThenThereIsOnlyOneAtomicIncrement() throws InterruptedException {
-        BaseCache cache = new BaseCache();
-        ThreadStorage thread1 = new ThreadStorage(cache);
-        ThreadStorage thread2 = new ThreadStorage(cache);
+    public void whenTwoThreadsTryUpdateInfoAndVersionsAreNotEqualThenThrowException() throws InterruptedException {
+        base = new Base(1, "Александр");
+        cache.add(base);
         thread1.start();
         thread2.start();
         thread1.join();
         thread2.join();
-        assertThat(base1.getVersion().intValue(), is(2));
-        assertThat(base1.getName(), is("Василий"));
-        //Assert.assertThat(ex.get().getMessage(), is("Ошибка при обновлении данных в потоке!"));
+        Assert.assertThat(ex.get().getMessage(), is("Ошибка при обновлении данных в потоке!"));
     }
 }
 
