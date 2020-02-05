@@ -33,6 +33,7 @@
         <module>chapter_011</module>
         <module>bomberman</module>
         <module>tictactoe_ood</module>
+        <module>chapter_012</module>
     </modules>
 
     <dependencies>
