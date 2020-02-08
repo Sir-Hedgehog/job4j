@@ -7,8 +7,8 @@ import java.util.Queue;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 17.01.2020
+ * @version 5.0
+ * @since 08.02.2020
  */
 
 @ThreadSafe
@@ -52,6 +52,10 @@ public class SimpleBlockingQueue<T> {
         T result;
         while (queue.isEmpty()) {
             try {
+                if (Thread.currentThread().isInterrupted()) {
+                    System.out.println("Поток " + Thread.currentThread().getName() + " закончил свою работу...");
+                    break;
+                }
                 System.out.println("В очереди нет элементов. Ждем добавление новых...");
                 wait();
                 System.out.println("Поступило извещение о том, что очередь не пустая...");

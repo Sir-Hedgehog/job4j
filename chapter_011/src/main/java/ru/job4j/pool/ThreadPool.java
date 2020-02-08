@@ -6,8 +6,8 @@ import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 01.02.2020
+ * @version 3.0
+ * @since 08.02.2020
  */
 
 public class ThreadPool {
@@ -47,6 +47,12 @@ public class ThreadPool {
         isRunning = false;
         for (Thread thread : threads) {
             thread.interrupt();
+            if (thread.isInterrupted()) {
+                System.out.println("Поток " + thread.getName() + " успешно выполнил свою миссию и находится на последних стадиях самоликвидации");
+            }
+            if (!thread.isAlive()) {
+                System.out.println("Поток " + thread.getName() + " успешно выполнил свою миссию и самоликвидировался");
+            }
         }
     }
 
@@ -57,9 +63,10 @@ public class ThreadPool {
     public boolean isStopped() {
         boolean result = false;
         for (Thread thread : threads) {
-            if (thread.isInterrupted()) {
+            if (!thread.isAlive() || thread.isInterrupted()) {
                 result = true;
             } else {
+                result = false;
                 break;
             }
         }
@@ -78,6 +85,7 @@ public class ThreadPool {
                 if (nextTask != null) {
                     nextTask.run();
                 }
+                Thread.currentThread().interrupt();
             }
         }
     }
