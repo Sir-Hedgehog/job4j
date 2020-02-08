@@ -4,8 +4,8 @@ import java.util.Objects;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 03.02.2020
+ * @version 4.0
+ * @since 08.02.2020
  */
 
 public class Base {

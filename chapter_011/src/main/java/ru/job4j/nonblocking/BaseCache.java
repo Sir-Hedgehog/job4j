@@ -4,8 +4,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 03.02.2020
+ * @version 4.0
+ * @since 08.02.2020
  */
 
 public class BaseCache {
@@ -27,13 +27,12 @@ public class BaseCache {
 
     public void update(Base model) throws OptimisticException {
         map.computeIfPresent(model.getId(), (key, value) -> {
-            if (model.getVersion() == value.getVersion()) {
-                this.map.put(model.getId(), model);
-                model.setVersion(value.getVersion() + 1);
-                return model;
-            } else {
+            if (model.getVersion() != value.getVersion()) {
                 throw new OptimisticException();
             }
+            this.map.put(model.getId(), model);
+            model.setVersion(value.getVersion() + 1);
+            return model;
         });
     }
 
