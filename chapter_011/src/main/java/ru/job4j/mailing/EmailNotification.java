@@ -4,22 +4,22 @@ import java.util.concurrent.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 01.02.2020
+ * @version 3.0
+ * @since 09.02.2020
  */
 
 public class EmailNotification {
     private ExecutorService pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     /**
-     * Метод создате шаблон рассылки для существующих пользователей
+     * Метод отправляет данные о пользователе
      * @param user - пользователь
      */
 
     public void emailTo(User user) {
-        String subject = "Notification " + user.getName();
-        String email = " to email " + user.getEmail();
-        String body = "\nAdd a new event to " + user.getName() + "\n";
+        String subject = user.getName();
+        String email = user.getEmail();
+        String body = user.getName();
         this.send(subject, body, email);
     }
 
@@ -42,13 +42,25 @@ public class EmailNotification {
 
     /**
      * Метод при помощи пула потоков отправляет рассылку с учетом заданного шаблона
-     * @param subject - тема рассылки
-     * @param body - тело рассылки
+     * @param subject - информация о пользователе для формирования темы рассылки
+     * @param body - информация о пользователе для формирования тела рассылки
      * @param email - почта получателя
      */
 
     private void send(String subject, String body, String email) {
-        pool.submit(() -> subject + email + body);
-        System.out.println(subject + email + body);
+        Future task = pool.submit(() -> "Notification " + subject + " to email " + email + "\nAdd a new event to " + body + "\n");
+        while(!task.isDone()) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            System.out.println("Новое сообщение:");
+            System.out.println(task.get());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

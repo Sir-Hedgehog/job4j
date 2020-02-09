@@ -2,8 +2,8 @@ package ru.job4j.mailing;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 01.02.2020
+ * @version 3.0
+ * @since 09.02.2020
  */
 
 public class User {
