@@ -34,6 +34,7 @@
         <module>bomberman</module>
         <module>tictactoe_ood</module>
         <module>chapter_012</module>
+        <module>elevator</module>
     </modules>
 
     <dependencies>
