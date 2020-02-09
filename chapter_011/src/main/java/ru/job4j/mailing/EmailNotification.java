@@ -48,8 +48,8 @@ public class EmailNotification {
      */
 
     private void send(String subject, String body, String email) {
-        Future task = pool.submit(() -> "Notification " + subject + " to email " + email + "\nAdd a new event to " + body + "\n");
-        while(!task.isDone()) {
+        Future task = pool.submit(() -> new Form(subject, body, email).call());
+        while (!task.isDone()) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -57,10 +57,30 @@ public class EmailNotification {
             }
         }
         try {
-            System.out.println("Новое сообщение:");
+            System.out.println("New message:");
             System.out.println(task.get());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * В классе Form происходит формирование шаблона рассылки
+     */
+
+    private class Form implements Callable<String> {
+        String subject;
+        String body;
+        String email;
+
+        Form(String subject, String body, String email) {
+            this.subject = subject;
+            this.body = body;
+            this.email = email;
+        }
+
+        public String call() {
+            return "Notification " + subject + " to email " + email + "\nAdd a new event to " + body + "\n";
         }
     }
 }
