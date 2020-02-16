@@ -7,8 +7,8 @@ import java.util.Queue;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 5.0
- * @since 08.02.2020
+ * @version 6.0
+ * @since 16.02.2020
  */
 
 @ThreadSafe

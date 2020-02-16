@@ -6,8 +6,8 @@ import static org.junit.Assert.assertThat;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 08.02.2020
+ * @version 4.0
+ * @since 16.02.2020
  */
 
 public class ThreadPoolTest {
