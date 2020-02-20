@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 
 public class ValidateService implements Validate {
-    private static final Pattern CHECK_OF_NAME = Pattern.compile("^([A-ZА-Я]{1}[a-zа-я]{1,})$");
+    private static final Pattern CHECK_OF_NAME = Pattern.compile("^(([A-Z]|[А-Я]){1}([a-z]|[а-я]){1,})$");
     private static final Pattern CHECK_OF_EMAIL = Pattern.compile("^((\\w{1,}[-._]{0,1}\\w{1,})+@(\\w{1,}[-._]{0,1}\\w{1,})+[.]{1}[a-z]{2,4})$");
     private static final Pattern CHECK_OF_LOGIN = Pattern.compile("^(\\w{1,}[-._]{0,1}\\w{1,})$");
     private static final Logger LOG = LoggerFactory.getLogger(UserServlet.class);
