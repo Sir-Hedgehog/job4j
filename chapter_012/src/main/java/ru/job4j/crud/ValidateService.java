@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 18.02.2020
+ * @version 2.0
+ * @since 22.02.2020
  */
 
 public class ValidateService implements Validate {
@@ -18,7 +18,7 @@ public class ValidateService implements Validate {
     private static final Pattern CHECK_OF_LOGIN = Pattern.compile("^(\\w{1,}[-._]{0,1}\\w{1,})$");
     private static final Logger LOG = LoggerFactory.getLogger(UserServlet.class);
 
-    private final Store logic = MemoryStore.getInstance();
+    private final Store logic = DatabaseStore.getInstance();
 
     private static ValidateService validateInstance = new ValidateService();
 

@@ -58,6 +58,13 @@ public class User {
         return createDate;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
     @Override
     public String toString() {
