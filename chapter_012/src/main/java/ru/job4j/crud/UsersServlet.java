@@ -8,8 +8,8 @@ import java.io.IOException;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 20.02.2020
+ * @version 3.0
+ * @since 24.02.2020
  */
 
 public class UsersServlet extends HttpServlet {
