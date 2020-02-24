@@ -1,5 +1,6 @@
 package ru.job4j.crud;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +22,10 @@ public class UserCreateServlet extends HttpServlet {
      */
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=utf-8");
-        response.sendRedirect(String.format("%s/create", request.getContextPath()));
+        request.getRequestDispatcher("/WEB-INF/views/create.jsp").forward(request, response);
     }
 
     /**
@@ -34,7 +35,7 @@ public class UserCreateServlet extends HttpServlet {
      */
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=utf-8");
         boolean result = collection.add(
@@ -43,9 +44,11 @@ public class UserCreateServlet extends HttpServlet {
                         request.getParameter("login"),
                         request.getParameter("email")));
         if (result) {
-            response.sendRedirect(String.format("%s/validCreate.jsp", request.getContextPath()));
+            request.getRequestDispatcher("/WEB-INF/views/validCreate.jsp").forward(request, response);
+            response.sendRedirect(String.format("%s/", request.getContextPath()));
         } else {
-            response.sendRedirect(String.format("%s/invalidCreate.jsp", request.getContextPath()));
+            request.getRequestDispatcher("/WEB-INF/views/invalidCreate.jsp").forward(request, response);
+            response.sendRedirect(String.format("%s/", request.getContextPath()));
         }
     }
 }

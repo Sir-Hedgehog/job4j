@@ -13,10 +13,10 @@
             Вы можете:
         </p>
         <p>
-            <a href='<%=request.getContextPath()%>/create.jsp' title='Создать пользователя'>1. Создать пользователя</a>
+            <a href='${pageContext.request.contextPath}/create' title='Создать пользователя'>1. Создать пользователя</a>
         </p>
         <p>
-            <a href='<%=request.getContextPath()%>/list.jsp' title='Список пользователей'>2. Посмотреть список пользователей</a>
+            <a href='${pageContext.request.contextPath}/list' title='Список пользователей'>2. Посмотреть список пользователей</a>
         </p>
         <p>
             Всё бесплатно!

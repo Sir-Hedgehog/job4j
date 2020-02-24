@@ -1,15 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html lang="ru">
     <head>
         <title>Создание аккаунта</title>
         <meta charset='utf-8'/>
     </head>
     <body>
-        <p>
-            Введите корректные данные!
-        </p>
-        <form action='<%=request.getContextPath()%>/create' method='post'>
+        <form action='${pageContext.request.contextPath}/create' method='post'>
             <table>
                 <tr>
                     <td>Введите имя:</td>
@@ -24,8 +21,7 @@
                     <td>
                         <label>
                             <input type='text' name='login'/>
-                        </label>
-                    </td>
+                        </label></td>
                 </tr>
                 <tr>
                     <td>Введите email:</td>

@@ -1,6 +1,6 @@
-<%@ page import="ru.job4j.crud.User" %>
-<%@ page import="ru.job4j.crud.ValidateService" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="person" scope="request" type="ru.job4j.crud.User"/>
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -8,14 +8,13 @@
         <meta charset='utf-8'/>
     </head>
     <body>
-    <%User user = ValidateService.getInstance().findById(Integer.valueOf(request.getParameter("id")));%>
-        <form action='<%=request.getContextPath()%>/edit?id=<%=user.getId()%>' method='post'>
+        <form action='${pageContext.request.contextPath}/edit?id=${person.id}' method='post'>
             <table>
                 <tr>
                     <td>Имя:</td>
                     <td>
                         <label>
-                            <input type='text' name='name' value='<%=user.getName()%>'/>
+                            <input type='text' name='name' value='${person.name}'/>
                         </label>
                     </td>
                 </tr>
@@ -23,7 +22,7 @@
                     <td>Логин:</td>
                     <td>
                         <label>
-                            <input type='text' name='login' value='<%=user.getLogin()%>'/>
+                            <input type='text' name='login' value='${person.login}'/>
                         </label>
                     </td>
                 </tr>
@@ -31,12 +30,12 @@
                     <td>Электронная почта:</td>
                     <td>
                         <label>
-                            <input type='text' name='email' value='<%=user.getEmail()%>'/>
+                            <input type='text' name='email' value='${person.email}'/>
                         </label>
                     </td>
                 </tr>
             </table>
-            <input type='hidden' name='id' value='<%=user.getId()%>'/>
+            <input type='hidden' name='id' value='${person.id}'/>
             <input type='submit' value='Сохранить'/>
         </form>
     </body>

@@ -1,6 +1,6 @@
-<%@ page import="ru.job4j.crud.ValidateService" %>
-<%@ page import="ru.job4j.crud.User" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="clients" scope="request" type="java.util.List"/>
 <!DOCTYPE html>
 <html lang='ru'>
     <head>
@@ -27,26 +27,26 @@
     </head>
     <body>
         <table border='1' bgcolor='#99ffcc'>
-            <%for (User user : ValidateService.getInstance().findAll()) {%>
+            <c:forEach items="${clients}" var="client">
                 <tr>
-                    <td><%=user.getId()%></td>
-                    <td><%=user.getName()%></td>
-                    <td><%=user.getLogin()%></td>
-                    <td><%=user.getEmail()%></td>
-                    <td><%=user.getCreateDate()%></td>
+                    <td><c:out value="${client.id}"/></td>
+                    <td><c:out value="${client.name}"/></td>
+                    <td><c:out value="${client.login}"/></td>
+                    <td><c:out value="${client.email}"/></td>
+                    <td><c:out value="${client.createDate}"/></td>
                 </tr>
-            <% } %>
+            </c:forEach>
         </table>
-        <%for (User user : ValidateService.getInstance().findAll()) {%>
-            <form class='submit' action='<%=request.getContextPath()%>/edit' method='get'>
-                <input type='hidden' name='id' value='<%=user.getId()%>'/>
+        <c:forEach items="${clients}" var="client">
+            <form class='submit' action='${pageContext.request.contextPath}/edit' method='get'>
+                <input type='hidden' name='id' value='${client.id}'/>
                 <input type='submit' value='Редактировать'>
             </form>
-            <form class='submit' action='<%=request.getContextPath()%>/list' method='post'>
-                <input type='hidden' name='id' value='<%=user.getId()%>'/>
+            <form class='submit' action='${pageContext.request.contextPath}/list' method='post'>
+                <input type='hidden' name='id' value='${client.id}'/>
                 <input type='submit' value='Удалить'>
             </form>
             <br/>
-        <% } %>
+        </c:forEach>
     </body>
 </html>

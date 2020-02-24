@@ -1,5 +1,6 @@
 package ru.job4j.crud;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +22,11 @@ public class UsersServlet extends HttpServlet {
      */
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=utf-8");
-        response.sendRedirect(String.format("%s/list.jsp", request.getContextPath()));
+        request.setAttribute("clients", collection.findAll());
+        request.getRequestDispatcher("/WEB-INF/views/list.jsp").forward(request, response);
     }
 
     /**
@@ -34,7 +36,7 @@ public class UsersServlet extends HttpServlet {
      */
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         collection.delete(Integer.valueOf(request.getParameter("id")));
         this.doGet(request, response);
     }

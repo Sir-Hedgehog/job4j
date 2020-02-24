@@ -1,5 +1,6 @@
 package ru.job4j.crud;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +22,12 @@ public class UserUpdateServlet extends HttpServlet {
      */
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=utf-8");
-        response.sendRedirect(String.format("%s/edit.jsp?id=%s", request.getContextPath(), request.getParameter("id")));
+        request.setAttribute("person", collection.findById(Integer.valueOf(request.getParameter("id"))));
+        request.getRequestDispatcher("/WEB-INF/views/edit.jsp").forward(request, response);
+        response.sendRedirect(String.format("%s/?id=%s", request.getContextPath(), request.getParameter("id")));
     }
 
     /**
@@ -34,7 +37,7 @@ public class UserUpdateServlet extends HttpServlet {
      */
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=utf-8");
         boolean result = collection.update(
@@ -44,9 +47,12 @@ public class UserUpdateServlet extends HttpServlet {
                         request.getParameter("login"),
                         request.getParameter("email")));
         if (result) {
-            response.sendRedirect(String.format("%s/validEdit.jsp", request.getContextPath()));
+            request.getRequestDispatcher("/WEB-INF/views/validEdit.jsp").forward(request, response);
+            response.sendRedirect(String.format("%s/", request.getContextPath()));
         } else {
-            response.sendRedirect(String.format("%s/invalidEdit.jsp?id=%s", request.getContextPath(), request.getParameter("id")));
+            request.setAttribute("person", collection.findById(Integer.valueOf(request.getParameter("id"))));
+            request.getRequestDispatcher("/WEB-INF/views/invalidEdit.jsp").forward(request, response);
+            response.sendRedirect(String.format("%s?id=%s", request.getContextPath(), request.getParameter("id")));
         }
     }
 }

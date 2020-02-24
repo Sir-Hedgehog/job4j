@@ -11,7 +11,7 @@
         </p>
         <p>
             Для проверки нажмите на ссылку:
-            <a href='<%=request.getContextPath()%>/list.jsp' title='Список пользователей'>обновленный список</a>
+            <a href='${pageContext.request.contextPath}/list' title='Список пользователей'>обновленный список</a>
         </p>
     </body>
 </html>
