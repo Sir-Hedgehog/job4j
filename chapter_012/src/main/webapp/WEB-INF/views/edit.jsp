@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="person" scope="request" type="ru.job4j.crud.User"/>
 <!DOCTYPE html>
 <html lang="ru">
@@ -10,6 +9,16 @@
     <body>
         <form action='${pageContext.request.contextPath}/edit?id=${person.id}' method='post'>
             <table>
+                <tr>
+                    <td>Выбранное фото:</td>
+                    <td>
+                        <div>
+                            <label>
+                                <input type='text' name='file' value='${person.photoId}' readonly/>
+                            </label>
+                        </div>
+                    </td>
+                </tr>
                 <tr>
                     <td>Имя:</td>
                     <td>
@@ -35,7 +44,6 @@
                     </td>
                 </tr>
             </table>
-            <input type='hidden' name='id' value='${person.id}'/>
             <input type='submit' value='Сохранить'/>
         </form>
     </body>

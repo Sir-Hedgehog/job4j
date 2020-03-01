@@ -8,14 +8,15 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 22.02.2020
+ * @version 3.0
+ * @since 01.02.2020
  */
 
 public class ValidateService implements Validate {
     private static final Pattern CHECK_OF_NAME = Pattern.compile("^(([A-Z]|[А-Я]){1}([a-z]|[а-я]){1,})$");
     private static final Pattern CHECK_OF_EMAIL = Pattern.compile("^((\\w{1,}[-._]{0,1}\\w{1,})+@(\\w{1,}[-._]{0,1}\\w{1,})+[.]{1}[a-z]{2,4})$");
     private static final Pattern CHECK_OF_LOGIN = Pattern.compile("^(\\w{1,}[-._]{0,1}\\w{1,})$");
+    private static final Pattern CHECK_OF_PHOTO = Pattern.compile("^((\\w|\\W){1,})+.(gif|jpg|png|jpeg|svg)$");
     private static final Logger LOG = LoggerFactory.getLogger(UserServlet.class);
 
     private final Store logic = DatabaseStore.getInstance();
@@ -65,6 +66,17 @@ public class ValidateService implements Validate {
     }
 
     /**
+     * Метод проверяет формат прикрепленной аватарки на валидность
+     * @param user - пользователь
+     * @return - валидные данные или нет
+     */
+
+    public boolean checkPhoto(User user) {
+        Matcher matcher = CHECK_OF_PHOTO.matcher(user.getPhotoId());
+        return matcher.find();
+    }
+
+    /**
      * Метод добавляет нового пользователя с учетом фильтра валидности
      * @param user - пользователь
      * @return - успешность операции
@@ -72,7 +84,7 @@ public class ValidateService implements Validate {
 
     public boolean add(User user) {
         boolean result = false;
-        if (checkName(user) && checkEmail(user) && checkLogin(user)) {
+        if (checkName(user) && checkEmail(user) && checkLogin(user) && checkPhoto(user)) {
             logic.add(user);
             result = true;
             LOG.info("LOGGER: Successful execution to add");
@@ -88,7 +100,7 @@ public class ValidateService implements Validate {
 
     public boolean update(int id, User user) {
         boolean result = false;
-        if (checkName(user) && checkEmail(user) && checkLogin(user)) {
+        if (checkName(user) && checkEmail(user) && checkLogin(user) && checkPhoto(user)) {
             logic.update(id, user);
             result = true;
             LOG.info("LOGGER: Successful execution to update");

@@ -8,8 +8,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 23.02.2020
+ * @version 3.0
+ * @since 01.03.2020
  */
 
 public class DatabaseStore implements Store {
@@ -49,12 +49,13 @@ public class DatabaseStore implements Store {
     @Override
     public boolean add(User user) {
         boolean result = false;
-        try (Connection connection = SOURCE.getConnection(); PreparedStatement ps = connection.prepareStatement("INSERT INTO users(id, name, login, email, date_of_creation) VALUES (?, ?, ?, ?, ?)")) {
+        try (Connection connection = SOURCE.getConnection(); PreparedStatement ps = connection.prepareStatement("INSERT INTO users(id, name, login, email, photoId, date_of_creation) VALUES (?, ?, ?, ?, ?, ?)")) {
             ps.setInt(1, user.getId());
             ps.setString(2, user.getName());
             ps.setString(3, user.getLogin());
             ps.setString(4, user.getEmail());
-            ps.setString(5, user.getCreateDate());
+            ps.setString(5, user.getPhotoId());
+            ps.setString(6, user.getCreateDate());
             ps.executeUpdate();
             result = true;
         } catch (SQLException e) {
@@ -72,17 +73,19 @@ public class DatabaseStore implements Store {
 
     @Override
     public boolean update(int id, User recent) {
-        try (Connection connection = SOURCE.getConnection(); PreparedStatement ps = connection.prepareStatement("UPDATE users SET name = ?, login = ?, email = ? WHERE id = ?")) {
+        boolean result = false;
+        try (Connection connection = SOURCE.getConnection(); PreparedStatement ps = connection.prepareStatement("UPDATE users SET name = ?, login = ?, email = ?, photoId = ? WHERE id = ?")) {
             ps.setString(1, recent.getName());
             ps.setString(2, recent.getLogin());
             ps.setString(3, recent.getEmail());
-            ps.setInt(4, id);
+            ps.setString(4, recent.getPhotoId());
+            ps.setInt(5, id);
             ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
+            result = true;
+        } catch (SQLException | IllegalStateException e) {
             LOG.error(e.getMessage(), e);
         }
-        throw new IllegalStateException(String.format("Such id %s of user is not exist", id));
+        return result;
     }
 
     /**
@@ -93,14 +96,15 @@ public class DatabaseStore implements Store {
 
     @Override
     public boolean delete(int id) {
+        boolean result = false;
         try (Connection connection = SOURCE.getConnection(); PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
             ps.setInt(1, id);
             ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
+            result = true;
+        } catch (SQLException | IllegalStateException e) {
             LOG.error(e.getMessage(), e);
         }
-        throw new IllegalStateException(String.format("Such id %s of user is not exist", id));
+        return result;
     }
 
     /**
@@ -114,7 +118,7 @@ public class DatabaseStore implements Store {
         try (Connection connection = SOURCE.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM users")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getString("name"), rs.getString("login"), rs.getString("email"));
+                User user = new User(rs.getString("name"), rs.getString("login"), rs.getString("email"), rs.getString("photoId"));
                 user.setId(rs.getInt("id"));
                 user.setCreateDate(rs.getString("date_of_creation"));
                 list.add(user);
@@ -133,20 +137,21 @@ public class DatabaseStore implements Store {
 
     @Override
     public User findById(int id) {
+        User result = null;
         try (Connection connection = SOURCE.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE id = ?")) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                User user = new User(rs.getString("name"), rs.getString("login"), rs.getString("email"));
+                User user = new User(rs.getString("name"), rs.getString("login"), rs.getString("email"), rs.getString("photoId"));
                 user.setId(rs.getInt("id"));
                 user.setCreateDate(rs.getString("date_of_creation"));
                 if (id == user.getId()) {
-                    return user;
+                    result = user;
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IllegalStateException e) {
             LOG.error(e.getMessage(), e);
         }
-        throw new IllegalStateException(String.format("Such id %s of user is not exist", id));
+        return result;
     }
 }

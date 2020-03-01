@@ -8,8 +8,8 @@ import java.io.IOException;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 24.02.2020
+ * @version 4.0
+ * @since 01.03.2020
  */
 
 public class UserUpdateServlet extends HttpServlet {
@@ -45,7 +45,8 @@ public class UserUpdateServlet extends HttpServlet {
                 new User(
                         request.getParameter("name"),
                         request.getParameter("login"),
-                        request.getParameter("email")));
+                        request.getParameter("email"),
+                        request.getParameter("file")));
         if (result) {
             request.getRequestDispatcher("/WEB-INF/views/validEdit.jsp").forward(request, response);
             response.sendRedirect(String.format("%s/", request.getContextPath()));

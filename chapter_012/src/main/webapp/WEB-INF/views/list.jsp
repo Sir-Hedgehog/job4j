@@ -21,19 +21,24 @@
                  }
                  .submit {
                      display: inline-block;
-                     margin-bottom: 0;
+                     padding: 43px 0;
+                     margin: 0;
                  }
         </style>
     </head>
     <body>
-        <table border='1' bgcolor='#99ffcc'>
+        <table border='1' bgcolor='#99ffcc' valign='center'>
             <c:forEach items="${clients}" var="client">
                 <tr>
-                    <td><c:out value="${client.id}"/></td>
-                    <td><c:out value="${client.name}"/></td>
-                    <td><c:out value="${client.login}"/></td>
-                    <td><c:out value="${client.email}"/></td>
-                    <td><c:out value="${client.createDate}"/></td>
+                    <td align="center"><c:out value="${client.id}"/></td>
+                    <td align="center"><c:out value="${client.name}"/></td>
+                    <td align="center"><c:out value="${client.login}"/></td>
+                    <td align="center"><c:out value="${client.email}"/></td>
+                    <td align="center"><c:out value="${client.createDate}"/></td>
+                    <td align="center">
+                        <img src="${pageContext.servletContext.contextPath}/download?name=${client.photoId}" width="100px" height="100px"/>
+                    </td>
+                    <td align="center"><a href="${pageContext.servletContext.contextPath}/download?name=${client.photoId}">Скачать картинку</a></td>
                 </tr>
             </c:forEach>
         </table>

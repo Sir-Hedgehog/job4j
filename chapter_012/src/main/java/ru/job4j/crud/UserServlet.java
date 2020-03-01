@@ -14,8 +14,8 @@ import java.util.function.Consumer;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 18.02.2020
+ * @version 2.0
+ * @since 01.03.2020
  */
 
 public class UserServlet extends HttpServlet {
@@ -84,7 +84,8 @@ public class UserServlet extends HttpServlet {
                 new User(
                         request.getParameter("name"),
                         request.getParameter("login"),
-                        request.getParameter("email")));
+                        request.getParameter("email"),
+                        request.getParameter("file")));
         LOG.info("LOGGER: transfer of params to add");
     }
 
@@ -99,7 +100,8 @@ public class UserServlet extends HttpServlet {
                 new User(
                         request.getParameter("name"),
                         request.getParameter("login"),
-                        request.getParameter("email")));
+                        request.getParameter("email"),
+                        request.getParameter("file")));
         LOG.info("LOGGER: transfer of params to update");
     }
 
