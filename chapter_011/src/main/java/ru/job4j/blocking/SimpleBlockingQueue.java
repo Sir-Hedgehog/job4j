@@ -7,8 +7,8 @@ import java.util.Queue;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 6.0
- * @since 16.02.2020
+ * @version 7.0
+ * @since 03.03.2020
  */
 
 @ThreadSafe
@@ -49,23 +49,21 @@ public class SimpleBlockingQueue<T> {
      */
 
     public synchronized T poll() {
-        T result;
-        while (queue.isEmpty()) {
+        T result = null;
+        while (queue.isEmpty() && !Thread.currentThread().isInterrupted()) {
             try {
-                if (Thread.currentThread().isInterrupted()) {
-                    System.out.println("Поток " + Thread.currentThread().getName() + " закончил свою работу...");
-                    break;
-                }
                 System.out.println("В очереди нет элементов. Ждем добавление новых...");
                 wait();
                 System.out.println("Поступило извещение о том, что очередь не пустая...");
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
         }
-        System.out.println("Высвобождаем очередь...");
-        result = queue.poll();
-        notify();
+        if (!Thread.currentThread().isInterrupted()) {
+            System.out.println("Высвобождаем очередь...");
+            result = queue.poll();
+            notify();
+        }
         return result;
     }
 
@@ -77,6 +75,10 @@ public class SimpleBlockingQueue<T> {
     public synchronized int getFactSize() {
         return queue.size();
     }
+    /**
+     * Метод возвращает максимально возможный размер очереди
+     * @return - максимально возможный размер очереди
+     */
 
     public synchronized int getNominalSize() {
         return this.size;
