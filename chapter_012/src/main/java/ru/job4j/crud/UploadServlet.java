@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServlet;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 01.03.2020
+ * @version 2.0
+ * @since 03.03.2020
  */
 
 public class UploadServlet extends HttpServlet {
@@ -56,18 +56,13 @@ public class UploadServlet extends HttpServlet {
         ServletFileUpload upload = new ServletFileUpload(factory);
         try {
             List<FileItem> items = upload.parseRequest(request);
-            LOG.info("ITEMS: " + items);
             File folder = new File("/bin/images/");
-            LOG.info("FOLDER: " + folder);
             if (!folder.exists()) {
                 folder.mkdirs();
             }
             for (FileItem item : items) {
-                LOG.info("ITEM: " + item.getName());
                 if (!item.isFormField()) {
                     nameOfFile = item.getName().substring(item.getName().lastIndexOf("\\") + 1);
-                    LOG.info("NEW ITEM: " + nameOfFile);
-                    LOG.info("SUM: " + folder + File.separator + nameOfFile);
                     File file = new File(folder + File.separator + nameOfFile);
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());

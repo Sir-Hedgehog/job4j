@@ -15,8 +15,8 @@ import java.util.Objects;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 01.03.2020
+ * @version 5.0
+ * @since 03.03.2020
  */
 
 public class UsersServlet extends HttpServlet {
@@ -35,8 +35,11 @@ public class UsersServlet extends HttpServlet {
         response.setContentType("text/html; charset=utf-8");
         request.setAttribute("clients", collection.findAll());
         List<String> images = new ArrayList<>();
-        for (File name : Objects.requireNonNull(new File("/bin/images/").listFiles())) {
-            LOG.info("file.getName(): " + name.getName());
+        File folder = new File("/bin/images/");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        for (File name : folder.listFiles()) {
             images.add(name.getName());
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/list.jsp");

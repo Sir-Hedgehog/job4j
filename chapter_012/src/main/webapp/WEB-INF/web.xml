@@ -22,6 +22,7 @@
     <servlet>
         <servlet-name>UploadServlet</servlet-name>
         <servlet-class>ru.job4j.crud.UploadServlet</servlet-class>
+        <load-on-startup>4</load-on-startup>
     </servlet>
     <servlet>
         <servlet-name>DownloadServlet</servlet-name>
