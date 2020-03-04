@@ -174,11 +174,6 @@
             <version>1.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
-            <version>2.6.0</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -203,7 +198,6 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>target/</classpathPrefix>
                         </manifest>
-
                     </archive>
                 </configuration>
             </plugin>
