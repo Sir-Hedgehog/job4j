@@ -1,11 +1,6 @@
 [![Build Status](https://travis-ci.org/Sir-Hedgehog/job4j.svg?branch=master)](https://travis-ci.org/Sir-Hedgehog/job4j)
 [![codecov](https://codecov.io/gh/Sir-Hedgehog/job4j/branch/master/graph/badge.svg)](https://codecov.io/gh/Sir-Hedgehog/job4j)
 
-# Репозиторий Громового Сергея
+# job4j
 
-Я прохожу обучение по курсу Job4j. 
 
-Выше находятся наиболее интересные проекты, которые я реализовывал во время обучения.
-
-Объединение зафиксированных изменений
-В курсе производилась работа в ветках git.
