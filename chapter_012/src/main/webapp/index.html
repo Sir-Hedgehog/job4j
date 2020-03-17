@@ -7,6 +7,25 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script>
+            var userId = 1;
+
+            function validate() {
+                var result = false;
+                var value1 = $('#name').val();
+                var value2 = $('#surname').val();
+                if (value1 === '') {
+                    alert('Введите имя!');
+                } else if(value2 === '') {
+                    alert('Введите фамилию!');
+                } else {
+                    alert('Регистрация прошла успешно!');
+                    result = true;
+                    userId = ++userId;
+                }
+                return result;
+            }
+        </script>
         <style>
             body {
                 background-color: #e7f4f0;
@@ -48,13 +67,13 @@
                 <input type="text" class="form-control" id="surname">
             </div>
             <div class="form-group">
-                <label for="option1">Пол:</label>
+                <label for="sex1">Пол:</label>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-secondary active">
-                        <input type="radio" name="sex" id="option1" checked>мужской
+                        <input type="radio" name="sex" id="sex1" checked>мужской
                     </label>
                     <label class="btn btn-secondary">
-                        <input type="radio" name="sex" id="option2">женский
+                        <input type="radio" name="sex" id="sex2">женский
                     </label>
                 </div>
             </div>
@@ -62,43 +81,25 @@
                 <label for="description">Описание: </label>
                 <textarea class="form-control" id="description"></textarea>
             </div>
-            <button type="submit" class="btn btn-default">Отправить</button><br/><br/>
-            <div class="container">
-                <h2>
-                    Авторизованные пользователи:
-                </h2><br/>
-                <table align="left" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Имя</th>
-                            <th>Фамилия</th>
-                            <th>Пол</th>
-                            <th>Описание</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <!-- example -->
-                        <tr>
-                            <td>Иван</td>
-                            <td>Петров</td>
-                            <td>мужской</td>
-                            <td>Я работаю механиком</td>
-                        </tr>
-                        <tr>
-                            <td>Марфа</td>
-                            <td>Сидорова</td>
-                            <td>женский</td>
-                            <td>Мое хобби: тискать кошек</td>
-                        </tr>
-                        <tr>
-                            <td>Глеб</td>
-                            <td>Корж</td>
-                            <td>мужской</td>
-                            <td>Мне нечего добавить</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <button type="submit" class="btn btn-default" onclick="return validate();">Отправить</button><br/><br/>
         </form>
+        <div class="container">
+            <h2>
+                Авторизованные пользователи:
+            </h2><br/>
+            <table align="left" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Идентификатор</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Пол</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
