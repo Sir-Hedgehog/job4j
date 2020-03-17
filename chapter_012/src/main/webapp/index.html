@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Bootstrap Example</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <style>
+            body {
+                background-color: #e7f4f0;
+            }
+
+            h1, h2, .form-group, button, table {
+                margin-left: 20px;
+                color: #5c6c67;
+            }
+
+            .container {
+                text-align: left;
+                margin-left: 20px;
+                padding: 0;
+            }
+
+            h2, table.table-striped {
+                margin-left: 0;
+            }
+
+            table.table-striped {
+                width: 80%;
+            }
+
+            .form-group {
+                width: 40%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Авторизация</h1><br/>
+        <form action="">
+            <div class="form-group">
+                <label for="name">Имя: </label>
+                <input type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group">
+                <label for="surname">Фамилия: </label>
+                <input type="text" class="form-control" id="surname">
+            </div>
+            <div class="form-group">
+                <label for="option1">Пол:</label>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="sex" id="option1" checked>мужской
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="sex" id="option2">женский
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Описание: </label>
+                <textarea class="form-control" id="description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-default">Отправить</button><br/><br/>
+            <div class="container">
+                <h2>
+                    Авторизованные пользователи:
+                </h2><br/>
+                <table align="left" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Имя</th>
+                            <th>Фамилия</th>
+                            <th>Пол</th>
+                            <th>Описание</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <!-- example -->
+                        <tr>
+                            <td>Иван</td>
+                            <td>Петров</td>
+                            <td>мужской</td>
+                            <td>Я работаю механиком</td>
+                        </tr>
+                        <tr>
+                            <td>Марфа</td>
+                            <td>Сидорова</td>
+                            <td>женский</td>
+                            <td>Мое хобби: тискать кошек</td>
+                        </tr>
+                        <tr>
+                            <td>Глеб</td>
+                            <td>Корж</td>
+                            <td>мужской</td>
+                            <td>Мне нечего добавить</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </body>
+</html>
