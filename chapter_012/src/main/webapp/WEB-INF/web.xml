@@ -5,12 +5,20 @@
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
     <servlet>
+        <servlet-name>GreetingServlet</servlet-name>
+        <servlet-class>ru.job4j.servlets.GreetingServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EchoServlet</servlet-name>
         <servlet-class>ru.job4j.servlets.EchoServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
+        <servlet-name>GreetingServlet</servlet-name>
+        <url-pattern>/greet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EchoServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/echo</url-pattern>
     </servlet-mapping>
 </web-app>

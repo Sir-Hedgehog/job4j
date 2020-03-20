@@ -1,123 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <title>Bootstrap Example</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script>
-            var userId = 0;
+            var counter = 0;
 
-            function validate() {
-                var result = false;
-                var value1 = $('#name').val();
-                var value2 = $('#surname').val();
-                if (value1 === '') {
-                    alert('Введите имя!');
-                } else if(value2 === '') {
-                    alert('Введите фамилию!');
-                } else {
-                    alert('Регистрация прошла успешно!');
-                    result = true;
-                    userId = ++userId;
-                }
-                return result;
-            }
-
-            function addData() {
-                var name = $('#name').val();
-                var surname = $('#surname').val();
-                var sex = $('input[name=sex]:checked').val();
-                var description = $('#description').val();
-                $('#tableBody tr:last').before(
-                    '<tr>' +
-                    '<td>' + userId + '</td>' +
-                    '<td>' + name + '</td>' +
-                    '<td>' + surname + '</td>' +
-                    '<td>' + sex + '</td>' +
-                    '<td>' + description + '</td>' +
-                    '</tr>'
-                );
+            function sendGreeting() {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8081/items/greet',
+                    data: 'name=' + $('#exampleInputName1').val(),
+                    dataType: 'text'
+                }).done(function(data) {
+                    $('input').before(
+                        '<p>' + ++counter + ". " + data +'</p>'
+                    );
+                }).fail(function(err){
+                    alert(err);
+                });
             }
         </script>
-        <style>
-            body {
-                background-color: #e7f4f0;
-            }
-
-            h1, h2, .form-group, button, table {
-                margin-left: 20px;
-                color: #5c6c67;
-            }
-
-            .container {
-                text-align: left;
-                margin-left: 20px;
-                padding: 0;
-            }
-
-            h2, table.table-striped {
-                margin-left: 0;
-            }
-
-            table.table-striped {
-                width: 80%;
-            }
-
-            .form-group {
-                width: 40%;
-            }
-        </style>
+        <title>AJAX</title>
     </head>
     <body>
-        <h1>Авторизация</h1><br>
-        <form action="" method="post" onsubmit="addData()">
-            <div class="form-group">
-                <label for="name">Имя: </label>
-                <input type="text" class="form-control" id="name">
-            </div>
-            <div class="form-group">
-                <label for="surname">Фамилия: </label>
-                <input type="text" class="form-control" id="surname">
-            </div>
-            <div class="form-group">
-                <label for="sex">Пол: </label>
-                <div id="sex" class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label for="male" class="btn btn-secondary active">
-                        <input type="radio" name="sex" id="male" value="мужской" checked="">мужской
-                    </label>
-                    <label for="female" class="btn btn-secondary">
-                        <input type="radio" name="sex" id="female" value="женский">женский
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="description">Описание: </label>
-                <textarea class="form-control" id="description"></textarea>
-            </div>
-            <button type="button" class="btn btn-default" onclick="validate(); addData();">Отправить</button><br><br>
-        </form>
         <div class="container">
-            <h2>
-                Авторизованные пользователи:
-            </h2><br>
-            <table align="left" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Идентификатор</th>
-                        <th>Имя</th>
-                        <th>Фамилия</th>
-                        <th>Пол</th>
-                        <th>Описание</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <tr>
-                    </tr>
-                </tbody>
-            </table>
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputName1">Enter name: </label>
+                    <input type="text" class="form-control" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter name">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="sendGreeting();">Submit</button>
+            </form>
         </div>
     </body>
 </html>
