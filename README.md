@@ -12,7 +12,52 @@ The modules are separated:
 In the every module there is showed to realise the using of specific technologies (Java Core, SQL, servlets and other things).
 Practically every program in modules was tested and checked.
 
-#Author
+## Used technologies
+*language and frameworks:*
+* Java Core;
+* JavaFX;
+* Quartz;
+* Servlet;
+* JSP;
+* JSTL;
+* jsoup;
+* slf4j;
+* guava;
+* jcip; 
+* log4j
+---
+*tests:*
+* Mockito;
+* JUnit;
+* Hamcrest
+---
+*databases:*
+* SQLLite
+* PostgreSQL;
+* JDBC
+---
+*texts and front-end:*
+* XML;
+* HTML;
+* CSS;
+* Bootstrap;
+* JavaScript;
+* JQuery;
+* Ajax
+---
+*server containers:*
+* Apache Tomcat 
+---
+*development tools:*
+* Intellij IDEA;
+* JaCoCo;
+* Travic CI;
+* Codecov;
+* Git;
+* Maven;
+* CheckStyle
+
+## Author
 Sergey Gromovoy
 
 
