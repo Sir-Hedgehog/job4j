@@ -13,6 +13,7 @@ In the every module there is showed to realise the using of specific technologie
 Practically every program in modules was tested and checked.
 
 ## Used technologies
+
 *language and frameworks:*
 * Java Core;
 * JavaFX;
@@ -25,17 +26,17 @@ Practically every program in modules was tested and checked.
 * guava;
 * jcip; 
 * log4j
----
+
 *tests:*
 * Mockito;
 * JUnit;
 * Hamcrest
----
+
 *databases:*
 * SQLLite
 * PostgreSQL;
 * JDBC
----
+
 *texts and front-end:*
 * XML;
 * HTML;
@@ -44,10 +45,10 @@ Practically every program in modules was tested and checked.
 * JavaScript;
 * JQuery;
 * Ajax
----
+
 *server containers:*
 * Apache Tomcat 
----
+
 *development tools:*
 * Intellij IDEA;
 * JaCoCo;
