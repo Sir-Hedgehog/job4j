@@ -35,6 +35,7 @@
         <module>tictactoe_ood</module>
         <module>chapter_012</module>
         <module>elevator</module>
+        <module>cinema</module>
     </modules>
 
     <dependencies>
@@ -172,6 +173,13 @@
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
             <version>1.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>7.2.2.jre11</version>
         </dependency>
 
     </dependencies>

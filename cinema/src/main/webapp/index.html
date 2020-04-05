@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" >
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <title>CinemaCarousel</title>
+        <style>
+            td {
+                background-color: #b7efb7;
+            }
+        </style>
+        <script>
+            function getTakenPlaces() {
+                let block = $('input:radio[name=place]').toArray();
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/cinema/taken',
+                    dataType: "json",
+                    success: (function(response) {
+                        $.each(response, function(key, content) {
+                            $.each(block, function(index, value) {
+                                if (content === value.value) {
+                                    $('td#' + content).css('background-color', '#ef9494');
+                                    let elect = $('input:radio[value=' + value.value + ']');
+                                    elect.prop('disabled', true);
+                                }
+                            });
+                        });
+                    }),
+                    error: (function(err) {
+                        alert(err);
+                    }),
+                    timeout: 5000
+                });
+            }
+
+            function validate() {
+                let result = false;
+                let choice = $('input:radio[name=place]:checked').val();
+                if (choice === undefined) {
+                    alert('Выберите место!');
+                } else {
+                    result = true;
+                }
+                return result;
+            }
+
+            function sendChoice() {
+                if (validate()) {
+                    let block = $('input:radio[name=place]:checked').val();
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://localhost:8080/cinema/choice',
+                        data: "block=" + block,
+                        dataType: "json",
+                        success: (function (response) {
+                            window.location.href = "http://localhost:8080/cinema/payment.html?row=" + response[0] + "&place=" + response[1];
+                        }),
+                        error: (function (err) {
+                            alert(err);
+                        })
+                    });
+                }
+            }
+        </script>
+    </head>
+    <body onload="getTakenPlaces()">
+        <div class="container">
+            <div class="row pt-3">
+                <h4>
+                    Бронирование мест на сеанс
+                </h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width: 120px;">Ряд / Место</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>1</th>
+                            <td id="11">
+                                <label><input type="radio" name="place" value="11"> Ряд 1, Место 1</label>
+                            </td>
+                            <td id="12">
+                                <label><input type="radio" name="place" value="12"> Ряд 1, Место 2</label>
+                            </td>
+                            <td id="13">
+                                <label><input type="radio" name="place" value="13"> Ряд 1, Место 3</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td id="21">
+                                <label><input type="radio" name="place" value="21"> Ряд 2, Место 1</label>
+                            </td>
+                            <td id="22">
+                                <label><input type="radio" name="place" value="22"> Ряд 2, Место 2</label>
+                            </td>
+                            <td id="23">
+                                <label><input type="radio" name="place" value="23"> Ряд 2, Место 3</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <td id="31">
+                                <label><input type="radio" name="place" value="31"> Ряд 3, Место 1</label>
+                            </td>
+                            <td id="32">
+                                <label><input type="radio" name="place" value="32"> Ряд 3, Место 2</label>
+                            </td>
+                            <td id="33">
+                                <label><input type="radio" name="place" value="33"> Ряд 3, Место 3</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row float-right">
+                <button type="button" class="btn btn-success" onclick="sendChoice()">Оплатить</button>
+            </div>
+        </div>
+    </body>
+</html>

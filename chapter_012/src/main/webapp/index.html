@@ -17,9 +17,9 @@
                     dataType: 'text'
                 }).done(function(data) {
                     $('input').before(
-                        '<p>' + ++counter + ". " + data +'</p>'
+                        '<p>' + ++counter + ". " + data + '</p>'
                     );
-                }).fail(function(err){
+                }).fail(function(err) {
                     alert(err);
                 });
             }
