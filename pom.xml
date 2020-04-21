@@ -36,6 +36,7 @@
         <module>chapter_012</module>
         <module>elevator</module>
         <module>cinema</module>
+        <module>Chapter_013</module>
     </modules>
 
     <dependencies>

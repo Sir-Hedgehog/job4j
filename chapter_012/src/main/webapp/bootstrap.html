@@ -8,12 +8,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script>
-            var userId = 0;
+            let userId = 0;
 
             function validate() {
-                var result = false;
-                var value1 = $('#name').val();
-                var value2 = $('#surname').val();
+                let result = false;
+                let value1 = $('#name').val();
+                let value2 = $('#surname').val();
                 if (value1 === '') {
                     alert('Введите имя!');
                 } else if(value2 === '') {
@@ -27,10 +27,10 @@
             }
 
             function addData() {
-                var name = $('#name').val();
-                var surname = $('#surname').val();
-                var sex = $('input[name=sex]:checked').val();
-                var description = $('#description').val();
+                let name = $('#name').val();
+                let surname = $('#surname').val();
+                let sex = $('input[name=sex]:checked').val();
+                let description = $('#description').val();
                 $('#tableBody tr:last').before(
                     '<tr>' +
                     '<td>' + userId + '</td>' +
