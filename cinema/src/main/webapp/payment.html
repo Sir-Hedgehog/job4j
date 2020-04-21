@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <title>CinemaCarousel</title>
+        <script>
+            function parseUrl(attributes) {
+                let params = attributes.slice(1);
+                let parsedParams = params.split('&');
+                let paramValues = [];
+                for (let index = 0; index < parsedParams.length; index++) {
+                    let current = parsedParams[index].split('=');
+                    paramValues[index] = current[1];
+                }
+                return paramValues;
+            }
+
+            function getPlace() {
+                let header = $('div#header');
+                let paramValues = parseUrl(window.location.search);
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/cinema/details',
+                    data: { row: paramValues[0], place: paramValues[1] },
+                    dataType: "text",
+                    success: (function(response) {
+                        header.append('<h3>' + response  + '</h3><br/>');
+                    }),
+                    error: (function(err) {
+                        alert(err);
+                    })
+                });
+            }
+
+            function validate() {
+                let result = false;
+                let username = $('#username').val();
+                let phone = $('#phone').val();
+                if (username === '') {
+                    alert('Укажите Ваше имя!');
+                } else if (phone === '') {
+                    alert('Укажите Ваш номер телефона!');
+                } else {
+                    result = true;
+                }
+                return result;
+            }
+
+            function sendAccount() {
+                if (validate()) {
+                    let result = $('div#result');
+                    let username = $('input#username').val();
+                    let phone = $('input#phone').val();
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://localhost:8080/cinema/account',
+                        data: {username: username, phone: phone},
+                        dataType: "text",
+                        success: (function (response) {
+                            result.find('h4').remove();
+                            result.find('br').remove();
+                            result.append('<h4>' + response + '</h4><br/>');
+                        }),
+                        error: (function (err) {
+                            alert(err);
+                        })
+                    });
+                }
+            }
+        </script>
+    </head>
+    <body onload="getPlace()">
+        <div class="container">
+            <div class="row pt-3" id="header"></div>
+            <div class="row pt-4" id="result"></div>
+            <div class="row">
+                <form>
+                    <div class="form-group">
+                        <label for="username">ФИО</label>
+                        <input type="text" class="form-control" id="username" placeholder="ФИО">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Номер телефона в формате +7(___)___-__-__ </label>
+                        <input type="text" class="form-control" id="phone" placeholder="Номер телефона">
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="sendAccount()">Оплатить</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

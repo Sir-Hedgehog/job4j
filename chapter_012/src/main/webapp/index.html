@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
+            var counter = 0;
+
+            function sendGreeting() {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8081/items/greet',
+                    data: 'name=' + $('#exampleInputName1').val(),
+                    dataType: 'text'
+                }).done(function(data) {
+                    $('input').before(
+                        '<p>' + ++counter + ". " + data + '</p>'
+                    );
+                }).fail(function(err) {
+                    alert(err);
+                });
+            }
+        </script>
+        <title>AJAX</title>
+    </head>
+    <body>
+        <div class="container">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputName1">Enter name: </label>
+                    <input type="text" class="form-control" id="exampleInputName1" aria-describedby="emailHelp" placeholder="Enter name">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="sendGreeting();">Submit</button>
+            </form>
+        </div>
+    </body>
+</html>
