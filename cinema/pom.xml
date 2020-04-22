@@ -19,9 +19,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>7.4.1.jre12</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
-            <version>2.6.0</version>
+            <version>2.7.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

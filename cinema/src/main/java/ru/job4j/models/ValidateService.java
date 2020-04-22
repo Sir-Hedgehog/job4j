@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 05.04.2020
+ * @version 2.0
+ * @since 22.04.2020
  */
 
 public class ValidateService implements Validation {
@@ -21,7 +21,6 @@ public class ValidateService implements Validation {
     private static final Pattern CHECK_OF_PHONE = Pattern.compile("^\\+7\\((\\d){3}\\)(\\d){3}-(\\d){2}-(\\d){2}$");
     private Map<Integer, Integer> takenPlaces = new HashMap<>();
     private final Store logic = CinemaDatabase.getInstance();
-
     private static Validation validateInstance = new ValidateService();
 
     /**
@@ -66,7 +65,11 @@ public class ValidateService implements Validation {
         boolean result = false;
         if (!takenPlaces.containsKey(hall.getRow()) || (takenPlaces.containsKey(hall.getRow()) && takenPlaces.get(hall.getRow()) != hall.getPlace())) {
             takenPlaces.put(hall.getRow(), hall.getPlace());
-            logic.takePlace(hall);
+            try {
+                logic.takePlace(hall);
+            } catch (SQLException e) {
+                LOG.error(e.getMessage(), e);
+            }
             result = true;
         }
         return result;

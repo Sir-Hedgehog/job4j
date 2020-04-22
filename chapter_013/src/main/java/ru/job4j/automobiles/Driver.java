@@ -32,7 +32,7 @@ public class Driver {
     @Column(name = "age")
     private int age;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH} )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "history_owner",
             joinColumns = @JoinColumn(name = "driver_id", nullable = false, updatable = false),
             inverseJoinColumns = @JoinColumn(name = "car_id", nullable = false, updatable = false)

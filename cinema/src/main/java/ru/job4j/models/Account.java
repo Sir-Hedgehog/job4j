@@ -1,9 +1,11 @@
 package ru.job4j.models;
 
+import java.util.Objects;
+
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 05.04.2020
+ * @version 2.0
+ * @since 22.04.2020
  */
 
 public class Account {
@@ -29,5 +31,22 @@ public class Account {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Account account = (Account) o;
+        return Objects.equals(name, account.name) && Objects.equals(phone, account.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, phone);
     }
 }

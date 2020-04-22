@@ -60,11 +60,17 @@
                         type: 'GET',
                         url: 'http://localhost:8080/cinema/account',
                         data: {username: username, phone: phone},
-                        dataType: "text",
+                        dataType: "json",
                         success: (function (response) {
-                            result.find('h4').remove();
-                            result.find('br').remove();
-                            result.append('<h4>' + response + '</h4><br/>');
+                            if (response[0] === "true") {
+                                result.find('h4').remove();
+                                result.find('br').remove();
+                                result.append('<h4>Уважаемый, ' + response[1] + '!</h4>'
+                                            + '<h4>Совсем скоро на указанный номер (' + response[2] + ') придет электронный билет.</h4>'
+                                            + '<h4>Приятного Вам просмотра!</h4><br/>');
+                            } else if (response[0] === "false") {
+                                result.append('<h4>Введите корректные данные!</h4><br/>');
+                            }
                         }),
                         error: (function (err) {
                             alert(err);
