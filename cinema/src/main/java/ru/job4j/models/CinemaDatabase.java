@@ -32,7 +32,7 @@ public class CinemaDatabase implements Store {
         SOURCE.setMaxOpenPreparedStatements(100);
         try {
             connection = SOURCE.getConnection();
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             throw new RuntimeException();
         }
     }
