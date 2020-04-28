@@ -9,7 +9,7 @@ services:
 - postgresql
 
 before_script:
-- psql -c 'create database Tracker;' -U postgres
+- psql -c 'create database tracker;' -U postgres
 
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонни сервис https://codecov.io/
