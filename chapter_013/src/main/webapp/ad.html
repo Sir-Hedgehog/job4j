@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.12/dist/sweetalert2.all.min.js"></script>
+        <title>Продажа авто</title>
+    </head>
+    <style>
+        html {
+            width: 50%;
+            min-height: 100vh;
+            border-left: 1px solid #333300;
+            border-right: 1px solid #333300;
+        }
+
+        html, #header {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #header {
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        #photo {
+            width: 85%;
+            display: inline-block;
+        }
+
+        #paste {
+            margin-bottom: 4px;
+        }
+
+        #placeAd {
+            margin: 0 16px 20px 0;
+        }
+    </style>
+    <script>
+        function validate() {
+            let result = false;
+            let name = $('#name').val();
+            let phone = $('#phone').val();
+            let model = $('#model').val();
+            let price = $('#price').val();
+            let mileage = $('#mileage').val();
+            if (name === '') {
+                swal.fire({
+                    icon: "warning",
+                    title: "Внимание!",
+                    text: "Необходимо ввести имя продавца!",
+                    confirmButtonColor: '#23a843',
+                });
+            } else if (phone === '') {
+                swal.fire({
+                    icon: "warning",
+                    title: "Внимание!",
+                    text: "Необходимо ввести телефон продавца!",
+                    confirmButtonColor: '#23a843',
+                });
+            } else if (model === '') {
+                swal.fire({
+                    icon: "warning",
+                    title: "Внимание!",
+                    text: "Необходимо ввести модель автомобиля!",
+                    confirmButtonColor: '#23a843',
+                });
+            } else if (price === '') {
+                swal.fire({
+                    icon: "warning",
+                    title: "Внимание!",
+                    text: "Необходимо ввести стоимость автомобиля!",
+                    confirmButtonColor: '#23a843',
+                });
+            }  else if (mileage === '') {
+                swal.fire({
+                    icon: "warning",
+                    title: "Внимание!",
+                    text: "Необходимо ввести пробег автомобиля!",
+                    confirmButtonColor: '#23a843',
+                });
+            } else {
+                result = true;
+            }
+            return result;
+        }
+
+        function addCar() {
+            if (validate()) {
+                let name = $('#name').val();
+                let phone = $('#phone').val();
+                let selectedImage = $('#selectedImage').val();
+                let model = $('#model').val();
+                let bodyType = $('#bodyType').val();
+                let yearOfRelease = $('#yearOfRelease').val();
+                let volume = $('#volume').val();
+                let power = $('#power').val();
+                let price = $('#price').val();
+                let mileage = $('#mileage').val();
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:8090/cars/add',
+                    dataType: "text",
+                    data: {
+                        name: name,
+                        phone: phone,
+                        selectedImage: selectedImage,
+                        model: model,
+                        bodyType: bodyType,
+                        yearOfRelease: yearOfRelease,
+                        volume: volume,
+                        power: power,
+                        price: price,
+                        mileage: mileage
+                    },
+                    success: (function(response) {
+                        if (response !== "") {
+                            swal.fire({
+                                icon: "success",
+                                title: "Объявление успешно размещено!",
+                                text: "Ваш идентификационный номер: " + response,
+                                confirmButtonColor: '#23a843',
+                            });
+                        } else {
+                            swal.fire({
+                                icon: "error",
+                                title: "Ошибка!",
+                                text: "Введите корректные данные!",
+                                confirmButtonColor: '#23a843',
+                            });
+                        }
+                    }),
+                    error: (function(err) {
+                        alert(err);
+                    }),
+                });
+            }
+        }
+
+        function uploadFile() {
+            let image = $('#image').prop('files')[0];
+            let formData = new FormData();
+            formData.append("image", image);
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://localhost:8090/cars/upload");
+            xhr.send(formData);
+            xhr.onload = function() {
+                $('#selectedImage').attr('value', this.responseText);
+            };
+        }
+    </script>
+    <body>
+        <div class="container">
+            <div class="row pt-3" id="#blockOfHeader">
+                <h3 id="header">Новое объявление</h3>
+            </div>
+            <div class="form-group">
+                <label for="name">Имя и фамилия продавца: </label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон в формате +7(___)___-__-__: </label>
+                <input type="text" class="form-control" id="phone" name="phone">
+            </div>
+            <div class="form-group" id='photo'>
+                <label for="image">Разместите фото автомобиля: </label>
+                <input type="file" class="form-control" id="image" name="image"/>
+            </div>
+            <input id="paste" class="btn btn-default" type="submit" onclick="uploadFile()" value='Прикрепить'/>
+            <div class="form-group">
+                <label for="selectedImage">Выбранное фото: </label>
+                <input type="text" class="form-control" id="selectedImage" value="Фото не выбрано" readonly>
+            </div>
+            <div class="form-group">
+                <label for="model">Модель: </label>
+                <input type="text" class="form-control" id="model" name="model">
+            </div>
+            <div class="form-group">
+                <label for="bodyType">Тип кузова: </label>
+                <input type="text" class="form-control" id="bodyType" name="bodyType">
+            </div>
+            <div class="form-group">
+                <label for="yearOfRelease">Год выпуска: </label>
+                <input type="text" class="form-control" id="yearOfRelease" name="yearOfRelease">
+            </div>
+            <div class="form-group">
+                <label for="volume">Объем двигателя: </label>
+                <input type="text" class="form-control" id="volume" name="volume">
+            </div>
+            <div class="form-group">
+                <label for="power">Мощность двигателя: </label>
+                <input type="text" class="form-control" id="power" name="power">
+            </div>
+            <div class="form-group">
+                <label for="price">Стоимость: </label>
+                <input type="text" class="form-control" id="price" name="power">
+            </div>
+            <div class="form-group">
+                <label for="mileage">Пробег: </label>
+                <input type="text" class="form-control" id="mileage" name="mileage">
+            </div>
+            <div class="row float-right">
+                <button type="button" id="placeAd" class="btn btn-success" onclick="addCar()">Добавить объявление</button>
+            </div>
+        </div>
+    </body>
+</html>
