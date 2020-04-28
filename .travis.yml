@@ -8,7 +8,7 @@ sudo: false
 services:
 - postgresql
 
-before_install:
+before_script:
 - psql -c 'create database Tracker;' -U postgres
 
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
