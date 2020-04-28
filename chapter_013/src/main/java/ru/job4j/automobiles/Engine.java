@@ -1,5 +1,6 @@
 package ru.job4j.automobiles;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Entity(name = "Engine")
 @Table(name = "engine")
 @ToString
+@EqualsAndHashCode
 public class Engine {
 
     @Id

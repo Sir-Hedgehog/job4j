@@ -27,7 +27,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.6.2</version>
                 <configuration>
-                    <changeLogFile>db/master.xml</changeLogFile>
+                    <changeLogFile>chapter_008/db/master.xml</changeLogFile>
                     <url>jdbc:postgresql://127.0.0.1:5432/Tracker</url>
                     <driver>org.postgresql.Driver</driver>
                     <username>postgres</username>
