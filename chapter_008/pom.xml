@@ -25,7 +25,7 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.6.2</version>
+                <version>3.8.9</version>
                 <configuration>
                     <changeLogFile>${basedir}/db/master.xml</changeLogFile>
                     <url>${db.url}</url>

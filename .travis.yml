@@ -11,8 +11,8 @@ services:
 before_script:
 - psql -c 'create database Tracker;' -U postgres
 
-# после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
-# Здесь используется сторонни сервис https://codecov.io/
+# После выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
+# Здесь используется сторонний сервис https://codecov.io/
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 
