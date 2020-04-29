@@ -28,7 +28,7 @@
                 <version>3.8.9</version>
                 <configuration>
                     <changeLogFile>${basedir}/db/master.xml</changeLogFile>
-                    <url>${db.url}</url>
+                    <url>jdbc:postgresql://127.0.0.1:5432/Tracker</url>
                     <driver>${db.driver}</driver>
                     <username>${db.username}</username>
                     <password>password</password>
