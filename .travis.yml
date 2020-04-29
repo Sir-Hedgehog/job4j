@@ -9,8 +9,7 @@ services:
 - postgresql
 
 before_script:
-- psql -c 'create database Tracker;' -U postgres
-- psql -c "CREATE USER user WITH PASSWORD 'password';" -U postgres
+- psql -c 'create database tracker;' -U postgres
 
 # После выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонний сервис https://codecov.io/
