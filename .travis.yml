@@ -2,6 +2,8 @@
 language: java
 
 jdk: openjdk12
+dist: xenial
+
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
 
@@ -9,7 +11,8 @@ services:
 - postgresql
 
 before_script:
-- psql -c 'create database Tracker;' -U postgres
+- psql --version
+- psql -c 'create database tracker;' -U postgres
 
 # После выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонний сервис https://codecov.io/
@@ -23,3 +26,7 @@ notifications:
       quaresma_08@mail.ru
     on_success: never # default: change
     on_failure: always # default: always
+
+env:
+  global:
+    - CODECOV_TOKEN="bcf8f5fe-ccb2-428c-b883-7b4f96be5522"
