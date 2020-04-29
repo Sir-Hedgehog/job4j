@@ -9,6 +9,7 @@ services:
 - postgresql
 
 before_script:
+- cp database.yml
 - psql -c 'create database tracker;' -U postgres
 
 # После выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
