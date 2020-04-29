@@ -281,17 +281,16 @@
                 <db.driver>org.postgresql.Driver</db.driver>
             </properties>
         </profile>
-        <!-- <profile>
+        <profile>
             <id>travis</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
                 <db.url>jdbc:postgresql://localhost/tracker</db.url>
-                <db.username>tester</db.username>
-                <db.password>password</db.password>
+                <db.username>postgres</db.username>
                 <db.driver>org.postgresql.Driver</db.driver>
             </properties>
-        </profile> -->
+        </profile>
     </profiles>
 </project>
