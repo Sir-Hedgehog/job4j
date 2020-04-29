@@ -11,7 +11,6 @@ services:
 - postgresql
 
 before_script:
-- psql --version
 - psql -c 'create database tracker;' -U postgres
 
 # После выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
