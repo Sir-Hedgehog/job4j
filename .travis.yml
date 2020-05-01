@@ -17,7 +17,7 @@ before_script:
 # После выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонний сервис https://codecov.io/
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+- bash <(curl -s https://codecov.io/bash) -t token
 
 # Отправлять уведомление на почту youremail@smtp.ru (изменить на свою), если сборка упала
 notifications:
