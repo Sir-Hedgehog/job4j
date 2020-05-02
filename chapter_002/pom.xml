@@ -40,7 +40,6 @@
                     <url>${db.url}</url>
                     <driver>${db.driver}</driver>
                     <username>${db.username}</username>
-                    <!--suppress UnresolvedMavenProperty -->
                     <password>${db.password}</password>
                 </configuration>
                 <executions>
