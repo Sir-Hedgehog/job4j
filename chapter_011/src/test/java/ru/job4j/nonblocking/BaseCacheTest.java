@@ -39,6 +39,8 @@ public class BaseCacheTest {
         cache.add(base);
         thread1.start();
         thread1.join();
+        thread1.interrupt();
+        thread2.interrupt();
         assertThat(base.getVersion(), is(1));
     }
 
@@ -50,6 +52,8 @@ public class BaseCacheTest {
         thread2.start();
         thread1.join();
         thread2.join();
+        thread1.interrupt();
+        thread2.interrupt();
         Assert.assertThat(ex.get().getMessage(), is("Ошибка при обновлении данных в потоке!"));
     }
 }

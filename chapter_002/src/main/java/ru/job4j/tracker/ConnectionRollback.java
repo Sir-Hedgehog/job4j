@@ -24,18 +24,18 @@ public class ConnectionRollback {
                 ConnectionRollback.class.getClassLoader(),
                 new Class[]{Connection.class},
                 (proxy, method, args) -> {
-                    Object rsl = null;
+                    Object result = null;
                     if ("close".equals(method.getName())) {
                         connection.rollback();
                         connection.close();
                     } else {
                         try {
-                            rsl = method.invoke(connection, args);
+                            result = method.invoke(connection, args);
                         } catch (InvocationTargetException ite) {
                             throw ite.getCause();
                         }
                     }
-                    return rsl;
+                    return result;
                 }
         );
     }

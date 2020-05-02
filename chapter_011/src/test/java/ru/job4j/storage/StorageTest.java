@@ -61,6 +61,10 @@ public class StorageTest {
         userStorage.update(user4, 10, 3750);
         //Удаляем пользователя.
         userStorage.delete(user5);
+        //Предлагаем jvm прервать нити
+        first.interrupt();
+        second.interrupt();
+        third.interrupt();
         //Проверяем результат.
         assertThat(user1.getAmount(), is(2000));
         assertThat(user2.getAmount(), is(550));

@@ -30,9 +30,10 @@ public class ThreadArrayListTest {
     }
 
     @Test
-    public void whenExecute2ThreadThen2() throws InterruptedException {
+    public void whenExecute5ThreadThen5() throws InterruptedException {
         //Создаем список объектов типа E.
-        final BasicArrayList threadArrayList = new ThreadArrayList(new DynamicArrayList());
+        //@SuppressWarnings("unchecked")
+        final BasicArrayList<Integer> threadArrayList = new ThreadArrayList<>(new DynamicArrayList<>());
         threadArrayList.add(1);
         threadArrayList.add(2);
         threadArrayList.add(3);
@@ -56,6 +57,12 @@ public class ThreadArrayListTest {
         third.join();
         fourth.join();
         fifth.join();
+        //Предлагаем jvm прервать нити
+        first.interrupt();
+        second.interrupt();
+        third.interrupt();
+        fourth.interrupt();
+        fifth.interrupt();
         //Проверяем результат.
         assertThat(1, is(threadArrayList.get(0)));
         assertThat(2, is(threadArrayList.get(1)));

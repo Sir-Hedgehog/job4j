@@ -51,6 +51,12 @@ public class CountTest {
         third.join();
         fourth.join();
         fifth.join();
+        //предлагаем jvm прервать нити
+        first.interrupt();
+        second.interrupt();
+        third.interrupt();
+        fourth.interrupt();
+        fifth.interrupt();
         //Проверяем результат.
         assertThat(count.get(), is(5));
     }

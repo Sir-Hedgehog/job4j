@@ -15,9 +15,9 @@ import static org.junit.Assert.assertThat;
 
 public class BlockingQueueTest {
     private class ProducerThread extends Thread {
-        private final Producer producer;
+        private final Producer<Object> producer;
 
-        private ProducerThread(final Producer producer) {
+        private ProducerThread(final Producer<Object> producer) {
             this.producer = producer;
         }
 
@@ -31,9 +31,9 @@ public class BlockingQueueTest {
     }
 
     private class ConsumerThread extends Thread {
-        private final Consumer consumer;
+        private final Consumer<Object> consumer;
 
-        private ConsumerThread(final Consumer consumer) {
+        private ConsumerThread(final Consumer<Object> consumer) {
             this.consumer = consumer;
         }
 
@@ -47,9 +47,9 @@ public class BlockingQueueTest {
 
     @Test
     public void checkSizeOfQueueDuringTheWorkingOfProducerAndConsumer() throws InterruptedException {
-        final SimpleBlockingQueue queue = new SimpleBlockingQueue<>(3);
-        Producer producer = new Producer(queue);
-        Consumer consumer = new Consumer(queue);
+        final SimpleBlockingQueue<Object> queue = new SimpleBlockingQueue<>(3);
+        Producer<Object> producer = new Producer<>(queue);
+        Consumer<Object> consumer = new Consumer<>(queue);
         ProducerThread producerThread = new ProducerThread(producer);
         ConsumerThread consumerThread = new ConsumerThread(consumer);
         Thread first = new Thread(producerThread);
@@ -62,6 +62,8 @@ public class BlockingQueueTest {
         assertThat(queue.getFactSize(), is(0));
         producer.offer(5);
         assertThat(consumer.poll(), is(5));
+        first.interrupt();
+        second.interrupt();
     }
 
     @Test
@@ -69,11 +71,9 @@ public class BlockingQueueTest {
         final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
         final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(3);
         Thread producer = new Thread(
-                () -> {
-                    IntStream.range(0, 5).forEach(
-                            queue::offer
-                    );
-                }
+                () -> IntStream.range(0, 5).forEach(
+                        queue::offer
+                )
         );
         producer.start();
         Thread consumer = new Thread(
@@ -88,6 +88,7 @@ public class BlockingQueueTest {
         consumer.interrupt();
         consumer.join();
         assertThat(buffer, is(Arrays.asList(0, 1, 2, 3, 4)));
+        producer.interrupt();
     }
 
     @Test
@@ -120,5 +121,6 @@ public class BlockingQueueTest {
         producer.interrupt();
         producer.join();
         assertThat(buffer, is(Arrays.asList(0, 1, 2, 3, 4)));
+        consumer.interrupt();
     }
 }

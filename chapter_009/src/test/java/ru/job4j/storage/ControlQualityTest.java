@@ -1,7 +1,6 @@
-package ru.job4j.storate;
+package ru.job4j.storage;
 
 import org.junit.Test;
-import ru.job4j.storage.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
