@@ -3,37 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <artifactId>chapter_008</artifactId>
-    <version>2.0</version>
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <groupId>ru.job4j</groupId>
         <artifactId>junior</artifactId>
+        <groupId>ru.job4j</groupId>
         <version>2.0</version>
     </parent>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.8.9</version>
-                <configuration>
-                    <changeLogFile>${basedir}/db/master.xml</changeLogFile>
-                    <url>jdbc:postgresql://127.0.0.1:5432/Tracker</url>
-                    <driver>${db.driver}</driver>
-                    <username>${db.username}</username>
-                    <password>password</password>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <modelVersion>4.0.0</modelVersion>
 </project>

@@ -1,4 +1,4 @@
-package ru.job4j.trackersql;
+package ru.job4j.tracker;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Proxy;

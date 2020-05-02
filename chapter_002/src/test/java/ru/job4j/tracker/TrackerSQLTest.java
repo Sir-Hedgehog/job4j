@@ -1,4 +1,4 @@
-package ru.job4j.trackersql;
+package ru.job4j.tracker;
 
 import org.junit.Test;
 import ru.job4j.tracker.Item;
