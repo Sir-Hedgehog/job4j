@@ -11,8 +11,6 @@ services:
 
 before_install:
 - psql -c "CREATE DATABASE tracker;" -U postgres
-#- psql -c "CREATE USER tester WITH PASSWORD 'password';" -U postgres
-#- psql -c "GRANT ALL PRIVILEGES ON DATABASE tracker TO tester;" -U postgres
 
 # После выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
 # Здесь используется сторонний сервис https://codecov.io/
