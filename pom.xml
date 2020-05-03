@@ -121,7 +121,7 @@
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.21.0.1</version>
+            <version>3.30.1</version>
         </dependency>
 
         <dependency>
@@ -252,9 +252,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
                 <configuration>
                     <excludes>
                         <exclude>ru/job4j/storage/ControlQualityTest.class</exclude>
@@ -263,6 +260,9 @@
                         <exclude>ru/job4j/ElevatorTest.class</exclude>
                     </excludes>
                 </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
