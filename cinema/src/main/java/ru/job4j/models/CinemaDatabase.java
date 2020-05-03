@@ -3,38 +3,24 @@ package ru.job4j.models;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 22.04.2020
+ * @version 3.0
+ * @since 03.05.2020
  */
 
 public class CinemaDatabase implements Store {
-    private static final BasicDataSource SOURCE = new BasicDataSource();
-    private static final CinemaDatabase INSTANCE = new CinemaDatabase();
     private static final Logger LOG = LoggerFactory.getLogger(CinemaDatabase.class);
+    private final BasicDataSource source = new BasicDataSource();
     private final Connection connection;
 
-    /**
-     * В конструкторе происходит инициализация пула соединений с базой данных
-     */
-
-    public CinemaDatabase() {
-        SOURCE.setUrl("jdbc:sqlserver://localhost:5454;databaseName=Cinema;integratedSecurity=true;");
-        SOURCE.setUsername("sa");
-        SOURCE.setPassword("password555");
-        SOURCE.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        SOURCE.setMinIdle(5);
-        SOURCE.setMaxIdle(10);
-        SOURCE.setMaxOpenPreparedStatements(100);
-        try {
-            connection = SOURCE.getConnection();
-        } catch (SQLException ex) {
-            throw new RuntimeException();
-        }
+    private static final class Lazy {
+        private static final Store INSTANCE = new CinemaDatabase();
     }
 
     /**
@@ -42,8 +28,38 @@ public class CinemaDatabase implements Store {
      * @return - экземпляр класса CinemaDatabase
      */
 
-    public static CinemaDatabase getInstance() {
-        return INSTANCE;
+    public static Store instanceOf() {
+        return Lazy.INSTANCE;
+    }
+
+    /**
+     * В конструкторе происходит инициализация пула соединений с базой данных
+     */
+
+    public CinemaDatabase() {
+        Properties configuration = new Properties();
+        try (InputStream is = CinemaDatabase.class.getClassLoader().getResourceAsStream("db.properties")) {
+            configuration.load(is);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+        try {
+            Class.forName(configuration.getProperty("jdbc.driver"));
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+        source.setUrl(configuration.getProperty("jdbc.url"));
+        source.setUsername(configuration.getProperty("jdbc.username"));
+        source.setPassword(configuration.getProperty("jdbc.password"));
+        source.setDriverClassName(configuration.getProperty("jdbc.driver"));
+        source.setMinIdle(5);
+        source.setMaxIdle(10);
+        source.setMaxOpenPreparedStatements(100);
+        try {
+            connection = source.getConnection();
+        } catch (SQLException ex) {
+            throw new RuntimeException();
+        }
     }
 
     /**
@@ -57,7 +73,6 @@ public class CinemaDatabase implements Store {
         boolean result = false;
         try {
             connection.setAutoCommit(false);
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             PreparedStatement ps = connection.prepareStatement("INSERT INTO hall(row, place) VALUES (?, ?)");
             ps.setInt(1, hall.getRow());
             ps.setInt(2, hall.getPlace());
@@ -99,7 +114,7 @@ public class CinemaDatabase implements Store {
     @Override
     public CopyOnWriteArrayList<Hall> findTakenPlaces() {
         CopyOnWriteArrayList<Hall> list = new CopyOnWriteArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM hall")) {
+        try (Connection conn = source.getConnection(); PreparedStatement ps = conn.prepareStatement("SELECT * FROM hall")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Hall hall = new Hall(rs.getInt("row"), rs.getInt("place"));

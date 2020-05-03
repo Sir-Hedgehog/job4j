@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 22.04.2020
+ * @version 3.0
+ * @since 03.05.2020
  */
 
 public class ValidateService implements Validation {
@@ -20,7 +20,7 @@ public class ValidateService implements Validation {
     private static final Pattern CHECK_OF_NAME = Pattern.compile("((([A-Z]){1}([a-z]){1,}(\\s){1}){2}(([A-Z]){1}([a-z]){1,}){1})|((([А-Я]){1}([а-я]){1,}(\\s){1}){2}(([А-Я]){1}([а-я]){1,}){1})");
     private static final Pattern CHECK_OF_PHONE = Pattern.compile("^\\+7\\((\\d){3}\\)(\\d){3}-(\\d){2}-(\\d){2}$");
     private Map<Integer, Integer> takenPlaces = new HashMap<>();
-    private final Store logic = CinemaDatabase.getInstance();
+    private final Store logic = CinemaDatabase.instanceOf();
     private static Validation validateInstance = new ValidateService();
 
     /**
