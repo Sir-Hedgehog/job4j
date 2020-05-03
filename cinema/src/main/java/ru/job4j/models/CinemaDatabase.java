@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
+ * @version 4.0
  * @since 03.05.2020
  */
 
@@ -99,6 +99,7 @@ public class CinemaDatabase implements Store {
             ps.executeUpdate();
             connection.commit();
             result = true;
+            connection.close();
         } catch (SQLException e) {
             connection.rollback();
             LOG.error(e.getMessage(), e);
