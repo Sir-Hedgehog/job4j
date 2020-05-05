@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 28.04.2020
+ * @version 2.0
+ * @since 05.04.2020
  */
 
 public class ValidateService implements Validation {
@@ -103,7 +103,7 @@ public class ValidateService implements Validation {
      */
 
     @Override
-    public List<List<String>> validateGetData() {
-        return database.getData();
+    public List<List<String>> validateGetData(String firm, String photo, String time) {
+        return database.getData(firm, photo, time);
     }
 }

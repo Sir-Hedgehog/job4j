@@ -3,11 +3,12 @@ package ru.job4j.carsale.models;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 28.04.2020
+ * @version 2.0
+ * @since 05.04.2020
  */
 
 @Entity(name = "Car")
@@ -20,7 +21,10 @@ public class Car {
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "status")
+    @Column(name = "date_of_creation")
+    private LocalDateTime createDateTime;
+
+    @Column(name = "status", columnDefinition = "interval")
     private String status;
 
     @Column(name = "image")
@@ -64,6 +68,14 @@ public class Car {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
     }
 
     public String getStatus() {

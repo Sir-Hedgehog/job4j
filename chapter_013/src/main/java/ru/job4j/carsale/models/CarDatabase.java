@@ -4,14 +4,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 28.04.2020
+ * @version 2.0
+ * @since 05.04.2020
  */
 
 public class CarDatabase implements TemplateBase {
@@ -66,33 +67,139 @@ public class CarDatabase implements TemplateBase {
     }
 
     /**
-     * Метод формирует список всех объявлений
-     * @return - список всех объявлений
+     * Метод формирует результирующий список объявлений исходя из выбранных фильтров
+     * @return - список объявлений
      */
 
     @Override
-    public List<List<String>> getData() {
+    public List<List<String>> getData(String firm, String photo, String time) {
+        String substring = this.getResultQuery(firm, photo, time);
         return this.template(session -> {
-            List<Car> cars = session.createQuery("from Car", Car.class).list();
-            List<List<String>> result = new ArrayList<>();
-            for (Car car : cars) {
-                List<String> current = new ArrayList<>();
-                current.add(car.getImage());
-                current.add(car.getSeller().getName());
-                current.add(car.getSeller().getNumber());
-                current.add(car.getModel());
-                current.add(car.getBodyType());
-                current.add(car.getYearOfRelease());
-                current.add(car.getPower());
-                current.add(car.getVolume());
-                current.add(car.getPrice());
-                current.add(car.getMileage());
-                current.add(car.getStatus());
-                current.add(String.valueOf(car.getSeller().getId()));
-                result.add(current);
-            }
-            return result;
+            List<Car> cars = session.createNativeQuery("select * from Car" + substring, Car.class).list();
+            return this.getResultList(cars);
         });
+    }
+
+    /**
+     * Метод получает данные для запроса в БД
+     * @param firm - фильтр по марке автомобиля
+     * @param photo - фильтр по наличию фотографии
+     * @param time - фильтр по времени создания объявления
+     * @return - данные для запроса в БД
+     */
+
+    private String getResultQuery(String firm, String photo, String time) {
+        String sortFirm = this.filterFirms(firm);
+        String sortPhoto = this.filterPhoto(photo);
+        String sortTime = this.filterTime(time);
+        return this.filterAll(firm, sortFirm, sortPhoto, sortTime);
+    }
+
+    /**
+     * Метод формирует данные о марке автомобиля для запроса в БД
+     * @param firm - марка автомобиля
+     * @return - отсортированные данные
+     */
+
+    private String filterFirms(String firm) {
+        String sortFirm = "";
+        if (!firm.equals("") && !firm.equals("allCars")) {
+            sortFirm = " model = '" + firm + "'";
+        }
+        return sortFirm;
+    }
+
+    /**
+     * Метод формирует данные о наличии фотографии для запроса в БД
+     * @param photo - наличие фотографии
+     * @return - отсортированные данные
+     */
+
+    private String filterPhoto(String photo) {
+        String sortPhoto = "";
+        if (photo.equals("withPhoto")) {
+            sortPhoto = " image != 'Фото не выбрано'";
+        } else if (photo.equals("withoutPhoto")) {
+            sortPhoto = " image = 'Фото не выбрано'";
+        }
+        return sortPhoto;
+    }
+
+    /**
+     * Метод формирует данные по времени создания объявления для запроса в БД
+     * @param time - время создания
+     * @return - отсортированные данные
+     */
+
+    private String filterTime(String time) {
+        String sortTime = "";
+        if (time.equals("twelveHours")) {
+            sortTime = " date_of_creation >= current_timestamp - INTERVAL '12 HOUR'";
+        } else if (time.equals("day")) {
+            sortTime = " date_of_creation >= current_timestamp - INTERVAL '1 DAY'";
+        } else if (time.equals("week")) {
+            sortTime = " date_of_creation >= current_timestamp - INTERVAL '7 DAY'";
+        } else if (time.equals("month")) {
+            sortTime = " date_of_creation >= current_timestamp - INTERVAL '1 MONTH'";
+        }
+        return sortTime;
+    }
+
+    /**
+     * Метод формирует данные исходя из информации по каждому из фильтров
+     * @param firm - марка автомобиля
+     * @param sortFirm - отсортированные данные по марке автомобиля
+     * @param sortPhoto - отсортированные данные по наличию фотографии
+     * @param sortTime - отсортированные данные по времени создания
+     * @return - отсортированные данные
+     */
+
+    private String filterAll(String firm, String sortFirm, String sortPhoto, String sortTime) {
+        String result = "";
+        if (!sortFirm.equals("") && !sortPhoto.equals("") && !sortTime.equals("") && !firm.equals("allCars")) {
+            result = " where" + sortFirm + " and" + sortPhoto + " and" + sortTime;
+        } else if (!sortFirm.equals("") && sortPhoto.equals("") && sortTime.equals("")) {
+            result = " where" + sortFirm;
+        } else if (sortFirm.equals("") && !sortPhoto.equals("") && sortTime.equals("")) {
+            result = " where" + sortPhoto;
+        } else if (sortFirm.equals("") && sortPhoto.equals("") && !sortTime.equals("")) {
+            result = " where" + sortTime;
+        } else if (!sortFirm.equals("") && !sortPhoto.equals("") && sortTime.equals("")) {
+            result = " where" + sortFirm + " and" + sortPhoto;
+        } else if (!sortFirm.equals("") && sortPhoto.equals("") && !sortTime.equals("")) {
+            result = " where" + sortFirm + " and" + sortTime;
+        } else if (sortFirm.equals("") && !sortPhoto.equals("") && !sortTime.equals("")) {
+            result = " where" + sortPhoto + " and" + sortTime;
+        }
+        return result;
+    }
+
+    /**
+     * Метод разбивает сущность, полученную из БД, на отдельные части с целью более удобного применения их во фронте
+     * @param cars - список автомобилей
+     * @return - список составляющих частей каждого из созданных объявлений с учетом фильтра
+     */
+
+    private List<List<String>> getResultList(List<Car> cars) {
+        List<List<String>> result = new ArrayList<>();
+        for (Car car : cars) {
+            List<String> current = new ArrayList<>();
+            current.add(car.getImage());
+            current.add(car.getSeller().getName());
+            current.add(car.getSeller().getNumber());
+            current.add(car.getModel());
+            current.add(car.getBodyType());
+            current.add(car.getYearOfRelease());
+            current.add(car.getPower());
+            current.add(car.getVolume());
+            current.add(car.getPrice());
+            current.add(car.getMileage());
+            current.add(car.getStatus());
+            current.add(String.valueOf(car.getSeller().getId()));
+            current.add(car.getCreateDateTime().format(DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy")));
+            result.add(current);
+        }
+        return result;
     }
 
     /**

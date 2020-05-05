@@ -1,6 +1,7 @@
 create table car (
   id serial PRIMARY KEY,
   seller_id int not null references seller(id),
+  date_of_creation timestamp(0) not null,
   status varchar(10) not null,
   image varchar(50),
   model varchar(20) not null,

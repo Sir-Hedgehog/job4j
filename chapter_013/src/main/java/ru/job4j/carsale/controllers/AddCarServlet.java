@@ -8,11 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 28.04.2020
+ * @version 2.0
+ * @since 05.04.2020
  */
 
 public class AddCarServlet extends HttpServlet {
@@ -46,6 +47,7 @@ public class AddCarServlet extends HttpServlet {
         seller.setNumber(phone);
         //сохранение данных о автомобиле
         Car car = new Car(seller);
+        car.setCreateDateTime(LocalDateTime.now());
         car.setImage(selectedImage);
         car.setModel(model);
         car.setBodyType(bodyType);

@@ -27,6 +27,19 @@
                 margin-bottom: 30px;
             }
 
+            nav {
+                padding: 10px 15px 0 10px;
+                display: flex;
+                justify-content: space-between;
+                background-color: #e9e8e8;
+                border-radius: 5px;
+                margin-bottom: 20px;
+            }
+
+            nav label select.form-control {
+                width: 220px;
+            }
+
             section {
                 display: table;
                 margin: auto;
@@ -39,8 +52,8 @@
             .description {
                 display: table-cell;
                 vertical-align: middle;
-                line-height: 1.5;
-                padding-left: 20px
+                line-height: 1.4;
+                padding-left: 20px;
             }
 
             p {
@@ -76,9 +89,23 @@
 
             function getCars() {
                 let section = $('section');
+                let firm = $('select#firms');
+                let photo = $('select#availabilityOfPhoto');
+                let time = $('select#time');
+                section.empty();
+                if (firm.val() !== "") {
+                    firm.find('option#startOptionForFirm').remove();
+                }
+                if (photo.val() !== "") {
+                    photo.find('option#startOptionForPhoto').remove();
+                }
+                if (time.val() !== "") {
+                    time.find('option#startOptionForTime').remove();
+                }
                 $.ajax({
                     type: 'GET',
                     url: 'http://localhost:8090/cars/base',
+                    data: { firm : firm.val(), photo : photo.val(), time : time.val() },
                     dataType: "json",
                     success: (function(response) {
                         if (response.length > 0) {
@@ -107,6 +134,7 @@
                                            '<p>Цена: ' + data[8] + '</p>' +
                                            '<p>Пробег: ' + data[9] + '</p>' +
                                            '<p id="status' + counter + '">Статус: ' + styleSpan + data[10] + '</span>' + " " + '<a href="#" onclick="updateStatus(' + joinId + ", " + counter + ')">изменить статус</a></p>' +
+                                           '<p>Время создания: ' + data[12] + '</p>' +
                                            '</div>' +
                                            '</div><br/>'
                             );
@@ -174,6 +202,37 @@
             <div class="row pt-3" id="#blockOfHeader">
                 <h3 id="header">Список машин пуст</h3>
             </div>
+            <nav>
+                <label for="firms">
+                    <select class="form-control" name="firms" id="firms" onchange="getCars()">
+                        <option id="startOptionForFirm" value="">Марка автомобиля</option>
+                        <option value="allCars">Все автомобили</option>
+                        <option value="Mercedes">Mercedes</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Lamborghini">Lamborghini</option>
+                        <option value="Tesla">Tesla</option>
+                    </select>
+                </label>
+                <label for="availabilityOfPhoto">
+                    <select class="form-control" name="availabilityOfPhoto" id="availabilityOfPhoto" onchange="getCars()">
+                        <option value="" id="startOptionForPhoto">Наличие фотографии</option>
+                        <option value="withOrWithoutPhoto">С фотографией или без</option>
+                        <option value="withPhoto">С фотографией</option>
+                        <option value="withoutPhoto">Без фотографии</option>
+                    </select>
+                </label>
+                <label for="time">
+                    <select class="form-control" name="time" id="time" onchange="getCars()">
+                        <option value="" id="startOptionForTime">Время создания</option>
+                        <option value="twelveHours">За 12 часов</option>
+                        <option value="day">За день</option>
+                        <option value="week">За неделю</option>
+                        <option value="month">За месяц</option>
+                        <option value="allTime">За всё время</option>
+                    </select>
+                </label>
+            </nav>
             <section></section>
             <div class="row float-right">
                 <button type="button" class="btn btn-success" onclick="placeAd()">Добавить объявление</button>

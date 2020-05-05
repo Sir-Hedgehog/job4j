@@ -4,12 +4,12 @@ import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 28.04.2020
+ * @version 2.0
+ * @since 05.04.2020
  */
 
 public interface Validation {
     boolean validateAdd(Seller seller, Car car);
     String validateUpdate(String joinId);
-    List<List<String>> validateGetData();
+    List<List<String>> validateGetData(String firm, String photo, String time);
 }
