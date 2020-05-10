@@ -27,6 +27,4 @@ public class SimpleQueue<T> {
         }
         return this.two.poll();
     }
-
-
 }
