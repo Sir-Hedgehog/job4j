@@ -10,14 +10,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 03.05.2020
+ * @version 5.0
+ * @since 13.05.2020
  */
 
 public class CinemaDatabase implements Store {
     private static final Logger LOG = LoggerFactory.getLogger(CinemaDatabase.class);
     private final BasicDataSource source = new BasicDataSource();
-    private final Connection connection;
+    private Connection connection;
 
     private static final class Lazy {
         private static final Store INSTANCE = new CinemaDatabase();
@@ -55,6 +55,13 @@ public class CinemaDatabase implements Store {
         source.setMinIdle(5);
         source.setMaxIdle(10);
         source.setMaxOpenPreparedStatements(100);
+    }
+
+    /**
+     * Метод устанавливает соединение с базой данных
+     */
+
+    private void makeConnection() {
         try {
             connection = source.getConnection();
         } catch (SQLException ex) {
@@ -70,6 +77,7 @@ public class CinemaDatabase implements Store {
 
     @Override
     public boolean takePlace(Hall hall) {
+        this.makeConnection();
         boolean result = false;
         try {
             connection.setAutoCommit(false);
