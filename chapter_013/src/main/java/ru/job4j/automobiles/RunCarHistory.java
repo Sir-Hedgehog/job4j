@@ -151,7 +151,6 @@ public class RunCarHistory {
             updatedDriver = driver;
         }
         session.update(updatedDriver);
-
     }
 
     private static void deleteDriversAndCars() {
