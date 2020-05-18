@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 10.05.2020
+ * @version 2.0
+ * @since 18.05.2020
  */
 
 @ThreadSafe
@@ -21,13 +21,22 @@ public class CASQueue<T> implements CASQueueInterface<T> {
      */
 
     @Override
-    public void push(T value) {
+    public boolean push(T value) {
         Node<T> newElement = new Node<>(value, null);
-        Node<T> current;
-        do {
-            current = tail.get();
-            tail.compareAndSet(current, newElement);
-        } while (!current.next.compareAndSet(null, newElement));
+        while (true) {
+            Node<T> current = tail.get();
+            Node<T> tailNext = current.next.get();
+            if (current == tail.get()) {
+                if (tailNext != null) {
+                    tail.compareAndSet(current, tailNext);
+                } else {
+                    if (current.next.compareAndSet(null, newElement)) {
+                        tail.compareAndSet(current, newElement);
+                        return true;
+                    }
+                }
+            }
+        }
     }
 
     /**

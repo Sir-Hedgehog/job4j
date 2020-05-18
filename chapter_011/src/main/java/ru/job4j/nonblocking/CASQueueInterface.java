@@ -7,6 +7,6 @@ package ru.job4j.nonblocking;
  */
 
 public interface CASQueueInterface<T> {
-    void push(T value);
+    boolean push(T value);
     T poll();
 }
