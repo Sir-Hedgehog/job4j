@@ -10,14 +10,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 5.0
- * @since 13.05.2020
+ * @version 6.0
+ * @since 04.06.2020
  */
 
 public class CinemaDatabase implements Store {
     private static final Logger LOG = LoggerFactory.getLogger(CinemaDatabase.class);
     private final BasicDataSource source = new BasicDataSource();
-    private Connection connection;
 
     private static final class Lazy {
         private static final Store INSTANCE = new CinemaDatabase();
@@ -58,30 +57,16 @@ public class CinemaDatabase implements Store {
     }
 
     /**
-     * Метод устанавливает соединение с базой данных
-     */
-
-    private void makeConnection() {
-        try {
-            connection = source.getConnection();
-        } catch (SQLException ex) {
-            throw new RuntimeException();
-        }
-    }
-
-    /**
      * Метод сохраняет выбранное место в кинозале
      * @param hall - кинозал
      * @return - успешность операции
      */
 
     @Override
-    public boolean takePlace(Hall hall) {
-        this.makeConnection();
+    public boolean takePlace(Hall hall) throws SQLException {
         boolean result = false;
-        try {
-            connection.setAutoCommit(false);
-            PreparedStatement ps = connection.prepareStatement("INSERT INTO hall(row, place) VALUES (?, ?)");
+        source.getConnection().setAutoCommit(false);
+        try (PreparedStatement ps = source.getConnection().prepareStatement("INSERT INTO hall(row, place) VALUES (?, ?)")) {
             ps.setInt(1, hall.getRow());
             ps.setInt(2, hall.getPlace());
             ps.executeUpdate();
@@ -101,15 +86,15 @@ public class CinemaDatabase implements Store {
     @Override
     public boolean addAccount(Account account) throws SQLException {
         boolean result = false;
-        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO accounts(name, phone) VALUES (?, ?)")) {
+        try (PreparedStatement ps = source.getConnection().prepareStatement("INSERT INTO accounts(name, phone) VALUES (?, ?)")) {
             ps.setString(1, account.getName());
             ps.setString(2, account.getPhone());
             ps.executeUpdate();
-            connection.commit();
+            source.getConnection().commit();
             result = true;
-            connection.close();
+            source.getConnection().close();
         } catch (SQLException e) {
-            connection.rollback();
+            source.getConnection().rollback();
             LOG.error(e.getMessage(), e);
         }
         return result;
@@ -123,7 +108,7 @@ public class CinemaDatabase implements Store {
     @Override
     public CopyOnWriteArrayList<Hall> findTakenPlaces() {
         CopyOnWriteArrayList<Hall> list = new CopyOnWriteArrayList<>();
-        try (Connection conn = source.getConnection(); PreparedStatement ps = conn.prepareStatement("SELECT * FROM hall")) {
+        try (PreparedStatement ps = source.getConnection().prepareStatement("SELECT * FROM hall")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Hall hall = new Hall(rs.getInt("row"), rs.getInt("place"));
