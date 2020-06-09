@@ -5,13 +5,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 6.0
- * @since 04.06.2020
+ * @version 7.0
+ * @since 09.06.2020
  */
 
 public class CinemaDatabase implements Store {
@@ -62,11 +63,9 @@ public class CinemaDatabase implements Store {
      * @return - успешность операции
      */
 
-    @Override
-    public boolean takePlace(Hall hall) throws SQLException {
+    private boolean takePlace(Hall hall, Connection connection)  {
         boolean result = false;
-        source.getConnection().setAutoCommit(false);
-        try (PreparedStatement ps = source.getConnection().prepareStatement("INSERT INTO hall(row, place) VALUES (?, ?)")) {
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO hall(row, place) VALUES (?, ?)")) {
             ps.setInt(1, hall.getRow());
             ps.setInt(2, hall.getPlace());
             ps.executeUpdate();
@@ -83,18 +82,39 @@ public class CinemaDatabase implements Store {
      * @return - успешность операции
      */
 
-    @Override
-    public boolean addAccount(Account account) throws SQLException {
+    private boolean addAccount(Account account, Connection connection) {
         boolean result = false;
-        try (PreparedStatement ps = source.getConnection().prepareStatement("INSERT INTO accounts(name, phone) VALUES (?, ?)")) {
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO accounts(name, phone) VALUES (?, ?)")) {
             ps.setString(1, account.getName());
             ps.setString(2, account.getPhone());
             ps.executeUpdate();
-            source.getConnection().commit();
             result = true;
-            source.getConnection().close();
         } catch (SQLException e) {
-            source.getConnection().rollback();
+            LOG.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+    /**
+     * Метод осуществляет транзакцию для операций выбора места и создания аккаунта
+     * @param hall - выбранное место
+     * @param account - аккаунт
+     * @return - успешность операции
+     */
+
+    @Override
+    public boolean realizeTransaction(Hall hall, Account account) throws SQLException {
+        Connection connection = null;
+        boolean result = false;
+        try {
+            connection = source.getConnection();
+            connection.setAutoCommit(false);
+            this.takePlace(hall, connection);
+            this.addAccount(account, connection);
+            connection.commit();
+            result = true;
+        } catch (SQLException e) {
+            Objects.requireNonNull(connection).rollback();
             LOG.error(e.getMessage(), e);
         }
         return result;
@@ -108,7 +128,7 @@ public class CinemaDatabase implements Store {
     @Override
     public CopyOnWriteArrayList<Hall> findTakenPlaces() {
         CopyOnWriteArrayList<Hall> list = new CopyOnWriteArrayList<>();
-        try (PreparedStatement ps = source.getConnection().prepareStatement("SELECT * FROM hall")) {
+        try (Connection connection = source.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM hall")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Hall hall = new Hall(rs.getInt("row"), rs.getInt("place"));

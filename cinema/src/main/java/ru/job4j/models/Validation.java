@@ -4,12 +4,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 05.04.2020
+ * @version 2.0
+ * @since 09.06.2020
  */
 
 public interface Validation {
-    boolean choosePlace(Hall hall);
-    boolean addData(Account account);
+    boolean validateTransaction(Hall hall, Account account);
     CopyOnWriteArrayList<Hall> getTakenPlaces();
 }

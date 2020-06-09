@@ -7,10 +7,7 @@
     <servlet>
         <servlet-name>HallServlet</servlet-name>
         <servlet-class>ru.job4j.controllers.HallServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ChoiceServlet</servlet-name>
-        <servlet-class>ru.job4j.controllers.ChoiceServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>
         <servlet-name>DetailsServlet</servlet-name>
@@ -26,10 +23,6 @@
         <url-pattern>/taken</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ChoiceServlet</servlet-name>
-        <url-pattern>/choice</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DetailsServlet</servlet-name>
         <url-pattern>/details</url-pattern>
     </servlet-mapping>
@@ -38,4 +31,3 @@
         <url-pattern>/account</url-pattern>
     </servlet-mapping>
 </web-app>
-

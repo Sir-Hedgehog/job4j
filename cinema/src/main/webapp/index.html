@@ -14,6 +14,11 @@
             }
         </style>
         <script>
+
+            /**
+             * Метод отображает список всех мест в зале кинотеатра
+             */
+
             function getTakenPlaces() {
                 let block = $('input:radio[name=place]').toArray();
                 $.ajax({
@@ -38,6 +43,11 @@
                 });
             }
 
+            /**
+             * Метод проверяет, выбрано ли место
+             * @return{boolean} - выбрано место или нет
+             */
+
             function validate() {
                 let result = false;
                 let choice = $('input:radio[name=place]:checked').val();
@@ -49,21 +59,14 @@
                 return result;
             }
 
+            /**
+             * Метод, в случае успешного выбора места, переводит пользователя на страницу создания аккаунта
+             */
+
             function sendChoice() {
                 if (validate()) {
                     let block = $('input:radio[name=place]:checked').val();
-                    $.ajax({
-                        type: 'GET',
-                        url: 'http://localhost:8080/cinema/choice',
-                        data: "block=" + block,
-                        dataType: "json",
-                        success: (function (response) {
-                            window.location.href = "http://localhost:8080/cinema/payment.html?row=" + response[0] + "&place=" + response[1];
-                        }),
-                        error: (function (err) {
-                            alert(err);
-                        })
-                    });
+                    window.location.href = "http://localhost:8080/cinema/payment.html?row=" + block.charAt(0) + "&place=" + block.charAt(1);
                 }
             }
         </script>
@@ -124,7 +127,7 @@
                 </table>
             </div>
             <div class="row float-right">
-                <button type="button" class="btn btn-success" onclick="sendChoice()">Оплатить</button>
+                <input type="submit" class="btn btn-success" onclick="sendChoice()" value="Оплатить"/>
             </div>
         </div>
     </body>

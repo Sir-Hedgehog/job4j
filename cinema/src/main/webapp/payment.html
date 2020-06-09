@@ -9,6 +9,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <title>CinemaCarousel</title>
         <script>
+
+            /**
+             * Метод парсит полученный URL-адрес с целью отображения информации о выбранном месте
+             * @param attributes - URL-адрес
+             * @returns{Array} - номер ряда и место
+             */
+
             function parseUrl(attributes) {
                 let params = attributes.slice(1);
                 let parsedParams = params.split('&');
@@ -19,6 +26,10 @@
                 }
                 return paramValues;
             }
+
+            /**
+             * Метод формирует заголовок с выбранным местом
+             */
 
             function getPlace() {
                 let header = $('div#header');
@@ -37,6 +48,11 @@
                 });
             }
 
+            /**
+             * Метод проверяет строки на заполненность
+             * @returns {boolean}
+             */
+
             function validate() {
                 let result = false;
                 let username = $('#username').val();
@@ -51,15 +67,20 @@
                 return result;
             }
 
+            /**
+             * Метод отображает результат выбора места и создания аккаунта
+             */
+
             function sendAccount() {
                 if (validate()) {
+                    let paramValues = parseUrl(window.location.search);
                     let result = $('div#result');
                     let username = $('input#username').val();
                     let phone = $('input#phone').val();
                     $.ajax({
                         type: 'GET',
                         url: 'http://localhost:8080/cinema/account',
-                        data: {username: username, phone: phone},
+                        data: {row: paramValues[0], place: paramValues[1], username: username, phone: phone},
                         dataType: "json",
                         success: (function (response) {
                             if (response[0] === "true") {

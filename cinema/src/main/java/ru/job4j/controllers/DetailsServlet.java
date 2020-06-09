@@ -7,8 +7,8 @@ import java.io.IOException;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 05.04.2020
+ * @version 2.0
+ * @since 09.06.2020
  */
 
 public class DetailsServlet extends HttpServlet {
@@ -33,7 +33,7 @@ public class DetailsServlet extends HttpServlet {
         } else if (row.equals("3")) {
             price = "310 рублей";
         }
-        String output = "Вы выбрали ряд " + String.valueOf(row) + " место " + String.valueOf(place) + ". Сумма: " + price;
+        String output = "Вы выбрали ряд " + String.valueOf(row) + " место " + String.valueOf(place) + ". Итого к оплате: " + price;
         response.getWriter().write(output);
     }
 }
