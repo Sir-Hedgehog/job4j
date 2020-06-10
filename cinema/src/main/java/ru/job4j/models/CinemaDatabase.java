@@ -5,14 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 7.0
- * @since 09.06.2020
+ * @version 8.0
+ * @since 10.06.2020
  */
 
 public class CinemaDatabase implements Store {
@@ -55,6 +56,7 @@ public class CinemaDatabase implements Store {
         source.setMinIdle(5);
         source.setMaxIdle(10);
         source.setMaxOpenPreparedStatements(100);
+        source.setDefaultAutoCommit(false);
     }
 
     /**
@@ -126,8 +128,8 @@ public class CinemaDatabase implements Store {
      */
 
     @Override
-    public CopyOnWriteArrayList<Hall> findTakenPlaces() {
-        CopyOnWriteArrayList<Hall> list = new CopyOnWriteArrayList<>();
+    public List<Hall> findTakenPlaces() {
+        List<Hall> list = new ArrayList<>();
         try (Connection connection = source.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM hall")) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

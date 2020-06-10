@@ -3,14 +3,14 @@ package ru.job4j.models;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 09.06.2020
+ * @version 5.0
+ * @since 10.06.2020
  */
 
 public class ValidateService implements Validation {
@@ -78,7 +78,7 @@ public class ValidateService implements Validation {
      */
 
     @Override
-    public CopyOnWriteArrayList<Hall> getTakenPlaces() {
+    public List<Hall> getTakenPlaces() {
         return logic.findTakenPlaces();
     }
 }

@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 09.06.2020
+ * @version 3.0
+ * @since 10.06.2020
  */
 
 public class HallServlet extends HttpServlet {
@@ -29,7 +30,7 @@ public class HallServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        CopyOnWriteArrayList<String> values = new CopyOnWriteArrayList<>();
+        List<String> values = new ArrayList<>();
         for (Hall hall : validation.getTakenPlaces()) {
             values.add("" + hall.getRow() + hall.getPlace());
         }
