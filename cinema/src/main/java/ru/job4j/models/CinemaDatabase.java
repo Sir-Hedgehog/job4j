@@ -12,8 +12,8 @@ import java.util.Properties;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 8.0
- * @since 10.06.2020
+ * @version 9.0
+ * @since 11.06.2020
  */
 
 public class CinemaDatabase implements Store {
@@ -110,7 +110,6 @@ public class CinemaDatabase implements Store {
         boolean result = false;
         try {
             connection = source.getConnection();
-            connection.setAutoCommit(false);
             this.takePlace(hall, connection);
             this.addAccount(account, connection);
             connection.commit();
