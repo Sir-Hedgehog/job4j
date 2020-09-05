@@ -37,6 +37,7 @@
         <module>elevator</module>
         <module>cinema</module>
         <module>chapter_013</module>
+        <module>auth</module>
     </modules>
 
     <dependencies>
@@ -159,7 +160,7 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.3.0</version>
+            <version>2.3.2</version>
         </dependency>
 
         <!-- jsoup HTML parser library @ https://jsoup.org/ -->
@@ -237,7 +238,7 @@
                 <version>0.8.5</version>
                 <executions>
                     <execution>
-                        <id>jacoco-initialize</id>
+                        <id>default-prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -256,7 +257,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.22.2</version>
                 <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
+                    <testFailureIgnore>false</testFailureIgnore>
                     <excludes>
                         <exclude>ru/job4j/storage/ControlQualityTest.class</exclude>
                         <exclude>ru/job4j/blocking/BlockingQueueTest.class</exclude>
