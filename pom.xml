@@ -261,6 +261,7 @@
                     <excludes>
                         <exclude>ru/job4j/storage/ControlQualityTest.class</exclude>
                         <exclude>ru/job4j/blocking/BlockingQueueTest.class</exclude>
+                        <exclude>ru/job4j/pool/ThreadPoolTest.class</exclude>
                         <exclude>ru/job4j/list/ThreadArrayListTest.class</exclude>
                         <exclude>ru/job4j/ElevatorTest.class</exclude>
                     </excludes>
