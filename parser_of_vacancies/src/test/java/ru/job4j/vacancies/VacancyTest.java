@@ -36,5 +36,6 @@ public class VacancyTest {
         ManagerSQL manager = new ManagerSQL(connection);
         String template = manager.edit(list);
         assertThat(template, is("Senior Java Ee Developer"));
+        connection.close();
     }
 }
