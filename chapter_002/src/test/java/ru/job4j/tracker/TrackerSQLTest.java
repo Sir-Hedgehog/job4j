@@ -1,12 +1,10 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
-import ru.job4j.tracker.Item;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.List;
 import java.util.Properties;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
@@ -41,6 +39,7 @@ public class TrackerSQLTest {
         Item item = new Item("Хабиб", "Нурмагомедов");
         tracker.add(item);
         assertThat(tracker.findByName("Хабиб").size(), is(1));
+        connection.close();
     }
 
     @Test
@@ -51,6 +50,7 @@ public class TrackerSQLTest {
         Item item = new Item("Брайн", "Ортега");
         tracker.add(item);
         assertThat(tracker.findById(item.getId()).getName(), is(tracker.findByName("Брайн").get(0).getName()));
+        connection.close();
     }
 
     @Test
@@ -66,6 +66,7 @@ public class TrackerSQLTest {
             tracker.add(fighter);
         }
         assertThat(tracker.findAll().size(), is(3));
+        connection.close();
     }
 
     @Test
@@ -82,6 +83,7 @@ public class TrackerSQLTest {
         }
         tracker.delete(list.get(0).getId());
         assertThat(tracker.findAll().size(), is(2));
+        connection.close();
     }
 
     @Test
@@ -94,5 +96,6 @@ public class TrackerSQLTest {
         Item newItem = new Item("Энтони", "Смит");
         tracker.replace(item.getId(), newItem);
         assertThat(tracker.findById(item.getId()).getName(), is(newItem.getName()));
+        connection.close();
     }
 }
