@@ -1,15 +1,17 @@
 package ru.job4j.auth.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Objects;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 05.09.2020
+ * @version 2.0
+ * @since 07.09.2020
  */
 
-@Entity
+@Entity(name = "Person")
+@Table(name = "person")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +22,11 @@ public class Person {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    @JsonIgnore
+    private Employee employee;
 
     public int getId() {
         return id;
@@ -45,6 +52,14 @@ public class Person {
         this.password = password;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -62,6 +77,15 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(id, login, password);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{"
+                    + "id=" + id
+                    + ", login='" + login + '\''
+                    + ", password='" + password + '\''
+                + '}';
     }
 }
 

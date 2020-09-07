@@ -2,94 +2,89 @@ package ru.job4j.auth.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import ru.job4j.auth.domain.Employee;
 import ru.job4j.auth.domain.Person;
-import ru.job4j.auth.repository.PersonRepository;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.Objects;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 05.09.2020
+ * @version 2.0
+ * @since 07.09.2020
  */
 
 @RestController
 @RequestMapping("/person/")
 public class PersonController {
-    private final PersonRepository persons;
+    private static final String API = "http://localhost:8080/employee/";
+    private static final String API_ID = "http://localhost:8080/employee/{id}";
+    private final RestTemplate rest;
     private static final Logger LOG = LoggerFactory.getLogger(PersonController.class);
 
-    public PersonController(final PersonRepository persons) {
-        this.persons = persons;
+    public PersonController(final RestTemplate rest) {
+        this.rest = rest;
     }
 
     /**
-     * Метод выдает список всех данных пользователей
-     * @return - список всех данных пользователей
+     * Метод выдает список всех учетных записей работников через взаимосвязь с помощью restTemplate
+     * @return - список всех учетных записей работников
      */
 
     @GetMapping("/")
     public List<Person> findAll() {
-        return StreamSupport.stream(this.persons.findAll().spliterator(), false).collect(Collectors.toList());
+        List<Person> result = new ArrayList<>();
+        List<Employee> employees = rest.exchange(
+                API,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Employee>>() {}
+        ).getBody();
+        for (Employee employee : Objects.requireNonNull(employees)) {
+            result.addAll(employee.getPersons());
+        }
+        return result;
     }
 
     /**
-     * Метод осуществляет поиск данных пользователя по идентификатору
-     * @param id - идентификатор
-     * @return - данные пользователя
-     */
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Person> findById(@PathVariable(value = "id") int id) {
-        var person = this.persons.findById(id);
-        return new ResponseEntity<>(
-                person.orElse(new Person()),
-                person.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
-        );
-    }
-
-    /**
-     * Метод создает данные нового пользователя
-     * @param person - данные пользователя
+     * Метод создает нового работника через взаимосвязь с помощью restTemplate
+     * @param employee - новый работник
      * @return - успешность создания
      */
 
     @PostMapping("/")
-    public ResponseEntity<Person> create(@RequestBody Person person) {
-        return new ResponseEntity<>(
-                this.persons.save(person),
-                HttpStatus.CREATED
-        );
+    public ResponseEntity<Employee> create(@RequestBody Employee employee) {
+        Employee result = rest.postForObject(API, employee, Employee.class);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     /**
-     * Метод обновляет данные пользователя
-     * @param person - данные пользователя
+     * Метод обновляет данные работника через взаимосвязь с помощью restTemplate
+     * @param employee - данные работника
      * @return - успешность обновления
      */
 
     @PutMapping("/")
-    public ResponseEntity<Void> update(@RequestBody Person person) {
-        this.persons.save(person);
+    public ResponseEntity<Void> update(@RequestBody Employee employee) {
+        rest.put(API, employee);
         return ResponseEntity.ok().build();
     }
 
     /**
-     * Метод удаляет данные пользователя
-     * @param id - идентификатор пользователя
+     * Метод удаляет данные уволенного работника через взаимосвязь с помощью restTemplate
+     * @param id - идентификатор работника
      * @return - успешность удаления
      */
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id") int id) {
-        Person person = new Person();
-        person.setId(id);
-        this.persons.delete(person);
+    public ResponseEntity<Void> delete(@PathVariable int id) {
+        rest.delete(API_ID, id);
         return ResponseEntity.ok().build();
     }
 }

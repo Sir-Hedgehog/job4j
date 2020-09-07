@@ -15,8 +15,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import ru.job4j.auth.controller.PersonController;
-import ru.job4j.auth.domain.Person;
+import ru.job4j.auth.controller.EmployeeController;
+import ru.job4j.auth.domain.Employee;
 import java.util.ArrayList;
 import java.util.List;
 import static org.hamcrest.Matchers.is;
@@ -28,8 +28,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 05.09.2020
+ * @version 2.0
+ * @since 07.09.2020
  */
 
 @RunWith(SpringRunner.class)
@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class AuthControllersTest {
 
     @MockBean
-    private PersonController controller;
+    private EmployeeController controller;
 
     @Autowired
     private MockMvc mockMvc;
@@ -49,26 +49,26 @@ public class AuthControllersTest {
     }
 
     /**
-     * Метод проверяет отображение всех существующих пользователей
+     * Метод проверяет отображение всех существующих работников
      */
 
     @Test
-    public void checkToGetAllUsers() throws Exception {
-        Person person1 = new Person();
-        person1.setId(1);
-        person1.setLogin("herbivorous");
-        person1.setPassword("apple");
-        Person person2 = new Person();
-        person2.setId(2);
-        person2.setLogin("predator");
-        person2.setPassword("meal");
-        List<Person> persons = new ArrayList<>();
-        persons.add(person1);
-        persons.add(person2);
-        String inputInJson = this.mapToJson(persons);
-        when(controller.findAll()).thenReturn(persons);
+    public void checkToGetAllEmployees() throws Exception {
+        Employee employee1 = new Employee();
+        employee1.setId(1);
+        employee1.setName("John");
+        employee1.setSurname("Miloshevic");
+        Employee employee2 = new Employee();
+        employee2.setId(2);
+        employee2.setName("Ruben");
+        employee2.setSurname("Magomedov");
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee1);
+        employees.add(employee2);
+        String inputInJson = this.mapToJson(employees);
+        when(controller.findAll()).thenReturn(employees);
         MvcResult result = mockMvc
-                .perform(get("/person/").accept(MediaType.APPLICATION_JSON))
+                .perform(get("/employee/").accept(MediaType.APPLICATION_JSON))
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
         String outputInJson = response.getContentAsString();
@@ -77,19 +77,19 @@ public class AuthControllersTest {
     }
 
     /**
-     * Метод проверяет поиск данных по идентификатору пользователя
+     * Метод проверяет поиск данных по идентификатору работника
      */
 
     @Test
-    public void checkToFindOfUserById() throws Exception {
-        Person person = new Person();
-        person.setId(1);
-        person.setLogin("herbivorous");
-        person.setPassword("apple");
-        String expectedInJson = this.mapToJson(person);
-        when(controller.findById(1)).thenReturn(new ResponseEntity<>(person, HttpStatus.OK));
+    public void checkToFindOfEmployeeById() throws Exception {
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setName("John");
+        employee.setSurname("Miloshevic");
+        String expectedInJson = this.mapToJson(employee);
+        when(controller.findById(1)).thenReturn(new ResponseEntity<>(employee, HttpStatus.OK));
         MvcResult result = mockMvc
-                .perform(get("/person/{id}", "1").accept(MediaType.APPLICATION_JSON))
+                .perform(get("/employee/{id}", "1").accept(MediaType.APPLICATION_JSON))
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
         String outputInJson = response.getContentAsString();
@@ -98,19 +98,19 @@ public class AuthControllersTest {
     }
 
     /**
-     * Метод проверяет успешность создания данных нового пользователя
+     * Метод проверяет успешность создания данных нового работника
      */
 
     @Test
-    public void checkToCreateLoginAndPassword() throws Exception {
-        Person person = new Person();
-        person.setId(1);
-        person.setLogin("herbivorous");
-        person.setPassword("apple");
-        String inputInJson = this.mapToJson(person);
-        when(controller.create(any(Person.class))).thenReturn(new ResponseEntity<>(person, HttpStatus.CREATED));
+    public void checkToCreateEmployee() throws Exception {
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setName("John");
+        employee.setSurname("Miloshevic");
+        String inputInJson = this.mapToJson(employee);
+        when(controller.create(any(Employee.class))).thenReturn(new ResponseEntity<>(employee, HttpStatus.CREATED));
         MvcResult result = mockMvc
-                .perform(post("/person/")
+                .perform(post("/employee/")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(inputInJson)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -122,19 +122,19 @@ public class AuthControllersTest {
     }
 
     /**
-     * Метод проверяет обновление пользовательских данных
+     * Метод проверяет обновление данных существующего работника
      */
 
     @Test
-    public void checkToUpdatePerson() throws Exception {
-        Person person = new Person();
-        person.setId(1);
-        person.setLogin("herbivorous");
-        person.setPassword("apple");
-        String expectedInJson = this.mapToJson(person);
-        when(controller.update(person)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
+    public void checkToUpdateEmployee() throws Exception {
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setName("John");
+        employee.setSurname("Miloshevic");
+        String expectedInJson = this.mapToJson(employee);
+        when(controller.update(employee)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
         MvcResult result = mockMvc
-                .perform(put("/person/")
+                .perform(put("/employee/")
                         .accept(MediaType.APPLICATION_JSON)
                         .content(expectedInJson)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -144,18 +144,18 @@ public class AuthControllersTest {
     }
 
     /**
-     * Метод проверяет удаление данных пользователя
+     * Метод проверяет удаление данных уволенного работника
      */
 
     @Test
-    public void checkToDeletePerson() throws Exception {
-        Person person = new Person();
-        person.setId(1);
-        person.setLogin("herbivorous");
-        person.setPassword("apple");
+    public void checkToDeleteEmployee() throws Exception {
+        Employee employee = new Employee();
+        employee.setId(1);
+        employee.setName("John");
+        employee.setSurname("Miloshevic");
         when(controller.delete(1)).thenReturn(new ResponseEntity<>(HttpStatus.OK));
         MvcResult result = mockMvc
-                .perform(delete("/person/{id}", "1").accept(MediaType.APPLICATION_JSON))
+                .perform(delete("/employee/{id}", "1").accept(MediaType.APPLICATION_JSON))
                 .andReturn();
         MockHttpServletResponse response = result.getResponse();
         assertEquals(HttpStatus.OK.value(), response.getStatus());
