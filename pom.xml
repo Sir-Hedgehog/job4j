@@ -38,6 +38,7 @@
         <module>cinema</module>
         <module>chapter_013</module>
         <module>auth</module>
+        <module>chat</module>
     </modules>
 
     <dependencies>
