@@ -2,9 +2,9 @@ package ru.job4j.chat.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.chat.model.Person;
 import ru.job4j.chat.repository.PersonRepository;
@@ -12,19 +12,26 @@ import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 10.09.2020
+ * @version 2.0
+ * @since 11.09.2020
  */
 
 @RestController
 @RequestMapping("/persons/")
 public class PersonController {
     private final PersonRepository persons;
+    private BCryptPasswordEncoder encoder;
     private static final Logger LOG = LoggerFactory.getLogger(PersonController.class);
 
-    @Autowired
-    public PersonController(final PersonRepository persons) {
+    public PersonController(PersonRepository persons, BCryptPasswordEncoder encoder) {
         this.persons = persons;
+        this.encoder = encoder;
+    }
+
+    @PostMapping("/sign-up")
+    public void signUp(@RequestBody Person person) {
+        person.setPassword(encoder.encode(person.getPassword()));
+        persons.save(person);
     }
 
     /**

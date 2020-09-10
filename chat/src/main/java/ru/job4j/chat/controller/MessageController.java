@@ -4,20 +4,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import ru.job4j.chat.model.Message;
 import ru.job4j.chat.model.Room;
 import ru.job4j.chat.repository.MessageRepository;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import static ru.job4j.chat.filter.JWTAuthenticationFilter.TOKEN_PREFIX;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 10.09.2020
+ * @version 2.0
+ * @since 11.09.2020
  */
 
 @RestController
@@ -35,18 +37,24 @@ public class MessageController {
     }
 
     /**
-     * Метод осуществляет поиск всех сообщений чат-комнаты
+     * Метод осуществляет поиск всех сообщений чат-комнаты после проверки токена для аутентификации пользователя
      * @param id - идентификатор чат-комнаты
      * @return - список сообщений
      */
 
     @GetMapping("/{id}")
     public List<Message> findByIdOfRoom(@PathVariable(value = "id") int id) {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String token = request.getHeader("Authorization").split(" ")[1];
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+        requestHeaders.set("Authorization", TOKEN_PREFIX + token);
+        HttpEntity<Room> requestEntity = new HttpEntity<>(requestHeaders);
         List<Message> messages = new ArrayList<>();
         List<Room> rooms = rest.exchange(
                 API,
                 HttpMethod.GET,
-                null,
+                requestEntity,
                 new ParameterizedTypeReference<List<Room>>() {}
         ).getBody();
         for (Room elect : Objects.requireNonNull(rooms)) {

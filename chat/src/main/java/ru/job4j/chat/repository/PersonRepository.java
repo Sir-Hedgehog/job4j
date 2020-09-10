@@ -20,4 +20,12 @@ public interface PersonRepository extends CrudRepository<Person, Integer> {
      */
 
     List<Person> findAll();
+
+    /**
+     * Метод находит пользователя по логину
+     * @param login - логин
+     * @return - данные пользователя
+     */
+
+    Person findByLogin(String login);
 }
