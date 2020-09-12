@@ -8,5 +8,5 @@ package ru.job4j.chat.model;
 
 public enum Sex {
     мужской,
-    женский,
+    женский
 }

@@ -18,8 +18,8 @@ import static ru.job4j.chat.filter.JWTAuthenticationFilter.TOKEN_PREFIX;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 11.09.2020
+ * @version 2.0
+ * @since 12.09.2020
  */
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -57,16 +57,16 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
-        if (token != null) {
-            String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
-                    .build()
-                    .verify(token.replace(TOKEN_PREFIX, ""))
-                    .getSubject();
-            if (user != null) {
-                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
-            }
+        if (token == null) {
             return null;
         }
-        return null;
+        String user = JWT.require(Algorithm.HMAC512(SECRET.getBytes()))
+                .build()
+                .verify(token.replace(TOKEN_PREFIX, ""))
+                .getSubject();
+        if (user == null) {
+            return null;
+        }
+        return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
     }
 }
