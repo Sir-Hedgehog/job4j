@@ -12,7 +12,7 @@ import java.util.Random;
  */
 
 public class Tracker implements ITracker {
-    List<Item> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
     private static final Random RANDOM = new Random();
 
     /**

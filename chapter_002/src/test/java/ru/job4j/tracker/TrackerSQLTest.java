@@ -10,8 +10,8 @@ import static org.junit.Assert.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version $Id$
- * @since 10.08.2019
+ * @version 2.0
+ * @since 13.09.2020
  */
 
 public class TrackerSQLTest {
@@ -66,6 +66,22 @@ public class TrackerSQLTest {
             tracker.add(fighter);
         }
         assertThat(tracker.findAll().size(), is(3));
+        connection.close();
+    }
+
+    @Test
+    public void checkReactiveFindAll() throws Exception {
+        Connection connection = ConnectionRollback.create(this.init());
+        TrackerSQL tracker = new TrackerSQL(connection);
+        tracker.createTable();
+        List<Item> list = List.of(
+                new Item("Даниэль", "Кормье"),
+                new Item("Джон", "Джонс"),
+                new Item("Кейн", "Веласкес"));
+        for (Item fighter : list) {
+            tracker.add(fighter);
+        }
+        tracker.reactiveFindAll(System.out::println);
         connection.close();
     }
 

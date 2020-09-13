@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version $Id$
+ * @version 1.0
  * @since 11.12.2018
  */
 
@@ -57,7 +57,6 @@ public class TrackerTest {
         tracker.add(list.get(1));
         tracker.add(list.get(2));
         assertThat(tracker.findAll(), is(list));
-
     }
 
     @Test

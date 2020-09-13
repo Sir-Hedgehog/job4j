@@ -7,8 +7,8 @@ import java.util.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version $Id$
- * @since 10.08.2019
+ * @version 2.0
+ * @since 13.09.2020
  */
 
 public class TrackerSQL implements ITracker, AutoCloseable {
@@ -32,6 +32,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * @param item новая заявка
      * @return заявка
      */
+
     @Override
     public Item add(Item item) {
         try (final PreparedStatement ps = this.connection.prepareStatement("INSERT INTO tracker(name, description) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
@@ -54,6 +55,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * @param item существующая заявка
      * @param id идентификатор
      */
+
     @Override
     public boolean replace(String id, Item item) {
         try (PreparedStatement st = connection.prepareStatement("UPDATE tracker SET name = ?, description = ? WHERE id = ? ")) {
@@ -72,6 +74,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * Метод удаляет заявку
      * @param id идентификатор заявки
      */
+
     @Override
     public boolean delete(String id) {
         try (PreparedStatement st = connection.prepareStatement("DELETE FROM tracker WHERE id = ?")) {
@@ -88,6 +91,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * Метод выдает список всех заявок
      * @return список заявок
      */
+
     @Override
     public List<Item> findAll() {
         List<Item> list = new ArrayList<>();
@@ -105,10 +109,28 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     }
 
     /**
+     * Метод выдает заявки в реактивном стиле
+     */
+
+    public void reactiveFindAll(Observer<Item> observer) {
+        try (PreparedStatement st = connection.prepareStatement("SELECT * FROM tracker")) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Item item = new Item(rs.getString("name"), rs.getString("description"));
+                item.setId(String.valueOf(rs.getInt("id")));
+                observer.receive(item);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(), e);
+        }
+    }
+
+    /**
      * Метод выдает список по имени
      * @param key вводится имя
      * @return существующая заявка по введенному имени
      */
+
     @Override
     public List<Item> findByName(String key) {
         List<Item> list = new ArrayList<>();
@@ -132,6 +154,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
      * @param id вводится идентификатор
      * @return существующая заявка по введенному идентификатору
      */
+
     @Override
     public Item findById(String id) {
         try (PreparedStatement st = connection.prepareStatement("SELECT * FROM tracker WHERE id = ?")) {
@@ -151,7 +174,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     }
 
     @Override
-
     public void close() throws Exception {
         if (connection != null) {
             connection.close();
