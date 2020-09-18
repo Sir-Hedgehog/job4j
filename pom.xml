@@ -39,6 +39,7 @@
         <module>chapter_013</module>
         <module>auth</module>
         <module>chat</module>
+        <module>weather</module>
     </modules>
 
     <dependencies>
