@@ -14,7 +14,7 @@ Practically every program in modules was tested and checked.
 
 ## Used technologies
 
-*language and frameworks:*
+*language and libs:*
 * Java Core;
 * JavaFX;
 * Quartz;
@@ -27,14 +27,25 @@ Practically every program in modules was tested and checked.
 * jcip; 
 * log4j
 
+*frameworks:*
+* Spring Boot Security;
+* Spring Boot Data;
+* Spring Boot Logging;
+* Spring Boot Web;
+* Spring Boot Tomcat;
+* REST API;
+* Hibernate
+
 *tests:*
 * Mockito;
 * JUnit;
 * Hamcrest
 
-*databases:*
-* SQLLite
+*data:*
+* SQLLite;
 * PostgreSQL;
+* MSSQL;
+* Liquibase;
 * JDBC
 
 *texts and front-end:*
@@ -52,7 +63,7 @@ Practically every program in modules was tested and checked.
 *development tools:*
 * Intellij IDEA;
 * JaCoCo;
-* Travic CI;
+* Travis CI;
 * Codecov;
 * Git;
 * Maven;
