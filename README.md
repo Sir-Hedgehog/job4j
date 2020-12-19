@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Sir-Hedgehog/job4j.svg?branch=master)](https://travis-ci.org/Sir-Hedgehog/job4j)
+[![Build Status](https://travis-ci.com/Sir-Hedgehog/job4j.svg?branch=master)](https://travis-ci.org/Sir-Hedgehog/job4j)
 [![codecov](https://codecov.io/gh/Sir-Hedgehog/job4j/branch/master/graph/badge.svg)](https://codecov.io/gh/Sir-Hedgehog/job4j)
 
 # My basic repository of course Job4j
